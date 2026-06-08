@@ -1,0 +1,2005 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Personalizza il tuo ricamo | Duami Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:ital,wght@0,700;0,800;1,700;1,800&family=Bebas+Neue&family=Laila:wght@400;600&family=Courier+Prime:wght@400;700&family=Dancing+Script:wght@400;700&family=Italianno&family=Sue+Ellen+Francisco&family=Medula+One&family=Beth+Ellen&display=swap" rel="stylesheet"/>
+<style>
+/* ════════════════════════════════
+   TOKENS
+════════════════════════════════ */
+:root{
+  /* brand */
+  --blue:#2979FF; --yellow:#FFC300; --red:#E04153;
+  --green:#08B082; --purple:#AB7FFB;
+  /* neutrals */
+  --bg:#FFFFFF; --bg-sec:#F7F7F7; --white:#FFFFFF;
+  --dark:#1A1A1A; --body:#3D3D3D; --muted:#767676;
+  --border:#D4D4D4;
+  /* radius & motion */
+  --r:14px; --r-sm:8px; --t:.18s ease;
+  --sh: 0 2px 16px rgba(0,0,0,.07);
+  --sh-hover: 0 6px 28px rgba(0,0,0,.13);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column;}
+
+/* focus ring */
+:focus-visible{outline:2.5px solid var(--blue);outline-offset:2px;border-radius:4px;}
+
+/* ── TOPBAR ── */
+.topbar{background:var(--dark);color:#fff;text-align:center;font-size:12px;letter-spacing:2px;text-transform:uppercase;padding:9px 20px;}
+
+/* ── HEADER ── */
+.site-header{display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:72px;background:var(--white);border-bottom:1.5px solid var(--border);position:sticky;top:0;z-index:200;}
+.logo{display:flex;align-items:center;text-decoration:none;flex-shrink:0;}
+.logo svg{height:28px;width:auto;display:block;}
+/* Nav */
+.hdr-nav{display:flex;align-items:center;gap:32px;list-style:none;}
+.hdr-nav a{font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--dark);text-decoration:none;opacity:.55;transition:opacity var(--t);}
+.hdr-nav a:hover{opacity:1;}
+.hdr-nav .nav-active{opacity:1;color:var(--yellow);}
+/* Header CTA */
+.btn-hdr{background:var(--dark);color:#fff;border:none;border-radius:100px;padding:9px 20px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;text-decoration:none;transition:background var(--t);}
+.btn-hdr:hover{background:#333;}
+
+/* ── PAGE HERO ── */
+.page-hero{background:var(--white);border-bottom:1.5px solid var(--border);padding:28px 40px 22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.hero-badge{border:2px solid var(--yellow);background:#fffbeb;border-radius:100px;padding:5px 16px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#8a6a00;flex-shrink:0;}
+.page-hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,2.2vw,2.1rem);font-weight:800;color:var(--dark);flex:1;margin-left:8px;}
+.page-hero h1 em{color:var(--red);font-style:italic;}
+.page-hero p{font-size:15px;color:var(--muted);max-width:260px;margin-left:8px;line-height:1.6;}
+
+/* ── SPLIT LAYOUT ── */
+.split{display:grid;grid-template-columns:1fr 1fr;flex:1;min-height:0;overflow:hidden;}
+.form-col{padding:24px 24px 120px;border-right:1.5px solid var(--border);background:#FFFFFF;overflow-y:auto;}
+.preview-col{overflow:hidden;display:flex;flex-direction:column;background:#DDD5C8;}
+.preview-sticky{flex:1;min-height:0;display:flex;flex-direction:column;}
+
+/* ── PAGE TITLE ── */
+.page-title{padding:28px 0 20px;}
+.page-title h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4vw,3.8rem);font-weight:800;color:var(--dark);line-height:1.15;}
+.page-title h1 em{
+  font-style:italic;
+  color:var(--purple);
+  background:rgba(171,127,251,.14);
+  border-radius:8px;
+  padding:2px 10px 4px;
+  display:inline-block;
+}
+.page-title p{font-size:15px;color:var(--muted);margin-top:6px;line-height:1.6;}
+
+/* ── STEP CARDS ── */
+.step-card{background:var(--white);border-radius:var(--r);margin-bottom:12px;overflow:hidden;}
+.step-card.locked{display:none;}
+.step-card.done .step-head{opacity:.8;}
+
+.step-head{display:flex;align-items:center;gap:14px;padding:18px 18px 14px;}
+.s-num{width:40px;height:40px;border-radius:50%;background:var(--dark);color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background var(--t);}
+.step-card.done .s-num{background:var(--green);}
+.s-title-wrap{display:flex;flex-direction:column;gap:2px;}
+.s-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+.s-title{font-family:'Playfair Display',serif;font-size:1.75rem;font-weight:800;color:var(--dark);}
+.s-summary{display:none;}
+.btn-mod{display:none;}
+.step-body{padding:0 18px 20px;}
+
+/* label overline */
+.fl{display:block;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:16px 0 10px;}
+.fl:first-child{margin-top:4px;}
+.hint{font-size:14px;color:var(--muted);font-style:italic;margin-top:6px;line-height:1.6;}
+
+/* ── CARD SHARED (prodotto / tipo / posizione) ── */
+.card-img-area{position:relative;margin:8px;border-radius:10px;height:92px;display:flex;align-items:center;justify-content:center;background:#F5F4F1;transition:background var(--t);}
+/* Icone: scure di default, bianche al select */
+.card-img-area svg{transition:stroke var(--t),fill var(--t),opacity var(--t),color var(--t);}
+.prod-card.sel .card-img-area svg,
+.type-card.sel .card-img-area svg{color:#fff!important;opacity:1!important;}
+.prod-card.sel .card-img-area,
+.type-card.sel .card-img-area,
+.pos-card.sel  .card-img-area{background:var(--blue);}
+/* Check circle: sempre visibile — vuoto default, pieno al select */
+.card-check{position:absolute;top:7px;right:7px;width:20px;height:20px;border-radius:50%;border:1.5px solid #B8B4AC;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all var(--t);}
+.card-check svg{opacity:0;transition:opacity var(--t);}
+.prod-card.sel .card-check,
+.type-card.sel .card-check,
+.pos-card.sel  .card-check{background:#fff;border-color:#fff;}
+.prod-card.sel .card-check svg,
+.type-card.sel .card-check svg,
+.pos-card.sel  .card-check svg{opacity:1;}
+.card-body{padding:2px 12px 12px;}
+.card-name{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;color:var(--dark);margin-bottom:4px;transition:color var(--t);}
+.prod-card.sel .card-name,.type-card.sel .card-name,.pos-card.sel .card-name{color:var(--blue);}
+.card-meta{display:flex;justify-content:space-between;align-items:center;gap:4px;}
+.card-desc{font-size:12px;color:var(--muted);line-height:1.4;}
+.card-price-tag{font-size:12px;font-weight:600;color:var(--muted);white-space:nowrap;transition:color var(--t);}
+.prod-card.sel .card-price-tag,
+.type-card.sel .card-price-tag,
+.pos-card.sel  .card-price-tag{color:var(--blue);font-weight:700;}
+
+/* ── PRODUCT CARDS GRID ── */
+.prod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.prod-card{border:1.5px solid var(--border);border-radius:14px;cursor:pointer;background:#fff;overflow:hidden;transition:border-color var(--t),box-shadow var(--t);}
+.prod-card:hover{border-color:#C0BCBA;}
+.prod-card.sel{border-color:var(--blue);box-shadow:0 0 0 3px rgba(41,121,255,.08);}
+
+/* ── INLINE TAGLIA ── */
+.taglia-inline{margin-top:16px;padding-top:4px;display:none;}
+.taglia-inline.show{display:block;}
+
+/* ── PILLS ── */
+.pills{display:flex;flex-wrap:wrap;gap:8px;}
+.pill{border:1.5px solid var(--border);border-radius:100px;padding:7px 18px;font-size:14px;font-weight:500;cursor:pointer;transition:var(--t);background:#fff;color:var(--body);user-select:none;}
+.pill:hover{border-color:#999;color:var(--dark);}
+.pill.sel{border-color:var(--dark);background:var(--dark);color:#fff;}
+.sz-lbl{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);display:block;margin:12px 0 8px;}
+.sz-lbl:first-child{margin-top:0;}
+
+/* ── TYPE CARDS ── */
+.type-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.type-card{border:1.5px solid var(--border);border-radius:14px;cursor:pointer;background:#fff;overflow:hidden;transition:border-color var(--t),box-shadow var(--t);}
+.type-card:hover{border-color:#C0BCBA;}
+.type-card.sel{border-color:var(--blue);box-shadow:0 0 0 3px rgba(41,121,255,.08);}
+.tc-title{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;color:var(--dark);margin-bottom:4px;}
+.tc-desc{font-size:12px;color:var(--muted);}
+
+/* Type card "Aa" — neutro di default, bianco al select (su sfondo blu) */
+.tc-aa{font-family:'Playfair Display',serif;font-size:2.4rem;font-style:italic;color:var(--muted);line-height:1;transition:color var(--t);}
+.type-card.sel .tc-aa{color:#fff;}
+
+/* ── POSITION CARDS ── */
+.pos-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
+.pos-card{border:1.5px solid var(--border);border-radius:14px;cursor:pointer;background:#fff;overflow:hidden;transition:border-color var(--t),box-shadow var(--t);}
+.pos-card:hover{border-color:#C0BCBA;}
+.pos-card.sel{border-color:var(--blue);box-shadow:0 0 0 3px rgba(41,121,255,.08);}
+/* T-shirt SVG: scura di default, bianca al select */
+.pos-card .shirt-dot{fill:var(--dark);opacity:.75;transition:fill var(--t),opacity var(--t);}
+.pos-card.sel .shirt-dot{fill:#fff;opacity:1;}
+.pos-card .shirt-path{fill:none;stroke:var(--dark);stroke-width:1.5;opacity:.75;transition:stroke var(--t),fill var(--t),opacity var(--t);}
+.pos-card.sel .shirt-path{stroke:rgba(255,255,255,.7);fill:rgba(255,255,255,.08);opacity:1;}
+.pos-name{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:4px;transition:color var(--t);}
+.pos-card.sel .pos-name{color:var(--blue);}
+.pos-meta{display:flex;justify-content:space-between;align-items:center;}
+.pos-price{font-size:12px;font-weight:600;color:var(--muted);transition:color var(--t);}
+.pos-card.sel .pos-price{color:var(--blue);font-weight:700;}
+.pos-dash{font-size:14px;color:var(--muted);}
+
+/* ════════════════════════
+   EDITOR — Step Testo
+════════════════════════ */
+/* Istruzioni step 4 */
+.step-instructions{font-size:15px;color:var(--muted);line-height:1.75;margin-bottom:16px;}
+.step-instructions strong{color:var(--body);}
+
+/* Align buttons */
+.tb-align{display:flex;gap:3px;}
+.tb-align-btn{width:44px;height:44px;border:2px solid var(--border);border-radius:var(--r-sm);background:#fff;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:var(--t);line-height:1;}
+.tb-align-btn:hover{border-color:var(--blue);background:#EEF4FF;}
+.tb-align-btn.sel{border-color:var(--blue);background:#D6E8FF;color:var(--blue);}
+
+/* Font inline nella toolbar */
+.tb-font-wrap{position:relative;display:flex;align-items:center;}
+.tb-font-btn{height:44px;border:2px solid var(--border);border-radius:var(--r-sm);padding:0 12px;font-size:14px;font-weight:600;background:#fff;color:var(--dark);cursor:pointer;transition:var(--t);display:flex;align-items:center;gap:6px;white-space:nowrap;font-family:'DM Sans',sans-serif;min-width:110px;justify-content:space-between;}
+.tb-font-btn:hover{border-color:var(--blue);}
+.tb-font-preview{font-size:15px;}
+.tb-font-drop{display:none;position:absolute;top:calc(100% + 6px);left:0;background:#fff;border:2px solid var(--border);border-radius:var(--r);padding:6px;z-index:300;box-shadow:0 6px 24px rgba(0,0,0,.12);width:200px;max-height:220px;overflow-y:auto;flex-direction:column;gap:2px;}
+.tb-font-drop.open{display:flex;}
+.tb-font-item{display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-radius:8px;cursor:pointer;transition:background var(--t);}
+.tb-font-item:hover{background:var(--bg-sec);}
+.tb-font-item.sel{background:#EEF4FF;}
+.tb-font-item-preview{font-size:18px;color:var(--dark);}
+.tb-font-item-name{font-size:11px;color:var(--muted);font-family:'DM Sans',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
+
+/* Toolbar */
+.editor-wrap{margin-top:0;}
+.editor-toolbar{display:flex;align-items:center;gap:5px;flex-wrap:wrap;padding:8px 10px;background:#F7F7F7;border:2px solid var(--border);border-bottom:1px solid var(--border);border-radius:var(--r) var(--r) 0 0;}
+.tb-sep{width:1px;height:22px;background:var(--border);margin:0 4px;flex-shrink:0;}
+
+/* Dimension dropdown */
+.dim-wrap{position:relative;}
+.dim-btn{height:44px;border:2px solid var(--border);border-radius:var(--r-sm);padding:0 12px;background:#fff;color:var(--dark);display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;min-width:148px;font-family:'DM Sans',sans-serif;transition:border-color var(--t);}
+.dim-btn:hover{border-color:var(--blue);}
+.dim-btn-left{display:flex;align-items:baseline;gap:6px;flex:1;}
+.dim-val{font-size:15px;font-weight:700;color:var(--dark);}
+.dim-price{font-size:11px;color:var(--muted);}
+.dim-chevron{font-size:10px;color:var(--muted);transition:transform var(--t);margin-left:auto;}
+.dim-drop{display:none;position:absolute;top:calc(100% + 6px);left:0;background:#fff;border:2px solid var(--border);border-radius:var(--r);padding:6px;z-index:300;box-shadow:0 6px 24px rgba(0,0,0,.12);min-width:200px;}
+.dim-drop.open{display:block;}
+.dim-item{display:flex;align-items:center;justify-content:space-between;padding:9px 10px;border-radius:8px;cursor:pointer;gap:16px;transition:background var(--t);}
+.dim-item:hover{background:var(--bg-sec);}
+.dim-item.sel{background:#EEF4FF;}
+.dim-item-h{font-size:14px;font-weight:700;color:var(--dark);}
+.dim-item.sel .dim-item-h{color:var(--blue);}
+.dim-item-price{font-size:12px;color:var(--muted);white-space:nowrap;}
+.dim-item.sel .dim-item-price{color:var(--blue);}
+.dim-check{color:var(--blue);width:16px;text-align:center;font-size:13px;flex-shrink:0;}
+
+/* Color picker */
+.color-btn-wrap{position:relative;}
+.tb-color-btn{height:44px;border:2px solid var(--border);border-radius:var(--r-sm);padding:0 12px;font-size:14px;font-weight:600;background:#fff;color:var(--dark);cursor:pointer;transition:var(--t);display:flex;align-items:center;gap:8px;white-space:nowrap;font-family:'DM Sans',sans-serif;}
+.tb-color-btn:hover{border-color:var(--blue);}
+.color-swatch{width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(0,0,0,.12);flex-shrink:0;}
+.color-popover{display:none;position:absolute;top:calc(100% + 8px);left:0;background:#fff;border:2px solid var(--border);border-radius:var(--r);padding:8px;z-index:300;box-shadow:var(--sh-hover);flex-direction:column;gap:2px;width:190px;max-height:300px;overflow-y:auto;}
+.color-popover.open{display:flex;}
+.cp-item{display:flex;align-items:center;gap:10px;padding:6px 8px;border-radius:8px;cursor:pointer;transition:background var(--t);}
+.cp-item:hover{background:var(--bg-sec);}
+.cp-item.sel{background:#EEF4FF;}
+.cp-dot{width:22px;height:22px;border-radius:50%;border:2px solid transparent;flex-shrink:0;transition:transform var(--t);}
+.cp-item:hover .cp-dot{transform:scale(1.1);}
+.cp-item.sel .cp-dot{border-color:rgba(0,0,0,.2);}
+.cp-name{font-size:13px;font-weight:500;color:var(--body);font-family:'DM Sans',sans-serif;}
+
+/* Icon picker dropdown */
+.icon-btn-wrap{position:relative;}
+.tb-icon-main{height:44px;padding:0 12px;border:2px solid var(--border);border-radius:var(--r-sm);background:#fff;cursor:pointer;font-size:18px;display:flex;align-items:center;gap:6px;transition:var(--t);font-family:'DM Sans',sans-serif;color:var(--dark);}
+.tb-icon-main:hover{border-color:var(--blue);background:#EEF4FF;}
+.tb-icon-main span{font-size:12px;font-weight:600;color:var(--muted);}
+.icon-drop{display:none;position:absolute;top:calc(100% + 6px);left:0;background:#fff;border:2px solid var(--border);border-radius:var(--r);padding:10px;z-index:300;box-shadow:var(--sh-hover);min-width:180px;}
+.icon-drop.open{display:block;}
+.icon-drop-section{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin:8px 0 6px;}
+.icon-drop-section:first-child{margin-top:0;}
+.icon-drop-row{display:flex;gap:6px;margin-bottom:4px;}
+.icon-opt{flex:1;display:flex;align-items:center;gap:6px;padding:7px 10px;border-radius:8px;cursor:pointer;border:1.5px solid var(--border);background:#fff;transition:var(--t);font-size:18px;color:var(--dark);}
+.icon-opt span{font-size:12px;color:var(--muted);font-family:'DM Sans',sans-serif;}
+.icon-opt:hover{border-color:var(--blue);background:#EEF4FF;}
+
+/* Editor field */
+.editor-field{min-height:180px;max-height:320px;overflow-y:auto;border:2px solid var(--border);border-top:none;border-radius:0 0 var(--r) var(--r);padding:14px 16px;font-size:18px;color:var(--dark);font-family:'DM Sans',sans-serif;background:#fff;outline:none;line-height:1.7;cursor:text;transition:border-color var(--t);}
+.editor-field:focus{border-color:var(--blue);}
+.editor-field:empty::before{content:'Scrivi qui…';color:#AAAAAA;font-style:italic;pointer-events:none;font-size:16px;}
+
+/* Letter counter */
+.editor-meta{display:flex;align-items:center;justify-content:space-between;margin-top:8px;}
+.letter-counter{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--muted);}
+.letter-badge{display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:22px;padding:0 8px;border-radius:100px;background:var(--bg-sec);border:1.5px solid var(--border);font-size:13px;font-weight:700;color:var(--dark);transition:background var(--t),border-color var(--t),color var(--t);}
+.letter-badge.has-text{background:#EBF1FF;border-color:rgba(41,121,255,.3);color:var(--blue);}
+.letter-emb-price{font-size:13px;font-weight:700;color:var(--blue);background:#EEF4FF;border:1.5px solid rgba(41,121,255,.25);border-radius:100px;padding:4px 14px;}
+
+/* Embroidery notes */
+.emb-notes-ta{width:100%;border:2px solid var(--border);border-radius:var(--r);padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:16px;color:var(--dark);background:#fff;resize:vertical;min-height:120px;outline:none;transition:border-color var(--t);}
+.emb-notes-ta:focus{border-color:var(--blue);}
+/* Step 6 — contatti */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.contact-field{display:flex;flex-direction:column;gap:6px;}
+.contact-field.full{grid-column:1/-1;}
+.contact-field label{font-size:12px;font-weight:700;color:var(--dark);letter-spacing:.04em;text-transform:uppercase;}
+.contact-field label .opt{font-size:11px;font-weight:500;color:var(--muted);text-transform:none;letter-spacing:0;margin-left:4px;}
+.contact-input{width:100%;border:2px solid var(--border);border-radius:var(--r);padding:11px 14px;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--dark);background:#fff;outline:none;transition:border-color var(--t);}
+.contact-input:focus{border-color:var(--blue);}
+.contact-input::placeholder{color:#AAAAAA;}
+.contact-process-box{background:var(--bg-sec);border:1.5px solid var(--border);border-radius:var(--r);padding:16px 18px;margin-bottom:20px;}
+.contact-process-box p{font-size:14px;color:var(--body);line-height:1.75;margin:0;}
+.contact-process-steps{display:flex;flex-direction:column;gap:8px;margin-top:12px;}
+.contact-process-step{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--body);line-height:1.5;}
+.contact-process-step-dot{width:20px;height:20px;border-radius:50%;background:var(--blue);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+
+/* General textarea */
+.field-ta{width:100%;border:2px solid var(--border);border-radius:var(--r);padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:16px;color:var(--dark);background:#fff;resize:vertical;min-height:90px;outline:none;transition:border-color var(--t);}
+.field-ta:focus{border-color:var(--blue);}
+.img-note{background:var(--bg-sec);border:1.5px solid var(--border);border-radius:var(--r);padding:12px 16px;font-size:14px;color:var(--muted);line-height:1.7;margin-top:10px;}
+
+/* ── BUTTONS ── */
+.btn-continue{display:block;width:100%;margin-top:18px;padding:14px;background:var(--dark);color:#fff;border:none;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:background var(--t);}
+.btn-continue:hover{background:var(--blue);}
+.btn-submit{display:block;width:100%;margin-top:18px;padding:14px;background:var(--yellow);color:var(--dark);border:none;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:background var(--t);}
+.btn-submit:hover{background:#e6b000;}
+.submit-note{font-size:14px;color:var(--muted);text-align:center;margin-top:8px;line-height:1.6;}
+
+/* ── BANNER CONTESTUALE ── */
+.ctx-banner{display:flex;align-items:flex-start;gap:10px;margin-top:16px;padding:12px 14px;background:var(--bg-sec);border-radius:var(--r-sm);font-size:13px;color:var(--muted);line-height:1.7;}
+.ctx-banner-icon{font-size:15px;flex-shrink:0;margin-top:1px;opacity:.6;}
+.ctx-banner strong{color:var(--body);}
+.ctx-banner-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
+.ctx-chip{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;background:rgba(0,0,0,.05);border:none;border-radius:4px;font-size:12px;font-weight:600;color:var(--muted);cursor:default;user-select:none;}
+
+/* ── ACCORDION ── */
+.info-wrap{margin-top:28px;}
+.info-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic;color:var(--dark);margin-bottom:10px;}
+.acc{border:1.5px solid var(--border);border-radius:var(--r);overflow:hidden;background:#fff;}
+.acc-item{border-bottom:1.5px solid var(--border);}
+.acc-item:last-child{border-bottom:none;}
+.acc-btn{display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;padding:14px 18px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;color:var(--dark);cursor:pointer;text-align:left;transition:background var(--t);}
+.acc-btn:hover{background:var(--bg-sec);}
+.acc-chev{font-size:11px;color:var(--muted);transition:transform var(--t);}
+.acc-btn.open .acc-chev{transform:rotate(180deg);}
+.acc-body{display:none;padding:12px 18px 16px;font-size:14px;color:var(--muted);line-height:1.8;border-top:1.5px solid var(--border);}
+.acc-body.open{display:block;}
+.tl{display:flex;flex-direction:column;gap:10px;}
+.tl-row{display:flex;gap:10px;align-items:flex-start;}
+.tl-dot{width:24px;height:24px;border-radius:50%;background:var(--yellow);color:var(--dark);font-size:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.tl-b strong{display:block;font-size:14px;color:var(--dark);}
+.fab-t{width:100%;border-collapse:collapse;font-size:14px;}
+.fab-t th{background:var(--bg-sec);padding:8px 12px;text-align:left;font-weight:700;color:var(--dark);}
+.fab-t td{padding:8px 12px;border-top:1.5px solid var(--border);color:var(--body);}
+
+/* ═══════════════════════════════
+   PREVIEW PANEL
+═══════════════════════════════ */
+/* Header bar — minimal con accento giallo */
+.prev-header{padding:10px 20px;border-bottom:1.5px solid var(--border);border-left:4px solid var(--yellow);background:#fff;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dark);display:flex;align-items:center;justify-content:space-between;}
+.prev-header em{font-style:normal;color:rgba(0,0,0,.5);font-weight:600;}
+.prev-view-label{font-size:11px;font-weight:600;letter-spacing:0;text-transform:none;color:rgba(0,0,0,.55);transition:color .3s;}
+.prev-view-label.sleeve{color:var(--red);}
+
+/* Canvas fills sticky panel */
+.prev-canvas{flex:1;position:relative;overflow:hidden;background:#DDD5C8;}
+
+/* Photo fills the entire canvas */
+.photo-container{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+.tshirt-photo{width:100%;height:100%;object-fit:cover;object-position:center 18%;user-select:none;pointer-events:none;transition:opacity .3s;}
+
+/* Zoom controls */
+.zoom-controls{position:absolute;top:14px;left:50%;transform:translateX(-50%);z-index:20;}
+.zoom-btn{height:38px;padding:0 16px;border-radius:100px;border:none;background:var(--yellow);backdrop-filter:blur(6px);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;color:var(--dark);font-size:13px;font-weight:600;transition:var(--t);box-shadow:0 2px 12px rgba(0,0,0,.18);}
+.zoom-btn:hover{background:#e6b000;transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.22);}
+.zoom-btn svg{display:block;transition:transform var(--t);}
+
+/* Contact Modal */
+.contact-modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(4px);z-index:500;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity .2s ease;}
+.contact-modal-ov.open{opacity:1;pointer-events:auto;}
+.contact-modal-card{background:#fff;border-radius:20px;width:100%;max-width:580px;max-height:90vh;overflow-y:auto;padding:32px;position:relative;box-shadow:0 24px 80px rgba(0,0,0,.2);transform:translateY(12px);transition:transform .2s ease;}
+.contact-modal-ov.open .contact-modal-card{transform:translateY(0);}
+.contact-modal-close{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;border:1.5px solid var(--border);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--body);transition:var(--t);}
+.contact-modal-close:hover{border-color:var(--dark);color:var(--dark);}
+.contact-modal-title{font-size:20px;font-weight:700;color:var(--dark);margin:0 0 20px;padding-right:32px;}
+.btn-contact-modal-submit{width:100%;margin-top:24px;background:var(--blue);color:#fff;border:none;border-radius:100px;padding:15px 24px;font-size:15px;font-weight:600;cursor:pointer;transition:var(--t);}
+.btn-contact-modal-submit:hover{background:#1a65e0;}
+
+/* Embroidery text overlay */
+.emb-overlay{position:absolute;display:flex;flex-direction:column;align-items:flex-start;gap:1px;pointer-events:none;transform:translate(-50%,-50%);z-index:10;transition:top .4s ease,left .4s ease;}
+.emb-line{line-height:1.3;white-space:nowrap;}
+
+/* Animated position dot */
+.pos-dot{position:absolute;width:10px;height:10px;border-radius:50%;background:var(--red);border:2px solid #fff;box-shadow:0 0 0 2px var(--red);transform:translate(-50%,-50%);pointer-events:none;z-index:11;transition:top .4s ease,left .4s ease;animation:pdot 2.2s ease-in-out infinite;}
+@keyframes pdot{0%,100%{box-shadow:0 0 0 2px var(--red);}50%{box-shadow:0 0 0 8px rgba(224,65,83,.18);}}
+
+/* Empty state */
+.prev-empty{display:flex;flex-direction:column;align-items:center;gap:12px;color:var(--muted);text-align:center;padding:48px 32px;position:absolute;inset:0;justify-content:center;}
+.prev-empty-icon{font-size:4rem;opacity:.15;}
+.prev-empty p{font-size:16px;font-style:italic;max-width:200px;line-height:1.6;}
+
+/* Sleeve badge */
+.sleeve-badge{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);background:rgba(26,26,26,.75);color:#fff;backdrop-filter:blur(6px);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:6px 16px;border-radius:100px;pointer-events:none;opacity:0;transition:opacity .3s;white-space:nowrap;}
+.sleeve-badge.show{opacity:1;}
+
+/* ── PRICE BAR FLOATING (opzione F) ── */
+.price-bar{
+  position:fixed;bottom:16px;left:50%;transform:translateX(-50%);
+  width:calc(100% - 32px);max-width:1100px;
+  z-index:200;
+  background:#fff;
+  border-radius:16px;
+  border:1px solid var(--border);
+  box-shadow:0 8px 40px rgba(0,0,0,.13);
+  overflow:hidden;
+}
+/* Dettagli — si espandono verso l'alto dentro la card */
+.price-rows{
+  max-height:0;overflow:hidden;
+  transition:max-height .3s ease;
+  background:#FAF9F7;
+}
+.price-bar.open .price-rows{max-height:240px;}
+.price-bar.open .price-bar-inner{border-top:1px solid var(--border);}
+.price-rows-inner{padding:14px 20px;display:flex;flex-direction:column;gap:8px;}
+.p-row{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:8px;font-size:13px;}
+.p-row>span:first-child{color:var(--muted);}
+.p-row>span:nth-child(2){font-weight:600;color:var(--dark);text-align:right;}
+.p-row>span:nth-child(2).empty{color:#C8C5BE;font-weight:400;}
+.p-row>span:last-child{min-width:64px;text-align:right;font-weight:700;color:var(--dark);}
+.p-row>span:last-child.base{color:var(--muted);font-weight:600;}
+.p-row>span:last-child.extra{color:var(--blue);}
+.p-row>span:last-child.none{visibility:hidden;}
+.p-rows-divider{height:1px;background:var(--border);margin:2px 0;}
+.p-rows-total{display:grid;grid-template-columns:1fr auto;font-size:13px;font-weight:700;color:var(--dark);}
+/* Barra principale sempre visibile */
+.price-bar-inner{
+  display:flex;align-items:center;gap:16px;padding:18px 24px;
+}
+.price-bar-left{flex:1;display:flex;align-items:center;gap:12px;cursor:pointer;min-width:0;}
+.p-total-wrap{display:flex;flex-direction:column;flex-shrink:0;}
+.p-total-label{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;white-space:nowrap;}
+.p-total-val{font-size:20px;font-weight:800;color:var(--dark);letter-spacing:-.5px;line-height:1.1;}
+.p-pills{display:flex;gap:5px;flex-wrap:wrap;flex:1;min-width:0;}
+.p-pill{font-size:11px;border-radius:100px;padding:3px 9px;font-weight:600;white-space:nowrap;background:#F2F1EE;color:var(--body);}
+.p-pill.sel{background:#EBF1FF;color:var(--blue);}
+.p-chevron-btn{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--muted);transition:border-color var(--t);pointer-events:none;}
+.p-chevron-btn svg{transition:transform .25s;}
+.price-bar.open .p-chevron-btn svg{transform:rotate(180deg);}
+.price-bar-left:hover .p-chevron-btn{border-color:var(--dark);color:var(--dark);}
+/* Bottone invia */
+.btn-bar-submit{background:var(--dark);color:#fff;border:none;border-radius:100px;padding:11px 22px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:background var(--t);white-space:nowrap;flex-shrink:0;}
+.btn-bar-submit:hover{background:#333;}
+
+/* ── CALIBRAZIONE ── */
+.calib-active .prev-canvas{cursor:crosshair;}
+.calib-hud{display:none;position:fixed;bottom:24px;right:24px;background:rgba(26,26,26,.95);color:#fff;font-size:12px;font-family:'DM Sans',monospace;font-weight:600;padding:14px 18px;border-radius:12px;z-index:9999;min-width:240px;box-shadow:0 4px 24px rgba(0,0,0,.3);line-height:1.8;}
+.calib-active~* .calib-hud,.calib-hud.visible{display:block;}
+.calib-hud-title{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:6px;}
+.calib-hud-val{color:#FFC300;font-size:14px;}
+.calib-hud-pos{color:rgba(255,255,255,.6);font-size:11px;margin-top:4px;}
+.calib-dot{position:absolute;width:14px;height:14px;border-radius:50%;background:var(--red);border:2.5px solid #fff;transform:translate(-50%,-50%);pointer-events:none;z-index:52;display:none;}
+
+/* ── STEP 5: PUNTO DI RICAMO ── */
+.punto-list{display:flex;flex-direction:column;gap:10px;}
+.punto-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:border-color var(--t),box-shadow var(--t);}
+.punto-card:hover{border-color:#C0BCBA;}
+.punto-card.sel{border:2px solid var(--blue);box-shadow:0 0 0 3px rgba(41,121,255,.1);}
+.punto-photos{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;}
+.punto-photo{position:relative;height:160px;background:var(--bg-sec);overflow:hidden;cursor:zoom-in;}
+.punto-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .25s ease;}
+.punto-photo:hover img{transform:scale(1.05);}
+.punto-ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;pointer-events:none;}
+.punto-ph-icon{font-size:26px;opacity:.3;}
+.punto-ph-lbl{font-size:11px;color:var(--muted);font-style:italic;}
+.punto-zoom{position:absolute;bottom:6px;right:7px;font-size:10px;background:rgba(0,0,0,.32);color:#fff;border-radius:4px;padding:1px 5px;opacity:0;transition:opacity .15s;pointer-events:none;}
+.punto-photo:hover .punto-zoom{opacity:1;}
+.punto-body{padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.punto-name{font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:700;color:var(--dark);transition:color var(--t);}
+.punto-desc{font-size:13px;color:var(--muted);margin-top:3px;line-height:1.5;}
+.punto-chk{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all var(--t);}
+.punto-chk svg{opacity:0;transition:opacity var(--t);}
+.punto-card.sel .punto-name{color:var(--blue);}
+.punto-card.sel .punto-chk{background:var(--blue);border-color:var(--blue);}
+.punto-card.sel .punto-chk svg{opacity:1;color:#fff;stroke:#fff;fill:#fff;}
+/* Lightbox */
+.lb-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;align-items:center;justify-content:center;padding:24px;}
+.lb-ov.open{display:flex;}
+.lb-box{background:#fff;border-radius:var(--r);overflow:hidden;max-width:620px;width:100%;box-shadow:0 24px 80px rgba(0,0,0,.3);}
+.lb-imgw{height:380px;overflow:hidden;background:var(--bg-sec);position:relative;}
+.lb-imgw img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+.lb-imgw-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:60px;opacity:.2;pointer-events:none;}
+.lb-foot{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;gap:12px;}
+.lb-meta{flex:1;}
+.lb-title{font-size:14px;font-weight:600;color:var(--dark);}
+.lb-dots{display:flex;gap:5px;margin-top:6px;}
+.lb-dot{width:7px;height:7px;border-radius:50%;background:var(--border);}
+.lb-dot.on{background:var(--yellow);}
+.lb-nav{display:flex;gap:8px;align-items:center;}
+.lb-nbtn{height:36px;padding:0 16px;border:1.5px solid var(--border);border-radius:100px;background:#fff;font-size:13px;font-weight:600;cursor:pointer;color:var(--dark);font-family:'DM Sans',sans-serif;transition:var(--t);}
+.lb-nbtn:hover{border-color:var(--yellow);}
+.lb-close-btn{position:absolute;top:10px;right:10px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.88);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--dark);z-index:2;transition:background var(--t);box-shadow:0 1px 6px rgba(0,0,0,.18);}
+.lb-close-btn:hover{background:#fff;}
+.lb-img-nav{position:absolute;bottom:14px;left:0;right:0;display:flex;justify-content:center;gap:8px;z-index:2;}
+.lb-img-nav .lb-nbtn{background:rgba(255,255,255,.88);box-shadow:0 1px 6px rgba(0,0,0,.18);border-color:transparent;}
+.lb-img-nav .lb-nbtn:hover{background:#fff;border-color:transparent;}
+.lb-sel-btn{height:36px;padding:0 22px;border:none;border-radius:100px;background:var(--yellow);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;color:var(--dark);font-family:'DM Sans',sans-serif;transition:background var(--t);}
+.lb-sel-btn:hover{background:#e6b000;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px){
+  html,body{height:auto;overflow:visible;}
+  body{display:block;}
+  .split{grid-template-columns:1fr;flex:none;overflow:visible;}
+  .preview-col{order:-1;overflow:visible;}
+  .preview-sticky{flex:none;height:auto;}
+  .prev-canvas{height:60vw;}
+  .form-col{padding:16px 16px 60px;border-right:none;}
+  .site-header{padding:0 16px;}
+  .hdr-nav{display:none;}
+  .btn-hdr{display:none;}
+  .prod-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:480px){
+  .prod-grid{grid-template-columns:repeat(2,1fr);}
+  .type-grid,.pos-grid{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="logo" href="https://www.duamilab.com" aria-label="Duami Lab — Homepage">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 804.05 188.41" aria-hidden="true">
+      <path fill="#2979ff" d="M0,184.56V0h59.73c1.45,0,4.44.04,8.97.13,4.53.09,8.88.39,13.07.9,14.87,1.79,27.47,6.97,37.81,15.51s18.2,19.4,23.58,32.55,8.08,27.56,8.08,43.19-2.69,30.04-8.08,43.19c-5.38,13.16-13.24,24.02-23.58,32.56-10.34,8.54-22.94,13.71-37.81,15.51-4.19.52-8.55.81-13.07.9-4.53.09-7.52.13-8.97.13H0Z"/>
+      <path fill="#ffc300" d="M332.22,0v115.35c0,14.79-3.16,27.64-9.48,38.58-6.32,10.94-15.12,19.42-26.4,25.45-11.28,6.02-24.35,9.03-39.22,9.03s-27.94-3.01-39.22-9.03c-11.28-6.02-20.08-14.5-26.4-25.45-6.33-10.94-9.49-23.79-9.49-38.58V.26"/>
+      <path fill="#e04153" d="M347.6,184.56L403.99,0h52.04l56.39,184.56h-164.83Z"/>
+      <path fill="#08b082" d="M535.5,184.56V0h31.27l61.01,122.53L688.79,0h31.27v184.56"/>
+      <path fill="#ab7ffb" d="M758.51,184.56V0h45.55v184.56h-45.55Z"/>
+    </svg>
+  </a>
+  <ul class="hdr-nav">
+    <li><a href="https://www.duamilab.com/#chi-siamo">Chi Siamo</a></li>
+    <li><a href="https://www.duamilab.com/#prodotti">Prodotti</a></li>
+    <li><a href="https://www.duamilab.com/#processo">Come Lavoriamo</a></li>
+    <li><a href="https://www.instagram.com/duamilab/" target="_blank" rel="noopener">Instagram</a></li>
+    <li><a href="https://www.duamilab.com/#contatti">Contattaci</a></li>
+  </ul>
+  <a class="btn-hdr nav-active" href="#">✦ Personalizza</a>
+</header>
+
+<div class="split">
+
+  <!-- ════ FORM ════ -->
+  <div class="form-col">
+
+    <div class="page-title">
+      <h1>Crea il tuo pezzo <em>personalizzato</em></h1>
+      <p>Scegli ogni dettaglio — ti inviamo una bozza prima di produrre.</p>
+    </div>
+
+    <!-- STEP 1: PRODOTTO + TAGLIA -->
+    <div class="step-card active" id="step-prodotto">
+      <div class="step-head">
+        <div class="s-num" id="snum-prodotto">1</div>
+        <div class="s-title-wrap">
+          <span class="s-label">STEP 01</span>
+          <span class="s-title">Cosa vuoi personalizzare?</span>
+        </div>
+      </div>
+      <div class="step-body" id="body-prodotto">
+        <div class="prod-grid">
+
+          <div class="prod-card" data-prod="maglietta" data-price="15" onclick="selectProduct(this)">
+            <div class="card-img-area">
+              <svg width="46" height="46" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--dark);opacity:.8;transition:opacity .18s"><path d="M17 7 Q24 13 31 7 L41 16 L34 20 L34 41 L14 41 L14 20 L7 16 Z"/></svg>
+              <div class="card-check"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1,3.5 3.2,5.8 8,1" stroke="#2979FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </div>
+            <div class="card-body">
+              <div class="card-name">Maglietta</div>
+              <div class="card-meta"><span class="card-desc">100% cotone bio</span><span class="card-price-tag">da €15</span></div>
+            </div>
+          </div>
+
+          <div class="prod-card" data-prod="borsa" data-price="12" onclick="selectProduct(this)">
+            <div class="card-img-area">
+              <svg width="46" height="46" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--dark);opacity:.8;transition:opacity .18s"><rect x="9" y="18" width="30" height="23" rx="3"/><path d="M18 18 L18 13 Q18 7 24 7 Q30 7 30 13 L30 18"/></svg>
+              <div class="card-check"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1,3.5 3.2,5.8 8,1" stroke="#2979FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </div>
+            <div class="card-body">
+              <div class="card-name">Tote bag</div>
+              <div class="card-meta"><span class="card-desc">canvas naturale</span><span class="card-price-tag">da €12</span></div>
+            </div>
+          </div>
+
+          <div class="prod-card" data-prod="portachiavi" data-price="8" onclick="selectProduct(this)">
+            <div class="card-img-area">
+              <svg width="46" height="46" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--dark);opacity:.8;transition:opacity .18s"><circle cx="18" cy="22" r="9"/><line x1="27" y1="22" x2="42" y2="22"/><line x1="37" y1="22" x2="37" y2="28"/><line x1="33" y1="22" x2="33" y2="27"/></svg>
+              <div class="card-check"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1,3.5 3.2,5.8 8,1" stroke="#2979FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </div>
+            <div class="card-body">
+              <div class="card-name">Portachiavi</div>
+              <div class="card-meta"><span class="card-desc">feltro + pelle</span><span class="card-price-tag">da €8</span></div>
+            </div>
+          </div>
+
+          <div class="prod-card" data-prod="bracciale" data-price="10" onclick="selectProduct(this)">
+            <div class="card-img-area">
+              <svg width="46" height="46" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".75"><ellipse cx="24" cy="22" rx="13" ry="7"/><path d="M11 22 L11 26 Q11 34 24 34 Q37 34 37 26 L37 22"/></svg>
+              <div class="card-check"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1,3.5 3.2,5.8 8,1" stroke="#2979FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </div>
+            <div class="card-body">
+              <div class="card-name">Bracciale</div>
+              <div class="card-meta"><span class="card-desc">cotone intrecciato</span><span class="card-price-tag">da €10</span></div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="ctx-banner">
+          <span class="ctx-banner-icon">🌿</span>
+          <div>
+            <strong>I nostri materiali:</strong> Maglietta in cotone bio pre-lavato · Borsa in canvas naturale · Portachiavi in feltro di lana · Bracciale in cotone intrecciato
+          </div>
+        </div>
+
+        <!-- Taglia inline (solo maglietta) — solo adulto -->
+        <div class="taglia-inline" id="tagliaInline">
+          <span class="fl">Scegli la taglia</span>
+          <div class="pills">
+            <div class="pill" onclick="pickTaglia(this)">XS</div>
+            <div class="pill" onclick="pickTaglia(this)">S</div>
+            <div class="pill" onclick="pickTaglia(this)">M</div>
+            <div class="pill" onclick="pickTaglia(this)">L</div>
+            <div class="pill" onclick="pickTaglia(this)">XL</div>
+            <div class="pill" onclick="pickTaglia(this)">XXL</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: TIPO -->
+    <div class="step-card locked" id="step-tipo">
+      <div class="step-head">
+        <div class="s-num" id="snum-tipo">2</div>
+        <div class="s-title-wrap">
+          <span class="s-label">STEP 02</span>
+          <span class="s-title">Scritta o immagine?</span>
+        </div>
+      </div>
+      <div class="step-body" id="body-tipo">
+        <div class="type-grid">
+
+          <div class="type-card" onclick="selectTipo(this,'frase')">
+            <div class="card-img-area">
+              <span class="tc-aa">Aa</span>
+              <div class="card-check"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1,3.5 3.2,5.8 8,1" stroke="#2979FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </div>
+            <div class="card-body">
+              <div class="tc-title">Scritta personalizzata</div>
+              <div class="card-meta"><span class="tc-desc">nome, frase, data</span><span class="card-price-tag">+ €5</span></div>
+            </div>
+          </div>
+
+          <div class="type-card" onclick="selectTipo(this,'immagine')">
+            <div class="card-img-area">
+              <svg width="46" height="46" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".7"><rect x="6" y="10" width="36" height="28" rx="3"/><circle cx="17" cy="21" r="4"/><path d="M6 32 L16 24 L24 30 L31 22 L42 33"/></svg>
+              <div class="card-check"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1,3.5 3.2,5.8 8,1" stroke="#2979FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </div>
+            <div class="card-body">
+              <div class="tc-title">Immagine o disegno</div>
+              <div class="card-meta"><span class="tc-desc">il tuo file o un'idea</span><span class="card-price-tag">+ €9</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3: DOVE -->
+    <div class="step-card locked" id="step-posizione">
+      <div class="step-head">
+        <div class="s-num" id="snum-posizione">3</div>
+        <div class="s-title-wrap">
+          <span class="s-label">STEP 03</span>
+          <span class="s-title">Dove lo mettiamo?</span>
+        </div>
+      </div>
+      <div class="step-body" id="body-posizione">
+        <div class="pos-grid">
+
+          <div class="pos-card" data-pos="Centro petto" onclick="selectPos(this)">
+            <div class="card-img-area">
+              <svg viewBox="0 0 100 88" width="72" height="63" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M32 10 Q50 20 68 10 L84 26 L70 31 L70 76 L30 76 L30 31 L16 26 Z" class="shirt-path" stroke-width="1.5"/>
+                <circle cx="50" cy="36" r="6" class="shirt-dot"/>
+              </svg>
+              <div class="card-check"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1,3.5 3.2,5.8 8,1" stroke="#2979FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </div>
+            <div class="card-body">
+              <div class="pos-name">Centro petto</div>
+              <div class="pos-meta"><span class="pos-dash">—</span><span class="pos-price">incluso</span></div>
+            </div>
+          </div>
+
+          <div class="pos-card" data-pos="Petto sinistro" onclick="selectPos(this)">
+            <div class="card-img-area">
+              <svg viewBox="0 0 100 88" width="72" height="63" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M32 10 Q50 20 68 10 L84 26 L70 31 L70 76 L30 76 L30 31 L16 26 Z" class="shirt-path" stroke-width="1.5"/>
+                <circle cx="62" cy="34" r="6" class="shirt-dot"/>
+              </svg>
+              <div class="card-check"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1,3.5 3.2,5.8 8,1" stroke="#2979FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </div>
+            <div class="card-body">
+              <div class="pos-name">Lato cuore</div>
+              <div class="pos-meta"><span class="pos-dash">—</span><span class="pos-price">incluso</span></div>
+            </div>
+          </div>
+
+          <div class="pos-card" data-pos="Manica destra" onclick="selectPos(this)">
+            <div class="card-img-area">
+              <svg viewBox="0 0 100 88" width="72" height="63" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M32 10 Q50 20 68 10 L84 26 L70 31 L70 76 L30 76 L30 31 L16 26 Z" class="shirt-path" stroke-width="1.5"/>
+                <circle cx="22" cy="22" r="6" class="shirt-dot"/>
+              </svg>
+              <div class="card-check"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1,3.5 3.2,5.8 8,1" stroke="#2979FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </div>
+            <div class="card-body">
+              <div class="pos-name">Manica destra</div>
+              <div class="pos-meta"><span class="pos-dash">—</span><span class="pos-price">+ €1</span></div>
+            </div>
+          </div>
+
+          <div class="pos-card" data-pos="Sotto il colletto" onclick="selectPos(this)">
+            <div class="card-img-area">
+              <svg viewBox="0 0 100 88" width="72" height="63" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M32 10 Q50 20 68 10 L84 26 L70 31 L70 76 L30 76 L30 31 L16 26 Z" class="shirt-path" stroke-width="1.5"/>
+                <circle cx="50" cy="20" r="6" class="shirt-dot"/>
+              </svg>
+              <div class="card-check"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1,3.5 3.2,5.8 8,1" stroke="#2979FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </div>
+            <div class="card-body">
+              <div class="pos-name">Sotto il colletto</div>
+              <div class="pos-meta"><span class="pos-dash">—</span><span class="pos-price">+ €2</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 4: PUNTO DI RICAMO -->
+    <div class="step-card locked" id="step-punto">
+      <div class="step-head">
+        <div class="s-num" id="snum-punto">4</div>
+        <div class="s-title-wrap">
+          <span class="s-label">STEP 04</span>
+          <span class="s-title">Che punto usiamo?</span>
+        </div>
+      </div>
+      <div class="step-body" id="body-punto">
+        <p class="step-instructions">Scegli il tipo di punto con cui realizzeremo il tuo ricamo. Ogni tecnica dà un'estetica diversa — clicca sulle foto per ingrandirle.</p>
+
+        <div class="punto-list">
+
+          <!-- Sostituisci src="img/punto_dritto_N.jpg" con le foto reali -->
+          <div class="punto-card" data-punto="Punto dritto" onclick="selectPunto(this)">
+            <div class="punto-photos">
+              <div class="punto-photo" style="background:#EAF0F8;" onclick="openLbPunto(event,0,0)">
+                <img src="img/punto_dritto_1.jpg" alt="" onerror="this.style.display='none'">
+                <div class="punto-ph"><span class="punto-ph-icon">📷</span><span class="punto-ph-lbl">Foto 1</span></div>
+                <span class="punto-zoom">+</span>
+              </div>
+              <div class="punto-photo" style="background:#E0EAF5;" onclick="openLbPunto(event,0,1)">
+                <img src="img/punto_dritto_2.jpg" alt="" onerror="this.style.display='none'">
+                <div class="punto-ph"><span class="punto-ph-icon">📷</span><span class="punto-ph-lbl">Foto 2</span></div>
+                <span class="punto-zoom">+</span>
+              </div>
+              <div class="punto-photo" style="background:#D8E4F2;" onclick="openLbPunto(event,0,2)">
+                <img src="img/punto_dritto_3.jpg" alt="" onerror="this.style.display='none'">
+                <div class="punto-ph"><span class="punto-ph-icon">📷</span><span class="punto-ph-lbl">Foto 3</span></div>
+                <span class="punto-zoom">+</span>
+              </div>
+            </div>
+            <div class="punto-body">
+              <div>
+                <div class="punto-name">Punto dritto</div>
+                <div class="punto-desc">Linee nette e precise — perfetto per scritte, contorni e disegni geometrici.</div>
+              </div>
+              <div class="punto-chk"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><polyline points="1,4 3.5,6.5 9,1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </div>
+          </div>
+
+          <!-- Sostituisci src="img/punto_catenella_N.jpg" con le foto reali -->
+          <div class="punto-card" data-punto="Punto catenella" onclick="selectPunto(this)">
+            <div class="punto-photos">
+              <div class="punto-photo" style="background:#F5EDDC;" onclick="openLbPunto(event,1,0)">
+                <img src="img/punto_catenella_1.jpg" alt="" onerror="this.style.display='none'">
+                <div class="punto-ph"><span class="punto-ph-icon">📷</span><span class="punto-ph-lbl">Foto 1</span></div>
+                <span class="punto-zoom">+</span>
+              </div>
+              <div class="punto-photo" style="background:#F0E5D0;" onclick="openLbPunto(event,1,1)">
+                <img src="img/punto_catenella_2.jpg" alt="" onerror="this.style.display='none'">
+                <div class="punto-ph"><span class="punto-ph-icon">📷</span><span class="punto-ph-lbl">Foto 2</span></div>
+                <span class="punto-zoom">+</span>
+              </div>
+              <div class="punto-photo" style="background:#EBDDC6;" onclick="openLbPunto(event,1,2)">
+                <img src="img/punto_catenella_3.jpg" alt="" onerror="this.style.display='none'">
+                <div class="punto-ph"><span class="punto-ph-icon">📷</span><span class="punto-ph-lbl">Foto 3</span></div>
+                <span class="punto-zoom">+</span>
+              </div>
+            </div>
+            <div class="punto-body">
+              <div>
+                <div class="punto-name">Punto catenella</div>
+                <div class="punto-desc">Texture a rilievo ben visibile — dà un aspetto artigianale e tridimensionale.</div>
+              </div>
+              <div class="punto-chk"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><polyline points="1,4 3.5,6.5 9,1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </div>
+          </div>
+
+          <!-- Sostituisci src="img/punto_spaccato_N.jpg" con le foto reali -->
+          <div class="punto-card" data-punto="Punto spaccato" onclick="selectPunto(this)">
+            <div class="punto-photos">
+              <div class="punto-photo" style="background:#E5EFE8;" onclick="openLbPunto(event,2,0)">
+                <img src="img/punto_spaccato_1.jpg" alt="" onerror="this.style.display='none'">
+                <div class="punto-ph"><span class="punto-ph-icon">📷</span><span class="punto-ph-lbl">Foto 1</span></div>
+                <span class="punto-zoom">+</span>
+              </div>
+              <div class="punto-photo" style="background:#DCE8E0;" onclick="openLbPunto(event,2,1)">
+                <img src="img/punto_spaccato_2.jpg" alt="" onerror="this.style.display='none'">
+                <div class="punto-ph"><span class="punto-ph-icon">📷</span><span class="punto-ph-lbl">Foto 2</span></div>
+                <span class="punto-zoom">+</span>
+              </div>
+              <div class="punto-photo" style="background:#D4E2D8;" onclick="openLbPunto(event,2,2)">
+                <img src="img/punto_spaccato_3.jpg" alt="" onerror="this.style.display='none'">
+                <div class="punto-ph"><span class="punto-ph-icon">📷</span><span class="punto-ph-lbl">Foto 3</span></div>
+                <span class="punto-zoom">+</span>
+              </div>
+            </div>
+            <div class="punto-body">
+              <div>
+                <div class="punto-name">Punto spaccato</div>
+                <div class="punto-desc">Copertura piena e morbida — crea un effetto vellutato e ricco di colore.</div>
+              </div>
+              <div class="punto-chk"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><polyline points="1,4 3.5,6.5 9,1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+    <!-- STEP 5: TESTO -->
+    <div class="step-card locked" id="step-testo">
+      <div class="step-head">
+        <div class="s-num" id="snum-testo">5</div>
+        <div class="s-title-wrap">
+          <span class="s-label">STEP 05</span>
+          <span class="s-title">Personalizza la tua scritta</span>
+        </div>
+      </div>
+      <div class="step-body" id="body-testo">
+
+        <!-- FRASE -->
+        <div id="sec-frase" style="display:none;">
+
+          <p class="step-instructions">Personalizza la tua scritta: seleziona tutto o parte del testo e scegli il font, la dimensione e il colore del filo. Goditi l'anteprima del tuo pezzo in tempo reale!</p>
+
+          <div class="editor-wrap">
+            <div class="editor-toolbar">
+              <!-- Font -->
+              <div class="tb-font-wrap">
+                <button class="tb-font-btn" id="fontBtn" onmousedown="event.preventDefault()" onclick="toggleFontDrop(event)">
+                  <span class="tb-font-preview" id="fontBtnPreview">Aa</span>
+                  <span id="fontBtnName" style="font-size:11px;color:var(--muted);">DM Sans ▾</span>
+                </button>
+                <div class="tb-font-drop" id="fontDrop"></div>
+              </div>
+
+              <div class="tb-sep"></div>
+
+              <!-- Size dropdown -->
+              <div class="dim-wrap">
+                <button class="dim-btn" id="dimBtn" onmousedown="event.preventDefault()" onclick="toggleDimDrop(event)">
+                  <svg width="14" height="18" viewBox="0 0 14 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--muted);flex-shrink:0"><line x1="7" y1="1" x2="7" y2="17"/><polyline points="3,5 7,1 11,5"/><polyline points="3,13 7,17 11,13"/></svg>
+                  <div class="dim-btn-left">
+                    <span class="dim-val" id="dimVal">2 cm</span>
+                    <span class="dim-price" id="dimPriceLabel">€2,00 / lett.</span>
+                  </div>
+                  <span class="dim-chevron" id="dimChev">▾</span>
+                </button>
+                <div class="dim-drop" id="dimDrop">
+                  <div class="dim-item" data-size="S" data-px="12" data-price="1.5" data-cm="1" onmousedown="event.preventDefault()" onclick="pickDimItem(this)">
+                    <span class="dim-item-h">1 cm</span>
+                    <span class="dim-item-price">€1,50 / lettera</span>
+                    <span class="dim-check" style="opacity:0">✓</span>
+                  </div>
+                  <div class="dim-item sel" data-size="M" data-px="18" data-price="2" data-cm="2" onmousedown="event.preventDefault()" onclick="pickDimItem(this)">
+                    <span class="dim-item-h">2 cm</span>
+                    <span class="dim-item-price">€2,00 / lettera</span>
+                    <span class="dim-check">✓</span>
+                  </div>
+                  <div class="dim-item" data-size="L" data-px="26" data-price="2.5" data-cm="3" onmousedown="event.preventDefault()" onclick="pickDimItem(this)">
+                    <span class="dim-item-h">3 cm</span>
+                    <span class="dim-item-price">€2,50 / lettera</span>
+                    <span class="dim-check" style="opacity:0">✓</span>
+                  </div>
+                  <div class="dim-item" data-size="XL" data-px="36" data-price="3" data-cm="4" onmousedown="event.preventDefault()" onclick="pickDimItem(this)">
+                    <span class="dim-item-h">4 cm</span>
+                    <span class="dim-item-price">€3,00 / lettera</span>
+                    <span class="dim-check" style="opacity:0">✓</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tb-sep"></div>
+
+              <!-- Color -->
+              <div class="color-btn-wrap">
+                <button class="tb-color-btn" id="colorBtn"
+                        onmousedown="event.preventDefault()" onclick="toggleColorPicker(event)">
+                  <span class="color-swatch" id="colorSwatch" style="background:#1A1A1A;"></span>
+                  <span id="colorName">Nero</span> ▾
+                </button>
+                <div class="color-popover" id="colorPopover"></div>
+              </div>
+
+              <div class="tb-sep"></div>
+
+              <!-- Icons dropdown -->
+              <div class="icon-btn-wrap">
+                <button class="tb-icon-main" onmousedown="event.preventDefault()" onclick="toggleIconDrop(event)" title="Inserisci icona">
+                  ♥ <span>icone ▾</span>
+                </button>
+                <div class="icon-drop" id="iconDrop">
+                  <div class="icon-drop-section">Cuore</div>
+                  <div class="icon-drop-row">
+                    <div class="icon-opt" onmousedown="event.preventDefault()" onclick="pickIcon('♥');closeIconDrop()">♥ <span>pieno</span></div>
+                    <div class="icon-opt" onmousedown="event.preventDefault()" onclick="pickIcon('♡');closeIconDrop()">♡ <span>bordo</span></div>
+                  </div>
+                  <div class="icon-drop-section">Stella</div>
+                  <div class="icon-drop-row">
+                    <div class="icon-opt" onmousedown="event.preventDefault()" onclick="pickIcon('★');closeIconDrop()">★ <span>piena</span></div>
+                    <div class="icon-opt" onmousedown="event.preventDefault()" onclick="pickIcon('☆');closeIconDrop()">☆ <span>bordo</span></div>
+                  </div>
+                  <div class="icon-drop-section">Casa</div>
+                  <div class="icon-drop-row">
+                    <div class="icon-opt" onmousedown="event.preventDefault()" onclick="pickIcon('⌂');closeIconDrop()">⌂ <span>piena</span></div>
+                    <div class="icon-opt" onmousedown="event.preventDefault()" onclick="pickIcon('⊓');closeIconDrop()">⊓ <span>bordo</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tb-sep"></div>
+
+              <!-- Alignment -->
+              <div class="tb-align">
+                <button class="tb-align-btn sel" id="alignLeft" data-align="left"
+                        onmousedown="event.preventDefault()" onclick="applyAlign('left')" title="Allinea a sinistra">
+                  <svg width="15" height="13" viewBox="0 0 15 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                    <line x1="0" y1="1"  x2="15" y2="1"/>
+                    <line x1="0" y1="5"  x2="10" y2="5"/>
+                    <line x1="0" y1="9"  x2="13" y2="9"/>
+                    <line x1="0" y1="13" x2="7"  y2="13"/>
+                  </svg>
+                </button>
+                <button class="tb-align-btn" id="alignCenter" data-align="center"
+                        onmousedown="event.preventDefault()" onclick="applyAlign('center')" title="Centra">
+                  <svg width="15" height="13" viewBox="0 0 15 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                    <line x1="0"   y1="1"  x2="15" y2="1"/>
+                    <line x1="2.5" y1="5"  x2="12.5" y2="5"/>
+                    <line x1="1"   y1="9"  x2="14" y2="9"/>
+                    <line x1="4"   y1="13" x2="11" y2="13"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="editor-field" id="editorField" contenteditable="true"
+                 oninput="onEditorInput()" onkeyup="syncToolbarState()" onmouseup="syncToolbarState()"
+                 spellcheck="false"></div>
+          </div>
+
+          <div class="editor-meta">
+            <span class="letter-counter">Lettere usate <span class="letter-badge" id="letterCount">0</span></span>
+            <span class="letter-emb-price" id="embPrice">€ 0,00 ricamo</span>
+          </div>
+
+
+          <hr style="border:none;border-top:1.5px solid var(--border);margin:24px 0 0;">
+          <span class="fl" style="margin-top:16px;color:#1A1A1A;">Vuoi dirci qualcosa di più?</span>
+          <p class="hint" style="margin-bottom:8px;">Lasciaci una nota se non sei riuscito a realizzare l'anteprima proprio come la volevi o vuoi specificare qualcosa in particolare! 🤓</p>
+          <textarea class="emb-notes-ta" id="embNotes" placeholder="Inserisci cosa non sei riuscito a fare con la personalizzazione o qualsiasi indicazione per noi"></textarea>
+        </div>
+
+        <!-- IMMAGINE -->
+        <div id="sec-immagine" style="display:none;">
+          <span class="fl">Descrizione / riferimento immagine</span>
+          <textarea class="field-ta" id="imgDesc" rows="4" placeholder="Descrivi il motivo o incolla un link. Puoi inviare il file via email dopo la richiesta."></textarea>
+          <div class="img-note">📎 PNG, JPG, PDF ad alta risoluzione. Valuteremo insieme fattibilità e preventivo.</div>
+          <hr style="border:none;border-top:1.5px solid var(--border);margin:24px 0 0;">
+          <span class="fl" style="margin-top:16px;color:#1A1A1A;">Vuoi dirci qualcosa di più?</span>
+          <p class="hint" style="margin-bottom:8px;">Lasciaci una nota se non sei riuscito a realizzare l'anteprima proprio come la volevi o vuoi specificare qualcosa in particolare! 🤓</p>
+          <textarea class="emb-notes-ta" id="embNotesImg" placeholder="Inserisci cosa non sei riuscito a fare con la personalizzazione o qualsiasi indicazione per noi"></textarea>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /form-col -->
+
+  <!-- ════ PREVIEW ════ -->
+  <div class="preview-col">
+    <div class="preview-sticky">
+
+      <div class="prev-header">
+        ✦ &nbsp;Anteprima <em>in tempo reale</em>
+        <span class="prev-view-label" id="prevViewLabel"></span>
+      </div>
+
+      <div class="prev-canvas" id="prevCanvas">
+
+        <div class="prev-empty" id="prevEmpty">
+          <div class="prev-empty-icon">✦</div>
+          <p>Scegli il prodotto per vedere la tua anteprima</p>
+        </div>
+
+        <div class="calib-dot" id="calibDot"></div>
+
+        <div class="photo-container" id="photoContainer" style="display:none;">
+          <!-- photoZoomWrap: foto + overlay scalano insieme -->
+          <div id="photoZoomWrap" style="position:absolute;inset:0;transition:transform .45s ease,transform-origin .45s ease;">
+            <img class="tshirt-photo" id="tshirtPhoto" src="img/tshirt_front.png" alt="Maglietta"
+                 onload="onPhotoLoad()"/>
+            <div class="emb-overlay" id="embOverlay" style="display:none;"></div>
+            <div class="pos-dot" id="posDot" style="display:none;"></div>
+          </div>
+          <div class="sleeve-badge" id="sleeveBadge"></div>
+        </div>
+
+        <!-- Zoom toggle -->
+        <div class="zoom-controls">
+          <button class="zoom-btn" id="zoomToggleBtn" onclick="toggleZoom()" title="Zoom">
+            <svg id="zoomIcon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <circle cx="7" cy="7" r="4.5"/>
+              <line x1="10.5" y1="10.5" x2="14" y2="14"/>
+              <line x1="7" y1="5" x2="7" y2="9"/>
+              <line x1="5" y1="7" x2="9" y2="7"/>
+            </svg>
+            <span id="zoomLabel">Zoom</span>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div><!-- /preview-col -->
+
+</div><!-- /split -->
+
+<!-- PRICE BAR STICKY — floating bottom -->
+<div class="price-bar" id="priceBar">
+  <div class="price-rows" id="priceRows">
+    <div class="price-rows-inner">
+      <div class="p-row" id="prProdRow"><span>Prodotto base</span><span id="prProdVal" class="empty">—</span><span id="prProdPrice" class="none">x</span></div>
+      <div class="p-row" id="prTagRow"><span>Taglia</span><span id="prTagVal" class="empty">—</span><span class="none">x</span></div>
+      <div class="p-row" id="prPosRow"><span>Posizione ricamo</span><span id="prPosVal" class="empty">—</span><span id="prPosPrice" class="none">x</span></div>
+      <div class="p-row" id="prPuntoRow"><span>Punto ricamo</span><span id="prPuntoVal" class="empty">—</span><span class="none">x</span></div>
+      <div class="p-row" id="prRicRow"><span id="prRicLabel">Personalizzazione</span><span id="prRicVal" class="empty">—</span><span id="prRicPrice" class="none">x</span></div>
+      <div class="p-rows-divider"></div>
+      <div class="p-rows-total"><span>Totale stimato</span><span id="prTotaleDetail">—</span></div>
+    </div>
+  </div>
+  <div class="price-bar-inner">
+    <div class="price-bar-left" onclick="document.getElementById('priceBar').classList.toggle('open')">
+      <div class="p-total-wrap">
+        <span class="p-total-label">Totale stimato</span>
+        <span class="p-total-val" id="prTotale">—</span>
+      </div>
+      <div class="p-pills" id="prPills"></div>
+      <div class="p-chevron-btn" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+    <button class="btn-bar-submit" onclick="openContactModal()">Invia la richiesta</button>
+  </div>
+</div>
+
+<!-- CONTACT MODAL -->
+<div class="contact-modal-ov" id="contactModalOv" onclick="if(event.target===this)closeContactModal()">
+  <div class="contact-modal-card">
+    <button class="contact-modal-close" onclick="closeContactModal()" aria-label="Chiudi">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="4" x2="16" y2="16"/><line x1="16" y1="4" x2="4" y2="16"/></svg>
+    </button>
+    <h2 class="contact-modal-title">Lasciaci i tuoi contatti</h2>
+
+    <div class="contact-process-box">
+      <p>Una volta ricevuta la richiesta ti contattiamo noi! Ecco cosa succede:</p>
+      <div class="contact-process-steps">
+        <div class="contact-process-step"><div class="contact-process-step-dot">1</div><span>Ti scriviamo per confermare tutti i dettagli e chiarire eventuali dubbi.</span></div>
+        <div class="contact-process-step"><div class="contact-process-step-dot">2</div><span>Confermiamo insieme il prezzo finale prima di iniziare.</span></div>
+        <div class="contact-process-step"><div class="contact-process-step-dot">3</div><span>Ci accordiamo per la spedizione o il ritiro e ti diciamo quando sarà pronto.</span></div>
+      </div>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-field">
+        <label for="contactNome">Nome <span style="color:var(--red)">*</span></label>
+        <input class="contact-input" id="contactNome" type="text" placeholder="Il tuo nome" required>
+      </div>
+      <div class="contact-field">
+        <label for="contactEmail">Email <span style="color:var(--red)">*</span></label>
+        <input class="contact-input" id="contactEmail" type="email" placeholder="tua@email.com" required>
+      </div>
+      <div class="contact-field">
+        <label for="contactTel">Cellulare <span class="opt">(facoltativo)</span></label>
+        <input class="contact-input" id="contactTel" type="tel" placeholder="+39 000 000 0000">
+      </div>
+      <div class="contact-field">
+        <label for="contactCitta">Città <span class="opt">(facoltativo)</span></label>
+        <input class="contact-input" id="contactCitta" type="text" placeholder="Roma, Milano…">
+      </div>
+      <div class="contact-field full">
+        <label for="contactIndirizzo">Indirizzo di spedizione <span class="opt">(facoltativo)</span></label>
+        <input class="contact-input" id="contactIndirizzo" type="text" placeholder="Via, numero civico, CAP, città">
+      </div>
+    </div>
+
+    <button class="btn-contact-modal-submit" onclick="if(validateContatti()){submitRequest();closeContactModal();}">
+      Invia la richiesta
+    </button>
+  </div>
+</div>
+
+<!-- LIGHTBOX PUNTO DI RICAMO -->
+<div class="lb-ov" id="lbOv" onclick="lbOvClick(event)">
+  <div class="lb-box">
+    <div class="lb-imgw" id="lbImgW">
+      <img id="lbImgEl" src="" alt="" onerror="this.style.display='none'">
+      <div class="lb-imgw-ph" id="lbImgPh">📷</div>
+      <button class="lb-close-btn" onclick="closeLb()">×</button>
+      <div class="lb-img-nav">
+        <button class="lb-nbtn" onclick="lbNav(-1)">← prec.</button>
+        <button class="lb-nbtn" onclick="lbNav(1)">succ. →</button>
+      </div>
+    </div>
+    <div class="lb-foot">
+      <div class="lb-meta">
+        <div class="lb-title" id="lbTitle">—</div>
+        <div class="lb-dots" id="lbDots"></div>
+      </div>
+      <button class="lb-sel-btn" id="lbSelBtn" onclick="selectPuntoFromLb()">Seleziona</button>
+    </div>
+  </div>
+</div>
+
+<!-- HUD calibrazione — fixed, fuori dal canvas, sempre visibile -->
+<div class="calib-hud" id="calibHud">
+  <div class="calib-hud-title">⊕ Modalità calibrazione (Ctrl+Shift+C)</div>
+  <div class="calib-hud-val" id="calibHudVal">Sposta il mouse sull'anteprima</div>
+  <div class="calib-hud-pos" id="calibHudPos">Clicca per registrare il punto</div>
+</div>
+
+<script>
+/* ════ DATA ════ */
+const FONTS = [
+  {name:'Bebas Neue',          fam:"'Bebas Neue',cursive"},
+  {name:'Lazydog',             fam:"'Laila',serif"},
+  {name:'Courier Prime',       fam:"'Courier Prime',monospace"},
+  {name:'Dancing Script',      fam:"'Dancing Script',cursive"},
+  {name:'Irene Florentia',     fam:"'Italianno',cursive"},
+  {name:'Sue Ellen Francisco', fam:"'Sue Ellen Francisco',cursive"},
+  {name:'Medula One',          fam:"'Medula One',cursive"},
+  {name:'Beth Ellen',          fam:"'Beth Ellen',cursive"},
+];
+
+const COLORS = [
+  {name:'Nero',          hex:'#1A1A1A'},
+  {name:'Bianco',        hex:'#F0EDE8',border:true},
+  {name:'Beige',         hex:'#C8B89A'},
+  {name:'Terracotta',    hex:'#B05430'},
+  {name:'Verde salvia',  hex:'#6B9470'},
+  {name:'Verde muschio', hex:'#3D5C3A'},
+  {name:'Blu notte',     hex:'#1E2D4A'},
+  {name:'Blu polvere',   hex:'#607D9A'},
+  {name:'Rosa antico',   hex:'#C9918E'},
+  {name:'Lavanda',       hex:'#9A8AB8'},
+  {name:'Giallo miele',  hex:'#C9903A'},
+  {name:'Marrone cacao', hex:'#6B4E37'},
+];
+
+/* ── Position anchors ──
+   imgX / imgY = fraction of rendered image size.
+   Front: shirt slightly angled. Collar ~Y12%, chest ~Y25-35%.
+   "Petto sinistro" = wearer's left = viewer's RIGHT (imgX > 0.5). */
+const POS_CFG = {
+  'Centro petto':      {imgSrc:'img/tshirt_front.png',   imgX:.500, imgY:.370, view:'davanti'},
+  'Petto sinistro':    {imgSrc:'img/tshirt_front.png',   imgX:.600, imgY:.370, view:'davanti'},
+  'Manica destra':   {imgSrc:'img/tshirt_lato.png',    imgX:.493, imgY:.441, view:'lato'},
+  'Sotto il colletto': {imgSrc:'img/tshirt_dietro.png',  imgX:.500, imgY:.250, view:'dietro'},
+};
+
+const PROD_PRICES = {maglietta:15,borsa:20,pochette:18,portachiavi:12,bracciale:15};
+const SIZE_PRICES  = {S:1.5, M:2, L:2.5, XL:3};
+
+/* ════ STATE ════ */
+const S = {
+  tipo:null, posizione:null, prodotto:null, taglia:null, punto:null,
+  testo:'', currentSize:'M', currentPx:18, currentColor:'#1A1A1A', currentAlign:'left',
+  currentFont:null,
+  nome:'', email:'', tel:'', citta:'', indirizzo:''
+};
+const STEPS = ['prodotto','tipo','posizione','punto','testo'];
+
+/* ════ STEP MACHINE ════ */
+function openStep(id){
+  const card=document.getElementById('step-'+id);
+  if(!card)return;
+  card.classList.remove('locked');
+  if(id==='testo') renderTesto();
+
+  setTimeout(()=>card.scrollIntoView({behavior:'smooth',block:'nearest'}),100);
+}
+function completeStep(id){
+  const card=document.getElementById('step-'+id);
+  const numEl=document.getElementById('snum-'+id);
+  if(!card)return;
+  if(numEl) numEl.innerHTML='<svg width="16" height="13" viewBox="0 0 16 13" fill="none"><polyline points="1.5,6.5 5.5,10.5 14.5,1.5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  card.classList.add('done');
+  const idx=STEPS.indexOf(id);
+  if(idx<STEPS.length-1) openStep(STEPS[idx+1]);
+  updatePrice();
+}
+function editStep(){}
+function getSummary(){ return ''; }
+
+/* ════ STEP 1: PRODOTTO ════ */
+function selectProduct(card){
+  document.querySelectorAll('.prod-card').forEach(c=>c.classList.remove('sel'));
+  card.classList.add('sel');
+  S.prodotto=card.dataset.prod;
+  S.taglia=null;
+  if(S.prodotto==='maglietta'){
+    document.getElementById('tagliaInline').classList.add('show');
+    document.querySelectorAll('#tagliaInline .pill').forEach(p=>p.classList.remove('sel'));
+  } else {
+    document.getElementById('tagliaInline').classList.remove('show');
+    S.taglia='Taglia unica';
+    showPhoto();
+    updatePrice();
+    setTimeout(()=>completeStep('prodotto'),300);
+  }
+  showPhoto();
+}
+function pickTaglia(pill){
+  document.querySelectorAll('#tagliaInline .pill').forEach(p=>p.classList.remove('sel'));
+  pill.classList.add('sel');
+  S.taglia=pill.textContent.trim();
+  updatePrice();
+  setTimeout(()=>completeStep('prodotto'),300);
+}
+
+/* ════ STEP 2: TIPO ════ */
+function selectTipo(card,tipo){
+  document.querySelectorAll('.type-card').forEach(c=>c.classList.remove('sel'));
+  card.classList.add('sel');
+  S.tipo=tipo;
+  setTimeout(()=>completeStep('tipo'),300);
+}
+
+/* ════ STEP 3: POSIZIONE ════ */
+function selectPos(card){
+  document.querySelectorAll('.pos-card').forEach(c=>c.classList.remove('sel'));
+  card.classList.add('sel');
+  S.posizione=card.dataset.pos;
+  applyPosToPreview();
+  setTimeout(()=>completeStep('posizione'),320);
+}
+function applyPosToPreview(){
+  if(!S.posizione)return;
+  const cfg=POS_CFG[S.posizione];
+  const photo=document.getElementById('tshirtPhoto');
+  const badge=document.getElementById('sleeveBadge');
+  const label=document.getElementById('prevViewLabel');
+  const viewLabels={davanti:'👕 Vista davanti',lato:'💪 Vista manica',dietro:'🔙 Vista retro'};
+  photo.src=cfg.imgSrc;
+  label.textContent=viewLabels[cfg.view]||'';
+  badge.classList.remove('show');
+  label.classList.remove('sleeve');
+}
+
+/* ════ PHOTO / OVERLAY ════ */
+function onPhotoLoad(){
+  positionOverlay();
+  updatePreviewText();
+  if(zoomLevel>0) applyZoom(); // ricentra lo zoom sul nuovo punto
+}
+
+/* imgX/imgY sono frazioni del container (photoContainer).
+   Il calibratore legge le stesse coordinate → sistema sempre consistente. */
+function positionOverlay(){
+  if(!S.posizione)return;
+  const cfg=POS_CFG[S.posizione];
+  const container=document.getElementById('photoContainer');
+  const dot=document.getElementById('posDot');
+  const ovr=document.getElementById('embOverlay');
+  if(!container||container.getBoundingClientRect().width===0)return;
+  dot.style.left=(cfg.imgX*100)+'%';
+  dot.style.top =(cfg.imgY*100)+'%';
+  /* mostra il pallino solo se non c'è ancora testo scritto */
+  dot.style.display=S.testo.trim().length===0?'block':'none';
+  ovr.style.left=(cfg.imgX*100)+'%';
+  ovr.style.top =(cfg.imgY*100)+'%';
+}
+function showPhoto(){
+  document.getElementById('prevEmpty').style.display='none';
+  document.getElementById('photoContainer').style.display='flex';
+}
+
+/* ════ STEP 4: TESTO ════ */
+function renderTesto(){
+  document.getElementById('sec-frase').style.display   =S.tipo==='frase'   ?'block':'none';
+  document.getElementById('sec-immagine').style.display=S.tipo==='immagine'?'block':'none';
+  if(S.tipo==='frase'){buildFontDrop();buildColorDots();}
+}
+function buildFontDrop(){
+  const drop=document.getElementById('fontDrop');
+  const ed=document.getElementById('editorField');
+  /* Sync button display con il font attuale — ogni volta che si apre lo step */
+  if(!S.currentFont) S.currentFont=FONTS[0].fam;
+  const curFont=FONTS.find(f=>f.fam===S.currentFont)||FONTS[0];
+  S.currentFont=curFont.fam;
+  document.getElementById('fontBtnPreview').style.fontFamily=curFont.fam;
+  document.getElementById('fontBtnName').textContent=curFont.name+' ▾';
+  /* Inizializza gli stili globali sull'editor così updatePreviewText li legge sempre */
+  ed.style.fontFamily=curFont.fam;
+  if(!ed.style.fontSize)   ed.style.fontSize=S.currentPx+'px';
+  if(!ed.style.color)      ed.style.color=S.currentColor;
+  if(drop.children.length)return;
+  FONTS.forEach((f,i)=>{
+    const item=document.createElement('div');
+    item.className='tb-font-item'+(i===0?' sel':'');
+    item.innerHTML=`<span class="tb-font-item-preview" style="font-family:${f.fam}">Ciao</span><span class="tb-font-item-name">${f.name}</span>`;
+    item.addEventListener('mousedown',ev=>{
+      ev.preventDefault();
+      document.querySelectorAll('.tb-font-item').forEach(c=>c.classList.remove('sel'));
+      item.classList.add('sel');
+      S.currentFont=f.fam;
+      // aggiorna bottone
+      document.getElementById('fontBtnPreview').style.fontFamily=f.fam;
+      document.getElementById('fontBtnName').textContent=f.name+' ▾';
+      drop.classList.remove('open');
+      applyFontToSel(f.fam);
+    });
+    drop.appendChild(item);
+  });
+}
+function toggleFontDrop(e){
+  e.stopPropagation();
+  document.getElementById('fontDrop').classList.toggle('open');
+}
+document.addEventListener('click',()=>document.getElementById('fontDrop')?.classList.remove('open'));
+function buildColorDots(){
+  const pop=document.getElementById('colorPopover');
+  if(pop.children.length)return;
+  COLORS.forEach((c,i)=>{
+    const item=document.createElement('div');
+    item.className='cp-item'+(i===0?' sel':'');
+    const dot=document.createElement('span');
+    dot.className='cp-dot';
+    dot.style.background=c.hex;
+    if(c.border)dot.style.border='2px solid #C0B8AE';
+    const name=document.createElement('span');
+    name.className='cp-name';
+    name.textContent=c.name;
+    item.appendChild(dot);item.appendChild(name);
+    item.addEventListener('mousedown',ev=>{
+      ev.preventDefault();
+      pop.querySelectorAll('.cp-item').forEach(el=>el.classList.remove('sel'));
+      item.classList.add('sel');
+      applyColorToSel(c.hex,dot);
+    });
+    pop.appendChild(item);
+  });
+}
+
+/* Applica uno stile globalmente (rimuove override inline) o solo alla selezione */
+let _applyingGlobal=false; // flag anti-loop: applyGlobal modifica il DOM del contenteditable
+function hasTextSelection(){
+  const sel=window.getSelection();
+  return sel&&sel.rangeCount>0&&!sel.getRangeAt(0).collapsed;
+}
+function applyGlobal(prop,value){
+  const ed=document.getElementById('editorField');
+  _applyingGlobal=true;
+  ed.style[prop]=value;
+  ed.querySelectorAll('[style]').forEach(el=>{
+    if(el.style[prop]!==undefined&&el.style[prop]!==''){
+      el.style[prop]='';
+      if(!el.getAttribute('style').trim())el.removeAttribute('style');
+    }
+  });
+  _applyingGlobal=false;
+}
+function applyFontToSel(fam){
+  if(hasTextSelection()){
+    wrapSel({fontFamily:fam});
+  } else {
+    applyGlobal('fontFamily',fam);
+    S.currentFont=fam;
+  }
+  updatePreviewText();
+  updatePrice();
+}
+function toggleDimDrop(e){
+  e.stopPropagation();
+  const drop=document.getElementById('dimDrop');
+  const chev=document.getElementById('dimChev');
+  const open=drop.classList.toggle('open');
+  chev.style.transform=open?'rotate(180deg)':'';
+}
+/* Aggiorna solo la UI del dropdown — NON tocca S (usato da syncToolbarState) */
+function syncDimUI(item){
+  document.querySelectorAll('.dim-item').forEach(el=>{
+    el.classList.remove('sel');
+    el.querySelector('.dim-check').style.opacity='0';
+  });
+  item.classList.add('sel');
+  item.querySelector('.dim-check').style.opacity='1';
+  document.getElementById('dimVal').textContent=item.dataset.cm+' cm';
+  document.getElementById('dimPriceLabel').textContent='€'+parseFloat(item.dataset.price).toFixed(2).replace('.',',')+' / lett.';
+}
+/* Selezione dall'utente: aggiorna UI + stato + applica stile */
+function pickDimItem(item){
+  syncDimUI(item);
+  S.currentSize=item.dataset.size;
+  S.currentPx=parseInt(item.dataset.px);
+  document.getElementById('dimDrop').classList.remove('open');
+  document.getElementById('dimChev').style.transform='';
+  /* NON chiamare ed.focus() — onmousedown:preventDefault mantiene già il focus
+     e calling focus() può resettare la selezione in alcuni browser */
+  if(hasTextSelection()){
+    wrapSel({fontSize:S.currentPx+'px'});
+  } else {
+    applyGlobal('fontSize',S.currentPx+'px');
+  }
+  updateLetterCounter();
+  updatePreviewText();
+  updatePrice();
+}
+document.addEventListener('click',()=>{
+  document.getElementById('dimDrop')?.classList.remove('open');
+  const chev=document.getElementById('dimChev');
+  if(chev) chev.style.transform='';
+});
+function applyAlign(align){
+  S.currentAlign=align;
+  const ed=document.getElementById('editorField');
+  ed.style.textAlign=align;
+  document.querySelectorAll('.tb-align-btn').forEach(b=>b.classList.toggle('sel',b.dataset.align===align));
+  updatePreviewText();
+}
+function applyColorToSel(hex,dotEl){
+  S.currentColor=hex;
+  document.getElementById('colorSwatch').style.background=hex;
+  /* aggiorna nome colore nel bottone */
+  const colorObj=COLORS.find(c=>c.hex===hex);
+  const nameEl=document.getElementById('colorName');
+  if(nameEl&&colorObj)nameEl.textContent=colorObj.name;
+  document.querySelectorAll('.cp-item').forEach(d=>d.classList.remove('sel'));
+  if(dotEl)dotEl.closest('.cp-item')?.classList.add('sel');
+  document.getElementById('colorPopover').classList.remove('open');
+  if(hasTextSelection()){
+    wrapSel({color:hex});
+  } else {
+    applyGlobal('color',hex);
+  }
+  updatePreviewText();
+  updatePrice();
+}
+function wrapSel(styles){
+  const sel=window.getSelection();
+  if(!sel||sel.rangeCount===0)return;
+  const range=sel.getRangeAt(0);
+  if(range.collapsed)return;
+  try{
+    const span=document.createElement('span');
+    Object.assign(span.style,styles);
+    const frag=range.extractContents();
+    /* Rimuove lo stesso stile dai figli così il nuovo span vince per specificità */
+    frag.querySelectorAll('[style]').forEach(el=>{
+      Object.keys(styles).forEach(prop=>{
+        el.style[prop]='';
+        if(!el.getAttribute('style').trim()) el.removeAttribute('style');
+      });
+    });
+    span.appendChild(frag);
+    range.insertNode(span);
+    /* Mantieni la selezione sul testo appena stilizzato */
+    range.setStartBefore(span);range.setEndAfter(span);
+    sel.removeAllRanges();sel.addRange(range);
+  }catch(e){}
+}
+function insertIcon(icon){
+  const ed=document.getElementById('editorField');
+  ed.focus();
+  document.execCommand('insertText',false,icon);
+  onEditorInput();
+}
+function toggleColorPicker(e){
+  e.stopPropagation();
+  document.getElementById('colorPopover').classList.toggle('open');
+  document.getElementById('iconDrop')?.classList.remove('open');
+}
+function toggleIconDrop(e){
+  e.stopPropagation();
+  document.getElementById('iconDrop').classList.toggle('open');
+  document.getElementById('colorPopover')?.classList.remove('open');
+}
+function closeIconDrop(){document.getElementById('iconDrop').classList.remove('open');}
+function pickIcon(icon){
+  insertIcon(icon);
+  /* aggiorna l'icona mostrata nel bottone */
+  const btn=document.querySelector('.tb-icon-main');
+  if(btn)btn.childNodes[0].textContent=icon+' ';
+}
+document.addEventListener('click',()=>{
+  document.getElementById('colorPopover')?.classList.remove('open');
+  document.getElementById('iconDrop')?.classList.remove('open');
+  document.getElementById('fontDrop')?.classList.remove('open');
+});
+function syncToolbarState(){
+  const sel=window.getSelection();
+  if(!sel||sel.rangeCount===0)return;
+  const node=sel.getRangeAt(0).startContainer;
+  const ed=document.getElementById('editorField');
+  let el=node.nodeType===Node.TEXT_NODE?node.parentElement:node;
+  let fontFam='',fontSize='',color='';
+  /* risali il DOM fino all'editor raccogliendo gli stili inline */
+  let curr=el;
+  while(curr&&curr!==ed){
+    if(!fontFam&&curr.style?.fontFamily) fontFam=curr.style.fontFamily;
+    if(!fontSize&&curr.style?.fontSize)  fontSize=curr.style.fontSize;
+    if(!color&&curr.style?.color)        color=curr.style.color;
+    curr=curr.parentElement;
+  }
+  /* fallback agli stili globali dell'editor */
+  if(!fontFam) fontFam=ed.style.fontFamily||S.currentFont||FONTS[0].fam;
+  if(!fontSize) fontSize=ed.style.fontSize||(S.currentPx+'px');
+  if(!color)   color=ed.style.color||S.currentColor;
+  /* aggiorna font button */
+  const clean=fontFam.replace(/['"]/g,'').split(',')[0].trim().toLowerCase();
+  const matched=FONTS.find(f=>f.fam.replace(/['"]/g,'').split(',')[0].trim().toLowerCase()===clean);
+  if(matched){
+    document.getElementById('fontBtnPreview').style.fontFamily=matched.fam;
+    document.getElementById('fontBtnName').textContent=matched.name+' ▾';
+    document.querySelectorAll('.tb-font-item').forEach(item=>{
+      const p=item.querySelector('.tb-font-item-preview');
+      if(p) item.classList.toggle('sel',p.style.fontFamily===matched.fam);
+    });
+  }
+  /* aggiorna size dropdown (solo UI, senza riapplicare stili) */
+  if(fontSize){
+    const px=Math.round(parseFloat(fontSize));
+    const match=document.querySelector(`.dim-item[data-px="${px}"]`);
+    if(match) syncDimUI(match);
+  }
+  /* aggiorna color swatch + label */
+  if(color){
+    document.getElementById('colorSwatch').style.background=color;
+    const hexColor=rgbToHex(color).toLowerCase();
+    const colorObj=COLORS.find(c=>c.hex.toLowerCase()===hexColor);
+    const nameEl=document.getElementById('colorName');
+    if(nameEl&&colorObj) nameEl.textContent=colorObj.name;
+  }
+}
+/* Converte rgb(...) → hex per confronto con COLORS[] */
+function rgbToHex(v){
+  const m=v.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
+  if(!m)return v;
+  return '#'+[m[1],m[2],m[3]].map(n=>parseInt(n).toString(16).padStart(2,'0')).join('');
+}
+
+function onEditorInput(){
+  if(_applyingGlobal)return; // modifica programmatica, non input utente
+  const ed=document.getElementById('editorField');
+  S.testo=ed.textContent||'';
+  const hasText=S.testo.trim().length>0;
+
+  /* Pallino rosso: visibile solo quando NON c'è testo */
+  const dot=document.getElementById('posDot');
+  if(dot) dot.style.display=(S.posizione&&!hasText)?'block':'none';
+
+  /* Auto-zoom: ingrandisce al primo carattere, torna normale se si cancella tutto */
+  if(hasText&&zoomLevel===0&&S.posizione){
+    zoomLevel=1; applyZoom(); updateZoomBtn();
+  } else if(!hasText&&zoomLevel>0){
+    zoomLevel=0; applyZoom(); updateZoomBtn();
+  }
+  updateLetterCounter();
+  updatePreviewText();
+  updatePrice();
+}
+function updateLetterCounter(){
+  const n=S.testo.replace(/\s/g,'').length;
+  const price=n*SIZE_PRICES[S.currentSize];
+  const badge=document.getElementById('letterCount');
+  badge.textContent=n;
+  badge.classList.toggle('has-text',n>0);
+  document.getElementById('embPrice').textContent='€ '+fmt(price)+' ricamo';
+}
+function completeTesto(){
+  const ed=document.getElementById('editorField');
+  if(S.tipo==='frase'&&!(ed.textContent||'').trim()){alert('Scrivi il tuo testo prima di continuare.');return;}
+  completeStep('testo');
+}
+
+/* ════ PREVIEW TEXT ════ */
+function updatePreviewText(){
+  const ovr=document.getElementById('embOverlay');
+  const dot=document.getElementById('posDot');
+  const hasText=S.testo.trim().length>0;
+  if(dot) dot.style.display=(S.posizione&&!hasText)?'block':'none';
+  if(!hasText||!S.posizione){ovr.style.display='none';return;}
+  const ed=document.getElementById('editorField');
+  const html=ed.innerHTML||'';
+  const scale=0.55;
+  /* Stili globali dell'editor come base per il testo senza override inline.
+     ed.style.* è sempre inizializzato da buildFontDrop e aggiornato da applyGlobal. */
+  const basePx   = parseFloat(ed.style.fontSize)||S.currentPx;
+  const baseColor= ed.style.color||S.currentColor;
+  const baseFont = ed.style.fontFamily||S.currentFont;
+  const lines=html.replace(/<div>/gi,'<br>').replace(/<\/div>/gi,'').split(/<br\s*\/?>/i);
+  ovr.innerHTML='';
+  ovr.style.display='flex';
+  ovr.style.alignItems=S.currentAlign==='center'?'center':'flex-start';
+  ovr.style.textAlign=S.currentAlign;
+  lines.forEach(lh=>{
+    if(!lh.trim()&&lines.length>1)return;
+    const div=document.createElement('div');
+    div.className='emb-line';
+    div.innerHTML=lh||'&nbsp;';
+    /* Applica gli stili base sul div — i figli con override inline li sovrascriveranno */
+    div.style.fontSize  =Math.round(basePx*scale)+'px';
+    div.style.color     =baseColor;
+    div.style.fontFamily=baseFont;
+    /* Scala le dimensioni esplicite nei figli */
+    div.querySelectorAll('[style]').forEach(el=>{
+      if(el.style.fontSize) el.style.fontSize=Math.round(parseFloat(el.style.fontSize)*scale)+'px';
+    });
+    ovr.appendChild(div);
+  });
+  requestAnimationFrame(positionOverlay);
+}
+
+/* ════ PRICE ════ */
+function fmt(n){return n.toFixed(2).replace('.',',');}
+function updatePrice(){
+  const base=S.prodotto?(PROD_PRICES[S.prodotto]||0):0;
+  const letters=S.testo.replace(/\s/g,'').length;
+  const pricePerLetter=SIZE_PRICES[S.currentSize]||2;
+  const emb=letters*pricePerLetter;
+  const total=base+emb;
+
+  const setVal=(id,val,isEmpty)=>{
+    const r=document.getElementById(id);if(!r)return;
+    r.textContent=val;
+    r.className=isEmpty?'empty':'';
+  };
+  const setPrice=(id,val,cls)=>{
+    const r=document.getElementById(id);if(!r)return;
+    r.textContent=val;r.className=cls;
+  };
+
+  // righe dettaglio
+  setVal('prProdVal', S.prodotto?cap(S.prodotto):'—', !S.prodotto);
+  setPrice('prProdPrice', S.prodotto?'€ '+fmt(base):'x', S.prodotto?'base':'none');
+
+  setVal('prTagVal', S.taglia||'—', !S.taglia);
+
+  setVal('prPosVal', S.posizione?cap(S.posizione):'—', !S.posizione);
+  setPrice('prPosPrice', 'x', 'none'); // posizione inclusa nel prodotto
+
+  setVal('prPuntoVal', S.punto||'—', !S.punto);
+
+  const ricLabel=letters>0?`Testo (${letters} lett. ${S.currentSize})`:'Personalizzazione';
+  const ricValTxt=S.tipo==='frase'?'Scritta':S.tipo==='immagine'?'Immagine':'—';
+  document.getElementById('prRicLabel').textContent=ricLabel;
+  setVal('prRicVal', ricValTxt, !S.tipo&&letters===0);
+  setPrice('prRicPrice', letters>0?'+ € '+fmt(emb):'x', letters>0?'extra':'none');
+
+  const totTxt=base>0?'€ '+fmt(total):'—';
+  document.getElementById('prTotale').textContent=totTxt;
+  document.getElementById('prTotaleDetail').textContent=totTxt;
+
+  // pill
+  const pills=document.getElementById('prPills');
+  if(pills){
+    const items=[];
+    if(S.prodotto) items.push({label:cap(S.prodotto)+(S.taglia?' / '+S.taglia:''),sel:true});
+    if(S.tipo) items.push({label:S.tipo==='frase'?'Scritta':'Immagine',sel:true});
+    if(S.posizione) items.push({label:cap(S.posizione),sel:true});
+    if(S.punto) items.push({label:S.punto,sel:true});
+    if(letters>0) items.push({label:letters+' lett.',sel:true,blue:true});
+    pills.innerHTML=items.map(p=>`<span class="p-pill${p.sel?' sel':''}">${p.label}</span>`).join('');
+
+  }
+}
+function cap(s){return s?s.charAt(0).toUpperCase()+s.slice(1):s;}
+
+/* ════ ACCORDION ════ */
+function toggleAcc(btn){
+  const body=btn.nextElementSibling;
+  const open=body.classList.contains('open');
+  btn.closest('.acc').querySelectorAll('.acc-body,.acc-btn').forEach(el=>el.classList.remove('open'));
+  if(!open){body.classList.add('open');btn.classList.add('open');}
+}
+
+/* ════ CALIBRAZIONE ════
+   Attiva con Ctrl+Shift+C.
+   Con object-fit:cover il container = area immagine → coordinate dirette.
+   imgX = (clientX - cr.left) / cr.width
+   imgY = (clientY - cr.top)  / cr.height
+══════════════════════════════════════════════════════════════════ */
+let calibMode=false;
+document.addEventListener('keydown',e=>{
+  if(e.ctrlKey&&e.shiftKey&&(e.key==='C'||e.key==='c')){
+    e.preventDefault();
+    calibMode=!calibMode;
+    document.querySelector('.preview-sticky').classList.toggle('calib-active',calibMode);
+    const hud=document.getElementById('calibHud');
+    hud.style.display=calibMode?'block':'none';
+    if(!calibMode) document.getElementById('calibDot').style.display='none';
+  }
+});
+
+(function setupCalib(){
+  const canvas=document.getElementById('prevCanvas');
+  const dotEl=document.getElementById('calibDot');
+  const hudVal=document.getElementById('calibHudVal');
+  const hudPos=document.getElementById('calibHudPos');
+
+  function getCoords(e){
+    // Con object-fit:cover: container = area visibile dell'immagine
+    const cr=document.getElementById('photoContainer').getBoundingClientRect();
+    const x=Math.min(1,Math.max(0,(e.clientX-cr.left)/cr.width));
+    const y=Math.min(1,Math.max(0,(e.clientY-cr.top)/cr.height));
+    return {x:x.toFixed(3), y:y.toFixed(3)};
+  }
+
+  canvas.addEventListener('mousemove',e=>{
+    if(!calibMode)return;
+    const {x,y}=getCoords(e);
+    hudVal.textContent=`imgX: ${x}  ·  imgY: ${y}`;
+    const cr=canvas.getBoundingClientRect();
+    dotEl.style.display='block';
+    dotEl.style.left=(e.clientX-cr.left)+'px';
+    dotEl.style.top=(e.clientY-cr.top)+'px';
+  });
+
+  canvas.addEventListener('mouseleave',()=>{
+    if(calibMode) dotEl.style.display='none';
+  });
+
+  canvas.addEventListener('click',e=>{
+    if(!calibMode)return;
+    e.stopPropagation();
+    const {x,y}=getCoords(e);
+    const pos=S.posizione||'—';
+    hudPos.innerHTML=`✓ <b>'${pos}'</b>: imgX ${x} · imgY ${y}`;
+    hudVal.style.color='#FFC300';
+  });
+})();
+
+
+/* ════ CANVAS EXPORT ════
+   Genera un PNG con la scritta ricamata (font, colore, allineamento)
+   e lo scarica automaticamente come file.
+═══════════════════════════════════════════════════════════════════ */
+async function generateEmbroideryCanvas(){
+  return new Promise(async resolve=>{
+    // dimensioni canvas: larghezza fissa, altezza si adatta
+    const CW=900;
+    const PADDING=60;
+    const lineGap=8;
+
+    // editor HTML → righe di testo puro + stile inline
+    const ed=document.getElementById('editorField');
+    const align=S.currentAlign||'left';
+
+    // Raccogliamo le righe come stringa pura per il canvas
+    const rawHtml=(ed.innerHTML||'').replace(/<div>/gi,'<br>').replace(/<\/div>/gi,'');
+    const plainLines=rawHtml.split(/<br\s*\/?>/i).map(l=>{
+      const tmp=document.createElement('div');tmp.innerHTML=l;return tmp.textContent||'';
+    }).filter((l,i,arr)=>l.trim()||arr.length===1);
+
+    // font selezionato (prima font-family nei font-card.sel o fallback)
+    const selCard=document.querySelector('.font-card.sel .font-card-preview');
+    const fontFam=selCard?selCard.style.fontFamily:"'DM Sans',sans-serif";
+    const fontFamClean=fontFam.replace(/'/g,'').split(',')[0].trim();
+
+    // Aspetta che tutti i font siano pronti
+    await document.fonts.ready;
+
+    const pxBase=S.currentPx||18;
+    const color=S.currentColor||'#1A1A1A';
+
+    // Misura altezze per calcolare CH
+    const tmpC=document.createElement('canvas');
+    const tmpCtx=tmpC.getContext('2d');
+    tmpCtx.font=`${pxBase}px "${fontFamClean}", DM Sans, sans-serif`;
+    const lineH=pxBase*1.45;
+    const CH=PADDING*2+plainLines.length*lineH+(plainLines.length-1)*lineGap;
+
+    // Canvas finale
+    const c=document.createElement('canvas');
+    c.width=CW; c.height=Math.max(CH,200);
+    const ctx=c.getContext('2d');
+
+    // Sfondo bianco
+    ctx.fillStyle='#FFFFFF';
+    ctx.fillRect(0,0,CW,c.height);
+
+    // Watermark leggero
+    ctx.fillStyle='#F0EEE9';
+    ctx.font='bold 13px "DM Sans", sans-serif';
+    ctx.textAlign='right';
+    ctx.fillText('Duami Lab — anteprima ricamo',CW-20,c.height-16);
+
+    // Testo
+    ctx.font=`${pxBase}px "${fontFamClean}", DM Sans, sans-serif`;
+    ctx.fillStyle=color;
+    ctx.textAlign=align==='center'?'center':'left';
+    const xBase=align==='center'?CW/2:PADDING;
+    let y=PADDING+pxBase;
+    plainLines.forEach(line=>{
+      ctx.fillText(line||' ',xBase,y);
+      y+=lineH+lineGap;
+    });
+
+    // Bordo guida posizione (leggero)
+    ctx.strokeStyle='#E8E6E1';
+    ctx.lineWidth=1;
+    ctx.strokeRect(0.5,0.5,CW-1,c.height-1);
+
+    c.toBlob(blob=>{
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a');
+      a.href=url;
+      a.download=`ricamo-duamilab-${Date.now()}.png`;
+      document.body.appendChild(a);a.click();
+      document.body.removeChild(a);
+      setTimeout(()=>URL.revokeObjectURL(url),5000);
+      resolve();
+    },'image/png');
+  });
+}
+
+/* ════ SUBMIT ════ */
+function validateContatti(){
+  S.nome=(document.getElementById('contactNome')?.value||'').trim();
+  S.email=(document.getElementById('contactEmail')?.value||'').trim();
+  S.tel=(document.getElementById('contactTel')?.value||'').trim();
+  S.citta=(document.getElementById('contactCitta')?.value||'').trim();
+  S.indirizzo=(document.getElementById('contactIndirizzo')?.value||'').trim();
+  if(!S.nome){alert('Inserisci il tuo nome.');document.getElementById('contactNome').focus();return false;}
+  if(!S.email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(S.email)){alert('Inserisci un indirizzo email valido.');document.getElementById('contactEmail').focus();return false;}
+  return true;
+}
+
+function openContactModal(){
+  document.getElementById('contactModalOv').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeContactModal(){
+  document.getElementById('contactModalOv').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+async function submitRequest(){
+  const notes=(document.getElementById('finalNotes')?.value||'').trim();
+  const embN=(document.getElementById('embNotes')?.value||document.getElementById('embNotesImg')?.value||'').trim();
+  const letters=S.testo.replace(/\s/g,'').length;
+  const emb=letters*SIZE_PRICES[S.currentSize];
+  const total=(PROD_PRICES[S.prodotto]||0)+emb;
+  const cmMap={S:1,M:2,L:3,XL:4};
+
+  // 1. Genera e scarica il PNG del ricamo
+  if(S.tipo==='frase'&&S.testo.trim()){
+    await generateEmbroideryCanvas();
+  }
+
+  // 2. Apri bozza email
+  const attach=S.tipo==='frase'&&S.testo.trim()
+    ?`%0A%0A📎 ALLEGATO: allega il file ricamo-duamilab-*.png scaricato automaticamente.`
+    :'';
+  const body=[
+    `RIEPILOGO ORDINE PERSONALIZZATO`,
+    `─────────────────────────────`,
+    `Tipo ricamo:  ${S.tipo||'—'}`,
+    `Prodotto:     ${S.prodotto||'—'}`,
+    `Taglia:       ${S.taglia||'—'}`,
+    `Posizione:    ${S.posizione||'—'}`,
+    `Testo:        ${S.testo||'—'}`,
+    `Font:         ${document.querySelector('.font-card.sel .font-card-name')?.textContent||'—'}`,
+    `Dimensione:   ${S.currentSize} (≈${cmMap[S.currentSize]||'?'} cm altezza)`,
+    `Allineamento: ${S.currentAlign==='center'?'centrato':'bandiera sinistra'}`,
+    `Colore filo:  ${S.currentColor||'—'}`,
+    `Punto:        ${S.punto||'—'}`,
+    `─────────────────────────────`,
+    `Lettere:      ${letters} × €${fmt(SIZE_PRICES[S.currentSize])} = €${fmt(emb)}`,
+    `Prodotto:     €${fmt(PROD_PRICES[S.prodotto]||0)}`,
+    `Totale stim.: €${fmt(total)}`,
+    `─────────────────────────────`,
+    `Note ricamo:  ${embN||'—'}`,
+    `Note gen.:    ${notes||'—'}`,
+    `─────────────────────────────`,
+    `CONTATTI`,
+    `Nome:         ${S.nome||'—'}`,
+    `Email:        ${S.email||'—'}`,
+    `Cellulare:    ${S.tel||'—'}`,
+    `Città:        ${S.citta||'—'}`,
+    `Indirizzo:    ${S.indirizzo||'—'}`,
+  ].map(l=>encodeURIComponent(l)).join('%0A');
+
+  setTimeout(()=>{
+    window.location.href=`mailto:duamilab@gmail.com?subject=Richiesta%20ricamo%20personalizzato&body=${body}${attach}`;
+  },600);
+}
+
+/* ════ ZOOM ════
+   Il transform è applicato a #photoZoomWrap che contiene foto + overlay + dot.
+   Così overlay e dot scalano solidali alla foto e restano sempre allineati.
+   positionOverlay usa dimensioni naturali → calcoli sempre corretti.
+════════════════════════════════════════════════════════════════════════ */
+let zoomLevel=0;
+const ZOOM_STEPS=[1,1.9,3.0];
+
+function applyZoom(){
+  const wrap=document.getElementById('photoZoomWrap');
+  if(!wrap)return;
+  const z=ZOOM_STEPS[zoomLevel];
+  if(z===1){
+    wrap.style.transform='';
+    wrap.style.transformOrigin='';
+  } else {
+    /* con object-fit:cover il container = frame visibile dell'immagine
+       → imgX/imgY sono già % del container, usarle direttamente come origin */
+    const cfg=S.posizione?POS_CFG[S.posizione]:null;
+    const ox=(cfg?cfg.imgX:0.5)*100;
+    const oy=(cfg?cfg.imgY:0.4)*100;
+    wrap.style.transformOrigin=`${ox}% ${oy}%`;
+    wrap.style.transform=`scale(${z})`;
+  }
+}
+function changeZoom(dir){
+  zoomLevel=Math.max(0,Math.min(ZOOM_STEPS.length-1,zoomLevel+dir));
+  applyZoom();
+  updateZoomBtn();
+}
+function resetZoom(){zoomLevel=0;applyZoom();updateZoomBtn();}
+
+/* Bottone singolo: alterna tra min (0) e max zoom */
+function toggleZoom(){
+  zoomLevel=zoomLevel===0?ZOOM_STEPS.length-1:0;
+  applyZoom();
+  updateZoomBtn();
+}
+function updateZoomBtn(){
+  const btn=document.getElementById('zoomIcon');
+  const lbl=document.getElementById('zoomLabel');
+  if(!btn)return;
+  const zoomed=zoomLevel>0;
+  btn.innerHTML=zoomed
+    ?'<circle cx="7" cy="7" r="4.5"/><line x1="10.5" y1="10.5" x2="14" y2="14"/><line x1="5" y1="7" x2="9" y2="7"/>'
+    :'<circle cx="7" cy="7" r="4.5"/><line x1="10.5" y1="10.5" x2="14" y2="14"/><line x1="7" y1="5" x2="7" y2="9"/><line x1="5" y1="7" x2="9" y2="7"/>';
+  if(lbl) lbl.textContent=zoomed?'Riduci':'Zoom';
+}
+
+/* ════ STEP 5: PUNTO DI RICAMO ════ */
+const PUNTI_LB=[
+  {name:'Punto dritto',    imgs:['img/punto_dritto_1.jpg','img/punto_dritto_2.jpg','img/punto_dritto_3.jpg'],    bgs:['#EAF0F8','#E0EAF5','#D8E4F2']},
+  {name:'Punto catenella', imgs:['img/punto_catenella_1.jpg','img/punto_catenella_2.jpg','img/punto_catenella_3.jpg'], bgs:['#F5EDDC','#F0E5D0','#EBDDC6']},
+  {name:'Punto spaccato',  imgs:['img/punto_spaccato_1.jpg','img/punto_spaccato_2.jpg','img/punto_spaccato_3.jpg'],  bgs:['#E5EFE8','#DCE8E0','#D4E2D8']},
+];
+let lbP=0,lbI=0;
+
+function selectPunto(card){
+  event.stopPropagation();
+  document.querySelectorAll('.punto-card').forEach(c=>c.classList.remove('sel'));
+  card.classList.add('sel');
+  S.punto=card.dataset.punto;
+  setTimeout(()=>completeStep('punto'),300);
+}
+function openLbPunto(e,p,i){
+  e.stopPropagation();
+  lbP=p; lbI=i; renderLbPunto();
+  document.getElementById('lbOv').classList.add('open');
+}
+function renderLbPunto(){
+  const d=PUNTI_LB[lbP];
+  const imgEl=document.getElementById('lbImgEl');
+  const ph=document.getElementById('lbImgPh');
+  const wrap=document.getElementById('lbImgW');
+  wrap.style.background=d.bgs[lbI];
+  imgEl.style.display='';
+  imgEl.src=d.imgs[lbI];
+  ph.style.display='flex';
+  document.getElementById('lbTitle').textContent=d.name+' — Foto '+(lbI+1);
+  const dots=document.getElementById('lbDots'); dots.innerHTML='';
+  d.imgs.forEach((_,i)=>{const el=document.createElement('div');el.className='lb-dot'+(i===lbI?' on':'');dots.appendChild(el);});
+  const selBtn=document.getElementById('lbSelBtn');
+  if(selBtn) selBtn.textContent='Seleziona '+d.name;
+}
+function lbNav(dir){
+  lbI=(lbI+dir+PUNTI_LB[lbP].imgs.length)%PUNTI_LB[lbP].imgs.length;
+  renderLbPunto();
+}
+function closeLb(){document.getElementById('lbOv').classList.remove('open');}
+function selectPuntoFromLb(){
+  const puntoName=PUNTI_LB[lbP].name;
+  const cards=document.querySelectorAll('.punto-card');
+  cards.forEach(c=>{
+    if(c.dataset.punto===puntoName){
+      document.querySelectorAll('.punto-card').forEach(x=>x.classList.remove('sel'));
+      c.classList.add('sel');
+      S.punto=puntoName;
+      setTimeout(()=>completeStep('punto'),300);
+    }
+  });
+  closeLb();
+}
+function lbOvClick(e){if(e.target===document.getElementById('lbOv'))closeLb();}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb();});
+
+window.addEventListener('resize',()=>{if(S.posizione)positionOverlay();});
+updatePrice();
+</script>
+</body>
+</html>
