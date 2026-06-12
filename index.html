@@ -78,6 +78,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);fon
 .step-card{background:var(--white);border-radius:var(--r);margin-bottom:12px;overflow:hidden;}
 .step-card.locked{display:none;}
 .step-card.done .step-head{opacity:.8;}
+.step-card.error .s-num{background:#E53935;}
+.step-card.error .step-head{border-left:3px solid #E53935;}
+.step-error-msg{display:none;align-items:center;gap:8px;background:#FFF5F5;border:1px solid #FFCDD2;border-radius:8px;padding:10px 14px;font-size:13px;color:#C62828;font-weight:500;margin-bottom:16px;}
+.step-card.error .step-error-msg{display:flex;}
+.step-error-msg::before{content:'⚠';font-size:14px;flex-shrink:0;}
 
 .step-head{display:flex;align-items:center;gap:14px;padding:18px 18px 14px;}
 .s-num{width:40px;height:40px;border-radius:50%;background:var(--dark);color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background var(--t);}
@@ -208,12 +213,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);fon
 .dim-val{font-size:15px;font-weight:700;color:var(--dark);}
 .dim-price{font-size:11px;color:var(--muted);}
 .dim-chevron{font-size:10px;color:var(--muted);transition:transform var(--t);margin-left:auto;}
-.dim-drop{display:none;position:absolute;top:calc(100% + 6px);left:0;background:#fff;border:2px solid var(--border);border-radius:var(--r);padding:6px;z-index:300;box-shadow:0 6px 24px rgba(0,0,0,.12);min-width:200px;}
+.dim-drop{display:none;position:absolute;top:calc(100% + 6px);left:0;background:#fff;border:2px solid var(--border);border-radius:var(--r);padding:6px;z-index:300;box-shadow:0 6px 24px rgba(0,0,0,.12);min-width:230px;}
 .dim-drop.open{display:block;}
 .dim-item{display:flex;align-items:center;justify-content:space-between;padding:9px 10px;border-radius:8px;cursor:pointer;gap:16px;transition:background var(--t);}
 .dim-item:hover{background:var(--bg-sec);}
 .dim-item.sel{background:#EEF4FF;}
-.dim-item-h{font-size:14px;font-weight:700;color:var(--dark);}
+.dim-item-h{font-size:14px;font-weight:700;color:var(--dark);white-space:nowrap;}
 .dim-item.sel .dim-item-h{color:var(--blue);}
 .dim-item-price{font-size:12px;color:var(--muted);white-space:nowrap;}
 .dim-item.sel .dim-item-price{color:var(--blue);}
@@ -264,14 +269,18 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);fon
 .emb-notes-ta{width:100%;border:2px solid var(--border);border-radius:var(--r);padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:16px;color:var(--dark);background:#fff;resize:vertical;min-height:120px;outline:none;transition:border-color var(--t);}
 .emb-notes-ta:focus{border-color:var(--blue);}
 /* Step 6 — contatti */
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.contact-grid{display:flex;flex-direction:column;gap:14px;margin-bottom:14px;}
 .contact-field{display:flex;flex-direction:column;gap:6px;}
 .contact-field.full{grid-column:1/-1;}
-.contact-field label{font-size:12px;font-weight:700;color:var(--dark);letter-spacing:.04em;text-transform:uppercase;}
-.contact-field label .opt{font-size:11px;font-weight:500;color:var(--muted);text-transform:none;letter-spacing:0;margin-left:4px;}
-.contact-input{width:100%;border:2px solid var(--border);border-radius:var(--r);padding:11px 14px;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--dark);background:#fff;outline:none;transition:border-color var(--t);}
+.contact-field label{font-size:0.875rem;font-weight:700;color:var(--dark);letter-spacing:.04em;text-transform:uppercase;}
+.contact-field label .opt{font-size:0.875rem;font-weight:500;color:var(--muted);text-transform:none;letter-spacing:0;margin-left:4px;}
+.contact-input{width:100%;border:2px solid var(--border);border-radius:var(--r);padding:11px 14px;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--dark);background:#fff;outline:none;transition:border-color var(--t),background var(--t);}
 .contact-input:focus{border-color:var(--blue);}
 .contact-input::placeholder{color:#AAAAAA;}
+.contact-input.input-error{border-color:#E53935;background:#FFF5F5;}
+.contact-field .field-error-msg{display:none;font-size:11px;color:#E53935;font-weight:600;margin-top:2px;}
+.contact-field.has-error .field-error-msg{display:block;}
+.contact-field.has-error .contact-input{border-color:#E53935;background:#FFF5F5;}
 .contact-process-box{background:var(--bg-sec);border:1.5px solid var(--border);border-radius:var(--r);padding:16px 18px;margin-bottom:20px;}
 .contact-process-box p{font-size:14px;color:var(--body);line-height:1.75;margin:0;}
 .contact-process-steps{display:flex;flex-direction:column;gap:8px;margin-top:12px;}
@@ -284,9 +293,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);fon
 .img-note{background:var(--bg-sec);border:1.5px solid var(--border);border-radius:var(--r);padding:12px 16px;font-size:14px;color:var(--muted);line-height:1.7;margin-top:10px;}
 
 /* ── BUTTONS ── */
-.btn-continue{display:block;width:100%;margin-top:18px;padding:14px;background:var(--dark);color:#fff;border:none;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:background var(--t);}
+.btn-continue{display:block;width:100%;margin-top:18px;padding:14px;background:var(--dark);color:#fff;border:none;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:0.875rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:background var(--t);}
 .btn-continue:hover{background:var(--blue);}
-.btn-submit{display:block;width:100%;margin-top:18px;padding:14px;background:var(--yellow);color:var(--dark);border:none;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:background var(--t);}
+.btn-submit{display:block;width:100%;margin-top:18px;padding:14px;background:var(--yellow);color:var(--dark);border:none;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:0.875rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:background var(--t);}
 .btn-submit:hover{background:#e6b000;}
 .submit-note{font-size:14px;color:var(--muted);text-align:center;margin-top:8px;line-height:1.6;}
 
@@ -335,19 +344,86 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);fon
 
 /* Zoom controls */
 .zoom-controls{position:absolute;top:14px;left:50%;transform:translateX(-50%);z-index:20;}
-.zoom-btn{height:38px;padding:0 16px;border-radius:100px;border:none;background:var(--yellow);backdrop-filter:blur(6px);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;color:var(--dark);font-size:13px;font-weight:600;transition:var(--t);box-shadow:0 2px 12px rgba(0,0,0,.18);}
+.zoom-btn{height:38px;padding:0 16px;border-radius:100px;border:none;background:var(--yellow);backdrop-filter:blur(6px);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;color:var(--dark);font-size:0.875rem;font-weight:600;transition:var(--t);box-shadow:0 2px 12px rgba(0,0,0,.18);}
 .zoom-btn:hover{background:#e6b000;transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.22);}
 .zoom-btn svg{display:block;transition:transform var(--t);}
 
 /* Contact Modal */
-.contact-modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(4px);z-index:500;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity .2s ease;}
+.contact-modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(4px);z-index:500;display:flex;align-items:flex-start;justify-content:center;padding:40px 24px 60px;overflow-y:auto;opacity:0;pointer-events:none;transition:opacity .2s ease;}
 .contact-modal-ov.open{opacity:1;pointer-events:auto;}
-.contact-modal-card{background:#fff;border-radius:20px;width:100%;max-width:580px;max-height:90vh;overflow-y:auto;padding:32px;position:relative;box-shadow:0 24px 80px rgba(0,0,0,.2);transform:translateY(12px);transition:transform .2s ease;}
+.contact-modal-wrap{position:relative;width:100%;max-width:580px;}
+.contact-modal-card{background:#fff;border-radius:20px;width:100%;padding:32px;position:relative;box-shadow:0 24px 80px rgba(0,0,0,.2);transform:translateY(12px);transition:transform .2s ease;}
 .contact-modal-ov.open .contact-modal-card{transform:translateY(0);}
 .contact-modal-close{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;border:1.5px solid var(--border);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--body);transition:var(--t);}
 .contact-modal-close:hover{border-color:var(--dark);color:var(--dark);}
 .contact-modal-title{font-size:20px;font-weight:700;color:var(--dark);margin:0 0 20px;padding-right:32px;}
-.btn-contact-modal-submit{width:100%;margin-top:24px;background:var(--dark);color:#fff;border:none;border-radius:100px;padding:15px 24px;font-size:15px;font-weight:600;cursor:pointer;transition:var(--t);}
+/* Riepilogo modale — card */
+.modal-riepilogo{margin-bottom:0;}
+.riepilogo-empty{font-size:13px;color:var(--muted);font-style:italic;padding:8px 0;}
+.recap-card{display:flex;flex-direction:column;border-radius:20px;overflow:hidden;box-shadow:0 2px 20px rgba(0,0,0,.09);}
+.recap-card-top{display:flex;align-items:stretch;}
+.recap-card-img{position:relative;width:110px;min-width:110px;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.recap-card-img img{width:100%;height:100%;object-fit:cover;object-position:center 10%;display:block;}
+.recap-card-footer-full{border-top:0.5px solid var(--border);padding:12px 18px 14px;background:#fff;display:flex;flex-direction:column;gap:4px;}
+.recap-card-img-placeholder{width:100%;height:100%;min-height:160px;display:flex;align-items:center;justify-content:center;}
+.recap-personalizzata-badge{display:inline-flex;align-items:center;background:#EDE8FC;color:#7C3AED;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:3px 9px;border-radius:100px;}
+.recap-card-header{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.recap-card-body{flex:1;padding:14px 18px;display:flex;flex-direction:column;gap:8px;background:#fff;}
+.recap-product-name{margin:0;font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--dark);line-height:1.2;}
+.recap-rows{display:flex;flex-direction:column;gap:4px;}
+.recap-info-row{display:flex;align-items:center;gap:0;flex-wrap:wrap;}
+.recap-info-item{display:inline-flex;align-items:center;gap:5px;font-size:0.875rem;color:var(--body);font-weight:500;white-space:nowrap;}
+.recap-info-item svg{flex-shrink:0;opacity:.55;}
+.recap-info-sep{margin:0 8px;color:var(--border);font-size:0.875rem;line-height:1;}
+/* Details expandable */
+.recap-details{margin-top:2px;}
+.recap-details summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:4px;font-size:0.875rem;font-weight:600;color:var(--muted);letter-spacing:.04em;padding:2px 0;user-select:none;-webkit-user-select:none;}
+.recap-details summary::-webkit-details-marker{display:none;}
+.recap-details-chevron{display:inline-block;font-size:0.75rem;transition:transform .2s;}
+.recap-details[open] .recap-details-chevron{transform:rotate(180deg);}
+.recap-details-body{padding-top:6px;display:flex;flex-direction:column;gap:4px;}
+.recap-price-block{display:flex;flex-direction:column;gap:3px;}
+.recap-price-row{display:flex;gap:6px;align-items:baseline;justify-content:space-between;}
+.recap-price-lbl{font-size:0.875rem;color:var(--muted);}
+.recap-price-val{font-size:0.875rem;color:var(--body);font-weight:500;white-space:nowrap;}
+/* Scritta personalizzata */
+.recap-section-label{font-size:0.75rem;font-weight:700;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;padding-top:10px;border-top:0.5px solid var(--border);margin-top:4px;}
+.recap-preview{padding-top:4px;}
+.recap-preview-text{line-height:1.3;white-space:pre-wrap;word-break:break-word;display:block;margin-bottom:6px;}
+.recap-dim-pill{font-size:0.75rem;color:var(--body);background:#F2F1EE;border-radius:100px;padding:3px 9px;font-weight:500;}
+/* Totale */
+.recap-total-row{display:flex;justify-content:space-between;align-items:baseline;padding-top:8px;border-top:0.5px solid var(--border);margin-top:4px;}
+.recap-total-lbl{font-size:0.875rem;font-weight:600;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;}
+.recap-total-val{font-family:'DM Sans',sans-serif;font-size:1.25rem;font-weight:700;color:var(--dark);}
+/* Forme decorative nella modale */
+.recap-deco-wrap{position:relative;}
+.recap-deco-wrap .modal-riepilogo,.recap-deco-wrap .recap-note-area{position:relative;z-index:1;}
+.modal-deco{position:absolute;bottom:-80px;left:0;right:0;height:160px;pointer-events:none;overflow:visible;z-index:0;}
+.modal-deco svg{position:absolute;}
+.modal-deco-spacer{height:40px;}
+/* deprecated rows kept for safety */
+.riepilogo-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px;background:var(--bg-sec);border-radius:var(--r-sm);}
+.riepilogo-row.riepilogo-total{background:#fffbeb;border:1.5px solid rgba(255,195,0,.5);margin-top:4px;}
+.riepilogo-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);}
+.riepilogo-val{font-size:14px;font-weight:600;color:var(--dark);text-align:right;max-width:60%;}
+.riepilogo-frase strong{font-weight:700;}
+.contact-modal-subtitle{font-size:14px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin:32px 0 16px;}
+.contact-note{resize:vertical;min-height:72px;font-family:'DM Sans',sans-serif;font-size:13px;line-height:1.5;}
+.recap-note-area{background:#FAF9F7;border-radius:0 0 20px 20px;padding:12px 18px;font-size:0.875rem;color:var(--body);line-height:1.6;white-space:pre-wrap;word-break:break-word;}
+.recap-note-area::before{content:'💬 ';}
+/* Address autocomplete */
+.addr-wrap{position:relative;}
+.addr-drop{display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;background:#fff;border:2px solid var(--border);border-radius:var(--r);box-shadow:var(--sh-hover);z-index:600;max-height:220px;overflow-y:auto;}
+.addr-drop.open{display:block;}
+.addr-item{padding:10px 14px;font-size:14px;color:var(--dark);cursor:pointer;border-bottom:1px solid var(--bg-sec);line-height:1.4;transition:background var(--t);}
+.addr-item:last-child{border-bottom:none;}
+.addr-item:hover{background:var(--bg-sec);}
+.addr-item-main{font-weight:600;}
+.addr-item-sub{font-size:12px;color:var(--muted);margin-top:2px;}
+/* Anteprima scritta nel riepilogo */
+.riepilogo-preview{background:#fff;border-radius:var(--r-sm);padding:20px 16px;display:flex;align-items:center;justify-content:center;min-height:80px;margin-bottom:2px;}
+.riepilogo-preview-text{line-height:1.3;white-space:pre-wrap;text-align:center;word-break:break-word;}
+.btn-contact-modal-submit{width:100%;margin-top:24px;background:var(--dark);color:#fff;border:none;border-radius:100px;padding:15px 24px;font-family:'DM Sans',sans-serif;font-size:0.875rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:var(--t);}
 .btn-contact-modal-submit:hover{background:#333;}
 
 /* Embroidery text overlay */
@@ -413,7 +489,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);fon
 .price-bar.open .p-chevron-btn svg{transform:rotate(180deg);}
 .price-bar-left:hover .p-chevron-btn{border-color:var(--dark);color:var(--dark);}
 /* Bottone invia */
-.btn-bar-submit{background:var(--dark);color:#fff;border:none;border-radius:100px;padding:11px 22px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:background var(--t);white-space:nowrap;flex-shrink:0;}
+.btn-bar-submit{background:var(--dark);color:#fff;border:none;border-radius:100px;padding:11px 22px;font-family:'DM Sans',sans-serif;font-size:0.875rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:background var(--t);white-space:nowrap;flex-shrink:0;}
 .btn-bar-submit:hover{background:#333;}
 
 /* ── CALIBRAZIONE ── */
@@ -467,14 +543,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);fon
 .lb-dot{width:7px;height:7px;border-radius:50%;background:var(--border);}
 .lb-dot.on{background:var(--yellow);}
 .lb-nav{display:flex;gap:8px;align-items:center;}
-.lb-nbtn{height:36px;padding:0 16px;border:1.5px solid var(--border);border-radius:100px;background:#fff;font-size:13px;font-weight:600;cursor:pointer;color:var(--dark);font-family:'DM Sans',sans-serif;transition:var(--t);}
+.lb-nbtn{height:36px;padding:0 16px;border:1.5px solid var(--border);border-radius:100px;background:#fff;font-size:0.875rem;font-weight:600;cursor:pointer;color:var(--dark);font-family:'DM Sans',sans-serif;transition:var(--t);}
 .lb-nbtn:hover{border-color:var(--yellow);}
 .lb-close-btn{position:absolute;top:10px;right:10px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.88);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--dark);z-index:2;transition:background var(--t);box-shadow:0 1px 6px rgba(0,0,0,.18);}
 .lb-close-btn:hover{background:#fff;}
 .lb-img-nav{position:absolute;bottom:14px;left:0;right:0;display:flex;justify-content:center;gap:8px;z-index:2;}
 .lb-img-nav .lb-nbtn{background:rgba(255,255,255,.88);box-shadow:0 1px 6px rgba(0,0,0,.18);border-color:transparent;}
 .lb-img-nav .lb-nbtn:hover{background:#fff;border-color:transparent;}
-.lb-sel-btn{height:36px;padding:0 22px;border:none;border-radius:100px;background:var(--yellow);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;color:var(--dark);font-family:'DM Sans',sans-serif;transition:background var(--t);}
+.lb-sel-btn{height:36px;padding:0 22px;border:none;border-radius:100px;background:var(--yellow);font-size:0.875rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;color:var(--dark);font-family:'DM Sans',sans-serif;transition:background var(--t);}
 .lb-sel-btn:hover{background:#e6b000;}
 
 /* ── RESPONSIVE ── */
@@ -483,7 +559,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);fon
   body{display:block;}
   .split{grid-template-columns:1fr;flex:none;overflow:visible;}
   /* form in cima, anteprima in fondo */
-  .form-col{order:1;padding:16px 16px 20px;border-right:none;}
+  .form-col{order:1;padding:12px 0 20px;border-right:none;}
+  .page-title{padding:20px 12px 16px;}
+  .step-head{padding:14px 14px 12px;}
+  .step-body{padding:0 14px 16px;}
+  .step-card{border-radius:0;margin-bottom:2px;}
+  .info-wrap{padding:0 12px;}
   .preview-col{order:2;overflow:visible;height:auto;display:block;padding-bottom:96px;}
   .preview-sticky{height:auto;display:block;}
   .prev-canvas{height:92vw;min-height:340px;flex:none;}
@@ -494,10 +575,19 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);fon
   .prod-grid{grid-template-columns:repeat(2,1fr);}
   /* price bar full-width su mobile */
   .price-bar{width:calc(100% - 24px);}
+  .price-bar-inner{padding:14px 16px;gap:10px;}
+  .p-total-val{font-size:17px;}
+  .btn-bar-submit{padding:10px 16px;font-size:0.875rem;letter-spacing:.04em;}
 }
 @media(max-width:480px){
   .prod-grid{grid-template-columns:repeat(2,1fr);}
   .type-grid,.pos-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:960px){
+  .contact-modal-ov{padding:16px 0 60px;align-items:flex-start;}
+  .contact-modal-card{border-radius:20px;max-width:100%;padding:24px 20px 32px;}
+  .contact-grid{grid-template-columns:1fr;}
+  .contact-field.full{grid-column:1;}
 }
 @media(max-width:960px){
   .p-pills{display:none;}
@@ -546,6 +636,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);fon
         </div>
       </div>
       <div class="step-body" id="body-prodotto">
+        <div class="step-error-msg" id="err-prodotto">Scegli il prodotto e la taglia per continuare</div>
         <div class="prod-grid">
 
           <div class="prod-card" data-prod="maglietta" data-price="15" onclick="selectProduct(this)">
@@ -626,6 +717,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);fon
         </div>
       </div>
       <div class="step-body" id="body-tipo">
+        <div class="step-error-msg" id="err-tipo">Scegli se vuoi una scritta o un'immagine ricamata</div>
         <div class="type-grid">
 
           <div class="type-card" onclick="selectTipo(this,'frase')">
@@ -664,6 +756,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);fon
         </div>
       </div>
       <div class="step-body" id="body-posizione">
+        <div class="step-error-msg" id="err-posizione">Indica dove vuoi posizionare il ricamo</div>
         <div class="pos-grid">
 
           <div class="pos-card" data-pos="Centro petto" onclick="selectPos(this)">
@@ -704,7 +797,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);fon
             </div>
             <div class="card-body">
               <div class="pos-name">Manica destra</div>
-              <div class="pos-meta"><span class="pos-dash">—</span><span class="pos-price">+ €1</span></div>
+              <div class="pos-meta"><span class="pos-dash">—</span><span class="pos-price"></span></div>
             </div>
           </div>
 
@@ -718,7 +811,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);fon
             </div>
             <div class="card-body">
               <div class="pos-name">Sotto il colletto</div>
-              <div class="pos-meta"><span class="pos-dash">—</span><span class="pos-price">+ €2</span></div>
+              <div class="pos-meta"><span class="pos-dash">—</span><span class="pos-price"></span></div>
             </div>
           </div>
 
@@ -736,6 +829,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);fon
         </div>
       </div>
       <div class="step-body" id="body-punto">
+        <div class="step-error-msg" id="err-punto">Scegli il tipo di punto per il ricamo</div>
         <p class="step-instructions">Scegli il tipo di punto con cui realizzeremo il tuo ricamo. Ogni tecnica dà un'estetica diversa — clicca sulle foto per ingrandirle.</p>
 
         <div class="punto-list">
@@ -845,6 +939,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);fon
         </div>
       </div>
       <div class="step-body" id="body-testo">
+        <div class="step-error-msg" id="err-testo">Inserisci la scritta o descrivi l'immagine da ricamare</div>
 
         <!-- FRASE -->
         <div id="sec-frase" style="display:none;">
@@ -981,7 +1076,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);fon
         <!-- IMMAGINE -->
         <div id="sec-immagine" style="display:none;">
           <span class="fl">Descrizione / riferimento immagine</span>
-          <textarea class="field-ta" id="imgDesc" rows="4" placeholder="Descrivi il motivo o incolla un link. Puoi inviare il file via email dopo la richiesta."></textarea>
+          <textarea class="field-ta" id="imgDesc" rows="4" placeholder="Descrivi il motivo o incolla un link. Puoi inviare il file via email dopo la richiesta." oninput="if(this.value.trim())clearStepError('testo')"></textarea>
           <div class="img-note">📎 PNG, JPG, PDF ad alta risoluzione. Valuteremo insieme fattibilità e preventivo.</div>
           <hr style="border:none;border-top:1.5px solid var(--border);margin:24px 0 0;">
           <span class="fl" style="margin-top:16px;color:#1A1A1A;">Vuoi dirci qualcosa di più?</span>
@@ -1066,53 +1161,55 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);fon
       <div class="p-pills" id="prPills"></div>
       <div class="p-chevron-btn" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
     </div>
-    <button class="btn-bar-submit" onclick="openContactModal()">Invia la richiesta</button>
+    <button class="btn-bar-submit" onclick="if(validateSteps())openContactModal()">Invia richiesta <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-left:3px;margin-top:-2px"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
   </div>
 </div>
 
 <!-- CONTACT MODAL -->
 <div class="contact-modal-ov" id="contactModalOv" onclick="if(event.target===this)closeContactModal()">
-  <div class="contact-modal-card">
+  <div class="contact-modal-wrap">
+<div class="contact-modal-card">
     <button class="contact-modal-close" onclick="closeContactModal()" aria-label="Chiudi">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="4" x2="16" y2="16"/><line x1="16" y1="4" x2="4" y2="16"/></svg>
     </button>
-    <h2 class="contact-modal-title">Lasciaci i tuoi contatti</h2>
+    <h2 class="contact-modal-title">Riepilogo della tua richiesta</h2>
 
-    <div class="contact-process-box">
-      <p>Una volta ricevuta la richiesta ti contattiamo noi! Ecco cosa succede:</p>
-      <div class="contact-process-steps">
-        <div class="contact-process-step"><div class="contact-process-step-dot">1</div><span>Ti scriviamo per confermare tutti i dettagli e chiarire eventuali dubbi.</span></div>
-        <div class="contact-process-step"><div class="contact-process-step-dot">2</div><span>Confermiamo insieme il prezzo finale prima di iniziare.</span></div>
-        <div class="contact-process-step"><div class="contact-process-step-dot">3</div><span>Ci accordiamo per la spedizione o il ritiro e ti diciamo quando sarà pronto.</span></div>
-      </div>
+    <div class="recap-deco-wrap">
+      <div id="modalRiepilogo" class="modal-riepilogo"></div>
+      <div id="recapNoteArea" style="display:none;" class="recap-note-area"></div>
     </div>
 
+
+    <h3 class="contact-modal-subtitle">Lascia i tuoi contatti</h3>
+
     <div class="contact-grid">
-      <div class="contact-field">
+      <div class="contact-field" id="fieldNome">
         <label for="contactNome">Nome <span style="color:var(--red)">*</span></label>
-        <input class="contact-input" id="contactNome" type="text" placeholder="Il tuo nome" required>
+        <input class="contact-input" id="contactNome" type="text" placeholder="Il tuo nome" required oninput="clearFieldError('fieldNome')">
+        <span class="field-error-msg">Inserisci il tuo nome</span>
       </div>
-      <div class="contact-field">
+      <div class="contact-field" id="fieldEmail">
         <label for="contactEmail">Email <span style="color:var(--red)">*</span></label>
-        <input class="contact-input" id="contactEmail" type="email" placeholder="tua@email.com" required>
+        <input class="contact-input" id="contactEmail" type="email" placeholder="tua@email.com" required oninput="clearFieldError('fieldEmail')">
+        <span class="field-error-msg">Inserisci un indirizzo email valido</span>
       </div>
       <div class="contact-field">
         <label for="contactTel">Cellulare <span class="opt">(facoltativo)</span></label>
         <input class="contact-input" id="contactTel" type="tel" placeholder="+39 000 000 0000">
       </div>
-      <div class="contact-field">
-        <label for="contactCitta">Città <span class="opt">(facoltativo)</span></label>
-        <input class="contact-input" id="contactCitta" type="text" placeholder="Roma, Milano…">
-      </div>
-      <div class="contact-field full">
-        <label for="contactIndirizzo">Indirizzo di spedizione <span class="opt">(facoltativo)</span></label>
-        <input class="contact-input" id="contactIndirizzo" type="text" placeholder="Via, numero civico, CAP, città">
+      <div class="contact-field full addr-wrap" id="fieldIndirizzo">
+        <label for="contactIndirizzo">Indirizzo di spedizione <span style="color:var(--red)">*</span></label>
+        <input class="contact-input" id="contactIndirizzo" type="text" placeholder="Via, numero civico, CAP, città"
+               autocomplete="off" required oninput="onAddrInput(this.value);clearFieldError('fieldIndirizzo')" onblur="setTimeout(closeAddrDrop,180)">
+        <div class="addr-drop" id="addrDrop"></div>
+        <span class="field-error-msg">Inserisci l'indirizzo di spedizione</span>
       </div>
     </div>
 
     <button class="btn-contact-modal-submit" onclick="if(validateContatti()){submitRequest();closeContactModal();}">
-      Invia la richiesta
+      INVIA RICHIESTA <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-left:4px;margin-top:-2px"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
     </button>
+  </div>
   </div>
 </div>
 
@@ -1185,7 +1282,7 @@ const POS_CFG = {
 };
 
 const PROD_PRICES = {maglietta:15,borsa:20,pochette:18,portachiavi:12,bracciale:15};
-const SIZE_PRICES  = {S:1.5, M:2, L:2.5, XL:3};
+const SIZE_PRICES  = {S:1, M:1.5, L:2, XL:2.5};
 
 /* ════ STATE ════ */
 const S = {
@@ -1204,14 +1301,16 @@ function openStep(id){
   if(id==='testo') renderTesto();
 
   setTimeout(()=>{
+    const rect=card.getBoundingClientRect();
     if(window.innerWidth<=960){
-      /* Mobile: scroll della pagina (window) verso lo step,
-         con offset per l'header sticky (72px) + piccolo respiro */
-      const rect=card.getBoundingClientRect();
       const target=window.scrollY+rect.top-88;
       window.scrollTo({top:target,behavior:'smooth'});
     } else {
-      card.scrollIntoView({behavior:'smooth',block:'nearest'});
+      const col=document.querySelector('.form-col');
+      if(col){
+        const target=col.scrollTop+rect.top-col.getBoundingClientRect().top-100;
+        col.scrollTo({top:target,behavior:'smooth'});
+      }
     }
   },120);
 }
@@ -1249,6 +1348,7 @@ function selectProduct(card){
   } else {
     document.getElementById('tagliaInline').classList.remove('show');
     S.taglia='Taglia unica';
+    clearStepError('prodotto');
     showPhoto();
     updatePrice();
     setTimeout(()=>completeStep('prodotto'),300);
@@ -1259,6 +1359,7 @@ function pickTaglia(pill){
   document.querySelectorAll('#tagliaInline .pill').forEach(p=>p.classList.remove('sel'));
   pill.classList.add('sel');
   S.taglia=pill.textContent.trim();
+  clearStepError('prodotto');
   updatePrice();
   setTimeout(()=>completeStep('prodotto'),300);
 }
@@ -1268,6 +1369,7 @@ function selectTipo(card,tipo){
   document.querySelectorAll('.type-card').forEach(c=>c.classList.remove('sel'));
   card.classList.add('sel');
   S.tipo=tipo;
+  clearStepError('tipo');
   setTimeout(()=>completeStep('tipo'),300);
 }
 
@@ -1276,6 +1378,7 @@ function selectPos(card){
   document.querySelectorAll('.pos-card').forEach(c=>c.classList.remove('sel'));
   card.classList.add('sel');
   S.posizione=card.dataset.pos;
+  clearStepError('posizione');
   applyPosToPreview();
   setTimeout(()=>completeStep('posizione'),320);
 }
@@ -1589,6 +1692,7 @@ function onEditorInput(){
   const ed=document.getElementById('editorField');
   S.testo=ed.textContent||'';
   const hasText=S.testo.trim().length>0;
+  if(hasText) clearStepError('testo');
 
   /* Pallino rosso: visibile solo quando NON c'è testo */
   const dot=document.getElementById('posDot');
@@ -1627,7 +1731,20 @@ function updatePreviewText(){
   if(!hasText||!S.posizione){ovr.style.display='none';return;}
   const ed=document.getElementById('editorField');
   const html=ed.innerHTML||'';
-  const scale=0.55;
+
+  /* ── Scala calibrata sul colletto ──────────────────────────────────────
+     Nell'immagine originale (1024×1024) il ribbing del colletto finisce a 165px
+     = 2 cm reali. Con object-fit:cover calcoliamo quanti px occupa 1 cm sullo
+     schermo, poi deriviamo lo scale rispetto ai px dell'editor (18px = 2cm → 9px/cm).
+  ─────────────────────────────────────────────────────────────────────── */
+  const canvas  = document.getElementById('prevCanvas');
+  const cW = canvas.offsetWidth, cH = canvas.offsetHeight;
+  const imgNat    = 1024; // px lato naturale immagine quadrata
+  const dispScale = Math.max(cW / imgNat, cH / imgNat); // object-fit:cover
+  /* Calibrazione: maglietta reale ~65cm, immagine 1024px, 2cm = 18px editor
+     scale = displayScale × (2 × 1024) / (65 × 18) = displayScale × 1.748          */
+  const scale = dispScale * 1.748;
+
   /* Stili globali dell'editor come base per il testo senza override inline.
      ed.style.* è sempre inizializzato da buildFontDrop e aggiornato da applyGlobal. */
   const basePx   = parseFloat(ed.style.fontSize)||S.currentPx;
@@ -1860,24 +1977,286 @@ async function generateEmbroideryCanvas(){
 }
 
 /* ════ SUBMIT ════ */
+function clearFieldError(fieldId){
+  const f=document.getElementById(fieldId);
+  if(f) f.classList.remove('has-error');
+}
+
 function validateContatti(){
   S.nome=(document.getElementById('contactNome')?.value||'').trim();
   S.email=(document.getElementById('contactEmail')?.value||'').trim();
   S.tel=(document.getElementById('contactTel')?.value||'').trim();
   S.citta=(document.getElementById('contactCitta')?.value||'').trim();
   S.indirizzo=(document.getElementById('contactIndirizzo')?.value||'').trim();
-  if(!S.nome){alert('Inserisci il tuo nome.');document.getElementById('contactNome').focus();return false;}
-  if(!S.email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(S.email)){alert('Inserisci un indirizzo email valido.');document.getElementById('contactEmail').focus();return false;}
+
+  // Rimuovi errori precedenti
+  ['fieldNome','fieldEmail','fieldIndirizzo'].forEach(id=>{
+    const f=document.getElementById(id);
+    if(f) f.classList.remove('has-error');
+  });
+
+  const errors=[];
+  if(!S.nome) errors.push('fieldNome');
+  if(!S.email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(S.email)) errors.push('fieldEmail');
+  if(!S.indirizzo) errors.push('fieldIndirizzo');
+
+  if(errors.length){
+    errors.forEach(id=>{
+      const f=document.getElementById(id);
+      if(f) f.classList.add('has-error');
+    });
+    // Scrolla al primo campo in errore
+    const first=document.getElementById(errors[0]);
+    if(first){
+      first.scrollIntoView({behavior:'smooth',block:'center'});
+      setTimeout(()=>first.querySelector('input')?.focus(),350);
+    }
+    return false;
+  }
   return true;
 }
 
+/* ════ ADDRESS AUTOCOMPLETE (OpenStreetMap Nominatim) ════ */
+let _addrTimer=null;
+function onAddrInput(val){
+  clearTimeout(_addrTimer);
+  if(val.trim().length<4){closeAddrDrop();return;}
+  _addrTimer=setTimeout(()=>fetchAddrSuggestions(val.trim()),400);
+}
+async function fetchAddrSuggestions(q){
+  try{
+    const paese=document.getElementById('contactPaese')?.value.trim()||'';
+    const cc=paese?`&countrycodes=${isoFromPaese(paese)}`:'';
+    const url=`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}${cc}&format=json&addressdetails=1&limit=5`;
+    const res=await fetch(url,{headers:{'Accept-Language':'it'}});
+    const data=await res.json();
+    renderAddrDrop(data);
+  }catch(e){closeAddrDrop();}
+}
+function isoFromPaese(p){
+  const map={'italia':'it','italy':'it','france':'fr','francia':'fr','germany':'de','germania':'de','spain':'es','spagna':'es','united kingdom':'gb','regno unito':'gb','usa':'us','stati uniti':'us'};
+  return map[p.toLowerCase()]||'';
+}
+function renderAddrDrop(items){
+  const drop=document.getElementById('addrDrop');
+  if(!items.length){closeAddrDrop();return;}
+  drop.innerHTML=items.map(it=>{
+    const a=it.address||{};
+    const main=[a.road,a.house_number].filter(Boolean).join(' ')||it.display_name.split(',')[0];
+    const sub=[a.postcode,a.city||a.town||a.village,a.country].filter(Boolean).join(', ');
+    return `<div class="addr-item" onmousedown="pickAddr('${escQ(it.display_name)}','${escQ(main)}','${escQ(sub)}')">
+      <div class="addr-item-main">${main}</div>
+      <div class="addr-item-sub">${sub}</div>
+    </div>`;
+  }).join('');
+  drop.classList.add('open');
+}
+function pickAddr(full,main,sub){
+  const input=document.getElementById('contactIndirizzo');
+  /* Componi un indirizzo compatto: via + città + CAP */
+  input.value=main+(sub?', '+sub:'');
+  closeAddrDrop();
+}
+function closeAddrDrop(){
+  document.getElementById('addrDrop')?.classList.remove('open');
+}
+function escQ(s){return (s||'').replace(/'/g,"\\'").replace(/"/g,'&quot;');}
+
 function openContactModal(){
+  buildRiepilogo();
+  updateRecapNote();
   document.getElementById('contactModalOv').classList.add('open');
-  document.body.style.overflow='hidden';
+}
+
+function validateSteps(){
+  const checks=[
+    {
+      step:'prodotto',
+      ok:()=>!!(S.prodotto&&S.taglia),
+      msg:'Scegli il prodotto e la taglia per continuare'
+    },
+    {
+      step:'tipo',
+      ok:()=>!!S.tipo,
+      msg:'Scegli se vuoi una scritta o un\'immagine ricamata'
+    },
+    {
+      step:'posizione',
+      ok:()=>!!S.posizione,
+      msg:'Indica dove vuoi posizionare il ricamo'
+    },
+    {
+      step:'punto',
+      ok:()=>!!S.punto,
+      msg:'Scegli il tipo di punto per il ricamo'
+    },
+    {
+      step:'testo',
+      ok:()=>{
+        if(S.tipo==='frase') return S.testo.replace(/\s/g,'').length>0;
+        if(S.tipo==='immagine') return (document.getElementById('imgDesc')?.value||'').trim().length>0;
+        return false;
+      },
+      msg:()=>S.tipo==='immagine'?'Descrivi l\'immagine o il motivo da ricamare':'Inserisci la scritta da ricamare'
+    }
+  ];
+
+  // Rimuovi errori precedenti
+  checks.forEach(c=>{
+    const el=document.getElementById('step-'+c.step);
+    if(el) el.classList.remove('error');
+  });
+
+  const errors=[];
+  checks.forEach(c=>{
+    const el=document.getElementById('step-'+c.step);
+    if(!el) return;
+    // Salta gli step ancora bloccati (non raggiunti dall'utente)
+    if(el.classList.contains('locked')) return;
+    if(!c.ok()){
+      el.classList.add('error');
+      const msgEl=document.getElementById('err-'+c.step);
+      if(msgEl) msgEl.textContent=typeof c.msg==='function'?c.msg():c.msg;
+      errors.push('step-'+c.step);
+    }
+  });
+
+  if(errors.length){
+    const first=document.getElementById(errors[0]);
+    if(first) first.scrollIntoView({behavior:'smooth',block:'center'});
+    return false;
+  }
+  return true;
+}
+
+function clearStepError(stepId){
+  const el=document.getElementById('step-'+stepId);
+  if(el) el.classList.remove('error');
+}
+function buildRiepilogo(){
+  const el=document.getElementById('modalRiepilogo');
+  if(!el)return;
+
+  const cap=s=>s?s.charAt(0).toUpperCase()+s.slice(1):'—';
+
+  if(!S.prodotto){
+    el.innerHTML='<p class="riepilogo-empty">Nessuna scelta ancora effettuata.</p>';
+    return;
+  }
+
+  /* ── Immagine prodotto ── */
+  const imgMap={maglietta:'img/tshirt_front.png',felpa:'img/tshirt_front.png'};
+  const imgSrc=imgMap[S.prodotto]||null;
+  const imgHtml=imgSrc
+    ?`<img src="${imgSrc}" alt="${cap(S.prodotto)}" style="width:100%;height:100%;object-fit:cover;display:block;">`
+    :`<div class="recap-card-img-placeholder"><svg width="64" height="72" viewBox="0 0 96 96" fill="none"><path d="M28 24 L8 38 L18 46 L18 80 L78 80 L78 46 L88 38 L68 24 C65 30 57 34 48 34 C39 34 31 30 28 24Z" fill="#fff" stroke="#D0CEC9" stroke-width="1.5" stroke-linejoin="round"/><path d="M28 24 C31 18 38 14 48 14 C58 14 65 18 68 24" fill="#F2F1EE" stroke="#D0CEC9" stroke-width="1.5" stroke-linejoin="round"/></svg></div>`;
+
+  /* ── Prezzi ── */
+  const letters=S.testo.replace(/\s/g,'').length;
+  const emb=S.tipo==='frase'?letters*(SIZE_PRICES[S.currentSize]||1.5):0;
+  const posSur=0;
+  const basePrice=PROD_PRICES[S.prodotto]||0;
+  const total=basePrice+emb;
+  const fmt2=n=>'€ '+n.toFixed(2).replace('.',',');
+
+  /* ── Riga info inline con icone ── */
+  const icoTaglia=`<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M7 10v4M12 10v4M17 10v4"/></svg>`;
+  const icoPos=`<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>`;
+  const icoPunto=`<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12 C5 8 7 8 9 12 C11 16 13 16 15 12 C17 8 19 8 21 12"/><path d="M3 6 C5 2 7 2 9 6 C11 10 13 10 15 6 C17 2 19 2 21 6"/><path d="M3 18 C5 14 7 14 9 18 C11 22 13 22 15 18 C17 14 19 14 21 18"/></svg>`;
+  let infoItems=[];
+  if(S.taglia)    infoItems.push(`<span class="recap-info-item">${icoTaglia}${S.taglia}</span>`);
+  if(S.posizione) infoItems.push(`<span class="recap-info-item">${icoPos}${S.posizione}</span>`);
+  if(S.punto)     infoItems.push(`<span class="recap-info-item">${icoPunto}${S.punto}</span>`);
+  const rows=infoItems.length?`<div class="recap-info-row">${infoItems.join('<span class="recap-info-sep">|</span>')}</div>`:'';
+
+  /* ── Breakdown prezzi ── */
+  let priceRows=`<div class="recap-price-block">`;
+  priceRows+=`<div class="recap-price-row"><span class="recap-price-lbl">${cap(S.prodotto)} base</span><span class="recap-price-val">${fmt2(basePrice)}</span></div>`;
+  if(S.tipo==='frase'&&letters>0){
+    const cmMap={S:1,M:2,L:3,XL:4};
+    const sizeCm=(cmMap[S.currentSize]||2)+' cm';
+    priceRows+=`<div class="recap-price-row"><span class="recap-price-lbl">Ricamo (${letters} lett. ${sizeCm})</span><span class="recap-price-val">${fmt2(emb)}</span></div>`;
+  }
+  priceRows+=`</div>`;
+
+  /* ── Anteprima scritta ── */
+  let previewHtml='';
+  let dimPill='';
+  if(S.tipo==='frase'&&S.testo.trim()){
+    const ed=document.getElementById('editorField');
+    const baseFam=ed?.style.fontFamily||S.currentFont||FONTS[0].fam;
+    const basePx=parseFloat(ed?.style.fontSize)||S.currentPx||18;
+    const baseCol=ed?.style.color||S.currentColor||'#1A1A1A';
+    const pxCm={12:1,18:2,26:3,36:4};
+    const sizeCount={};
+    function walkEd(node,inh){
+      if(node.nodeType===Node.TEXT_NODE){
+        const txt=node.textContent.replace(/\s/g,'');
+        if(!txt.length)return;
+        const cm=pxCm[Math.round(parseFloat(inh.fontSize)||basePx)]||2;
+        sizeCount[cm]=(sizeCount[cm]||0)+txt.length;
+      } else if(node.nodeType===Node.ELEMENT_NODE){
+        const ns={...inh};
+        if(node.style?.fontFamily)ns.fontFamily=node.style.fontFamily;
+        if(node.style?.fontSize)  ns.fontSize=node.style.fontSize;
+        if(node.style?.color)     ns.color=node.style.color;
+        node.childNodes.forEach(c=>walkEd(c,ns));
+      }
+    }
+    if(ed) ed.childNodes.forEach(c=>walkEd(c,{fontFamily:baseFam,fontSize:basePx+'px',color:baseCol}));
+    const dimLabel=Object.entries(sizeCount).sort((a,b)=>a[0]-b[0]).map(([cm])=>`${cm} cm`).join(' · ')||'';
+    previewHtml=`
+      <div class="recap-section-label">Scritta personalizzata</div>
+      <div class="recap-preview">
+        <span class="recap-preview-text" style="font-family:${baseFam};font-size:${Math.max(16,Math.min(28,basePx))}px;color:${baseCol};text-align:${S.currentAlign||'left'};">${ed?ed.innerHTML:''}</span>
+      </div>`;
+  } else if(S.tipo==='immagine'){
+    previewHtml=`
+      <div class="recap-section-label">Scritta personalizzata</div>
+      <div class="recap-preview"><span style="font-size:12px;color:var(--muted);">Immagine / disegno personalizzato</span></div>`;
+  }
+
+  /* ── Totale ── */
+  const totalRow=`<div class="recap-total-row"><span class="recap-total-lbl">Totale</span><span class="recap-total-val">${fmt2(total)}</span></div>`;
+
+  el.innerHTML=`
+  <div class="recap-card">
+    <div class="recap-card-top">
+      <div class="recap-card-img">
+        ${imgHtml}
+      </div>
+      <div class="recap-card-body">
+        <div class="recap-card-header">
+          <p class="recap-product-name">${cap(S.prodotto)}</p>
+          <span class="recap-personalizzata-badge">Personalizzata</span>
+        </div>
+        <div class="recap-rows">${rows}</div>
+        ${previewHtml}
+      </div>
+    </div>
+    <div class="recap-card-footer-full">
+      ${priceRows}
+      ${totalRow}
+    </div>
+  </div>`;
+}
+function updateRecapNote(){
+  const noteId=S.tipo==='immagine'?'embNotesImg':'embNotes';
+  const val=(document.getElementById(noteId)?.value||'').trim();
+  const area=document.getElementById('recapNoteArea');
+  const card=document.querySelector('#modalRiepilogo .recap-card');
+  if(!area)return;
+  if(val){
+    area.textContent=val;
+    area.style.display='block';
+    if(card) card.style.borderRadius='20px 20px 0 0';
+  } else {
+    area.style.display='none';
+    if(card) card.style.borderRadius='';
+  }
 }
 function closeContactModal(){
   document.getElementById('contactModalOv').classList.remove('open');
-  document.body.style.overflow='';
 }
 
 async function submitRequest(){
@@ -1993,6 +2372,7 @@ function selectPunto(card){
   document.querySelectorAll('.punto-card').forEach(c=>c.classList.remove('sel'));
   card.classList.add('sel');
   S.punto=card.dataset.punto;
+  clearStepError('punto');
   setTimeout(()=>completeStep('punto'),300);
 }
 function openLbPunto(e,p,i){
