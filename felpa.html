@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Configura la tua felpa in pile | Duami Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:ital,wght@0,700;0,800;1,700;1,800&display=swap" rel="stylesheet"/>
+<style>
+/* ════════════════════════════════
+   TOKENS — allineati a index.html
+════════════════════════════════ */
+:root{
+  --blue:#2979FF; --yellow:#FFC300; --red:#E04153;
+  --green:#08B082; --purple:#AB7FFB;
+  --bg:#FFFFFF; --bg-sec:#F7F7F7; --white:#FFFFFF;
+  --dark:#1A1A1A; --body:#3D3D3D; --muted:#767676;
+  --border:#D4D4D4;
+  --r:14px; --r-sm:8px; --t:.18s ease;
+  --sh: 0 2px 16px rgba(0,0,0,.07);
+  --sh-hover: 0 6px 28px rgba(0,0,0,.13);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column;}
+:focus-visible{outline:2.5px solid var(--blue);outline-offset:2px;border-radius:4px;}
+
+/* ── HEADER ── */
+.site-header{display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:72px;background:var(--white);border-bottom:1.5px solid var(--border);position:sticky;top:0;z-index:200;}
+.logo{display:flex;align-items:center;text-decoration:none;flex-shrink:0;}
+.logo svg{height:28px;width:auto;display:block;}
+.hdr-nav{display:flex;align-items:center;gap:32px;list-style:none;}
+.hdr-nav a{font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--dark);text-decoration:none;opacity:.55;transition:opacity var(--t);}
+.hdr-nav a:hover{opacity:1;}
+.hdr-nav .nav-active{opacity:1;color:var(--green);}
+.btn-hdr{background:var(--dark);color:#fff;border:none;border-radius:100px;padding:9px 20px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;text-decoration:none;transition:background var(--t);}
+.btn-hdr:hover{background:#333;}
+
+/* ── SPLIT LAYOUT ── */
+.split{display:grid;grid-template-columns:1fr 1fr;flex:1;min-height:0;overflow:hidden;}
+.form-col{padding:24px 24px 120px;border-right:1.5px solid var(--border);background:#FFFFFF;overflow-y:auto;}
+.preview-col{overflow:hidden;display:flex;flex-direction:column;background:#DDD5C8;}
+.preview-sticky{flex:1;min-height:0;display:flex;flex-direction:column;}
+
+/* ── PAGE TITLE ── */
+.page-title{padding:28px 0 20px;}
+.page-title span.overline{display:block;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin-bottom:8px;}
+.page-title h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3.4rem);font-weight:800;color:var(--dark);line-height:1.15;}
+.page-title h1 em{
+  font-style:italic;color:#08B082;background:rgba(8,176,130,.10);
+  border-radius:8px;padding:2px 10px 4px;display:inline-block;
+}
+.page-title p{font-size:15px;color:var(--muted);margin-top:8px;line-height:1.6;max-width:440px;}
+
+/* ── STEP CARDS ── */
+.step-card{background:var(--white);border-radius:var(--r);margin-bottom:12px;overflow:hidden;}
+.step-card.locked{opacity:.4;pointer-events:none;}
+.step-card.locked .step-body{display:none;}
+.step-head{display:flex;align-items:center;gap:14px;padding:18px 18px 14px;}
+.s-num{width:40px;height:40px;border-radius:50%;background:var(--dark);color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background var(--t);}
+.step-card.done .s-num{background:var(--green);}
+.s-title-wrap{display:flex;flex-direction:column;gap:2px;}
+.s-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+.s-title{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:800;color:var(--dark);}
+.step-body{padding:0 18px 20px;}
+
+.fl{display:block;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:16px 0 10px;}
+.fl:first-child{margin-top:4px;}
+.hint{font-size:14px;color:var(--muted);font-style:italic;margin-top:6px;line-height:1.6;}
+
+/* ── CARD SHARED ── */
+.card-check{position:absolute;top:7px;right:7px;width:20px;height:20px;border-radius:50%;border:1.5px solid #B8B4AC;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all var(--t);}
+.card-check svg{opacity:0;transition:opacity var(--t);}
+
+/* ── MODELLO CARDS ── */
+.modello-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.modello-card{position:relative;border:1.5px solid var(--border);border-radius:14px;cursor:pointer;background:#fff;overflow:hidden;transition:border-color var(--t),box-shadow var(--t);}
+.modello-card:hover{border-color:#C0BCBA;}
+.modello-card.sel{border-color:var(--green);box-shadow:0 0 0 3px rgba(8,176,130,.1);}
+.modello-card.sel .card-check{background:var(--green);border-color:var(--green);}
+.modello-card.sel .card-check svg{opacity:1;}
+.mc-img-area{position:relative;margin:8px;border-radius:10px;height:96px;display:flex;align-items:center;justify-content:center;background:#F5F4F1;transition:background var(--t);}
+.mc-img-area svg{color:var(--dark);opacity:.8;transition:color var(--t),opacity var(--t);}
+.modello-card.sel .mc-img-area{background:var(--green);}
+.modello-card.sel .mc-img-area svg{color:#fff;opacity:1;}
+.mc-body{padding:2px 12px 14px;}
+.mc-name{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;color:var(--dark);margin-bottom:4px;}
+.modello-card.sel .mc-name{color:var(--green);}
+.mc-desc{font-size:12px;color:var(--muted);line-height:1.4;}
+
+/* ── PILLS ── */
+.pills{display:flex;flex-wrap:wrap;gap:8px;}
+.pill{border:1.5px solid var(--border);border-radius:100px;padding:9px 20px;font-size:14px;font-weight:500;cursor:pointer;transition:var(--t);background:#fff;color:var(--body);user-select:none;}
+.pill:hover{border-color:#999;color:var(--dark);}
+.pill.sel{border-color:var(--dark);background:var(--dark);color:#fff;}
+.pill-inline{margin-top:14px;padding-top:2px;display:none;}
+.pill-inline.show{display:block;}
+
+/* ── MATERIALE GRID ── */
+.mat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.mat-card{position:relative;border:1.5px solid var(--border);border-radius:14px;cursor:pointer;background:#fff;overflow:hidden;transition:border-color var(--t),box-shadow var(--t);}
+.mat-card:hover{border-color:#C0BCBA;}
+.mat-card.sel{border-color:var(--green);box-shadow:0 0 0 3px rgba(8,176,130,.1);}
+.mat-card.sel .card-check{background:var(--green);border-color:var(--green);}
+.mat-card.sel .card-check svg{opacity:1;}
+.mat-thumb{position:relative;height:96px;overflow:hidden;background:#EDE6D6;}
+.mat-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+.mat-body{padding:10px 12px 14px;}
+.mat-name{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;color:var(--dark);margin-bottom:4px;}
+.mat-card.sel .mat-name{color:var(--green);}
+.mat-desc{font-size:11.5px;color:var(--muted);line-height:1.4;}
+
+/* ── SWATCH GRID (colori) ── */
+.swatch-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.swatch-card{position:relative;border:1.5px solid var(--border);border-radius:14px;cursor:pointer;background:#fff;overflow:hidden;transition:border-color var(--t),box-shadow var(--t);text-align:center;}
+.swatch-card:hover{border-color:#C0BCBA;}
+.swatch-card.sel{border-color:var(--blue);box-shadow:0 0 0 3px rgba(41,121,255,.1);}
+.swatch-card.sel .card-check{background:var(--blue);border-color:var(--blue);}
+.swatch-card.sel .card-check svg{opacity:1;}
+.swatch-thumb{position:relative;height:64px;overflow:hidden;}
+.swatch-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+.swatch-name{font-size:11px;font-weight:600;color:var(--body);padding:8px 6px 10px;line-height:1.3;}
+.swatch-card.sel .swatch-name{color:var(--blue);}
+
+/* ── CONTEXT BANNER ── */
+.ctx-banner{display:flex;align-items:flex-start;gap:10px;margin-top:16px;padding:12px 14px;background:var(--bg-sec);border-radius:var(--r-sm);font-size:13px;color:var(--muted);line-height:1.7;}
+.ctx-banner-icon{font-size:15px;flex-shrink:0;margin-top:1px;opacity:.6;}
+.ctx-banner strong{color:var(--body);}
+
+/* ── NOTE TEXTAREA ── */
+.field-ta{width:100%;border:2px solid var(--border);border-radius:var(--r);padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--dark);background:#fff;resize:vertical;min-height:80px;outline:none;transition:border-color var(--t);}
+.field-ta:focus{border-color:var(--green);}
+
+/* ── RIEPILOGO STEP ── */
+.recap-list{display:flex;flex-direction:column;gap:0;border:1.5px solid var(--border);border-radius:var(--r);overflow:hidden;margin-top:4px;}
+.recap-row{display:flex;justify-content:space-between;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border);}
+.recap-row:last-child{border-bottom:none;}
+.recap-row-label{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);}
+.recap-row-val{font-size:14px;font-weight:600;color:var(--dark);text-align:right;}
+.recap-row-val.empty{color:#C8C5BE;font-weight:400;font-style:italic;}
+.btn-submit-main{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:18px;padding:16px;background:var(--dark);color:#fff;border:none;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:0.875rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:background var(--t);}
+.btn-submit-main:hover{background:var(--green);}
+.btn-submit-main:disabled{opacity:.35;cursor:not-allowed;}
+.btn-submit-main:disabled:hover{background:var(--dark);}
+.submit-note{font-size:13px;color:var(--muted);text-align:center;margin-top:10px;line-height:1.6;}
+
+/* ════════════════════════════════
+   PREVIEW PANEL
+════════════════════════════════ */
+.prev-header{padding:10px 20px;border-bottom:1.5px solid var(--border);border-left:4px solid var(--green);background:#effaf6;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dark);display:flex;align-items:center;justify-content:space-between;}
+.prev-header em{font-style:normal;color:rgba(0,0,0,.5);font-weight:600;}
+.prev-canvas{flex:1;position:relative;overflow:hidden;background:#DDD5C8;display:flex;align-items:center;justify-content:center;}
+.garment-wrap{width:min(70%,340px);height:min(78%,440px);filter:drop-shadow(0 12px 30px rgba(0,0,0,.14));}
+.garment-wrap svg{width:100%;height:100%;display:block;}
+
+.prev-empty{display:flex;flex-direction:column;align-items:center;gap:12px;color:var(--muted);text-align:center;padding:48px 32px;position:absolute;inset:0;justify-content:center;z-index:5;background:#DDD5C8;}
+.prev-empty-icon{font-size:3.6rem;opacity:.2;}
+.prev-empty p{font-size:16px;font-style:italic;max-width:220px;line-height:1.6;}
+
+/* ── RECAP BAR (fixed) ── */
+.recap-bar{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:1100px;z-index:200;background:#fff;border-radius:16px;border:1px solid var(--border);box-shadow:0 8px 40px rgba(0,0,0,.13);}
+.recap-bar-inner{display:flex;align-items:center;gap:16px;padding:16px 22px;}
+.recap-pills{flex:1;display:flex;gap:6px;flex-wrap:wrap;min-width:0;}
+.p-pill{font-size:11px;border-radius:100px;padding:5px 12px;font-weight:600;white-space:nowrap;background:#F2F1EE;color:var(--muted);}
+.p-pill.sel{background:#E7F7F1;color:var(--green);}
+.btn-bar-submit{background:var(--dark);color:#fff;border:none;border-radius:100px;padding:11px 22px;font-family:'DM Sans',sans-serif;font-size:0.875rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:background var(--t);white-space:nowrap;flex-shrink:0;}
+.btn-bar-submit:hover{background:#333;}
+.btn-bar-submit:disabled{opacity:.35;cursor:not-allowed;pointer-events:none;}
+
+/* ── CONTACT MODAL ── */
+.contact-modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(4px);z-index:500;display:flex;align-items:flex-start;justify-content:center;padding:40px 24px 60px;overflow-y:auto;opacity:0;pointer-events:none;transition:opacity .2s ease;}
+.contact-modal-ov.open{opacity:1;pointer-events:auto;}
+.contact-modal-wrap{position:relative;width:100%;max-width:560px;}
+.contact-modal-card{background:#fff;border-radius:20px;width:100%;padding:32px;position:relative;box-shadow:0 24px 80px rgba(0,0,0,.2);transform:translateY(12px);transition:transform .2s ease;}
+.contact-modal-ov.open .contact-modal-card{transform:translateY(0);}
+.contact-modal-close{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;border:1.5px solid var(--border);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--body);transition:var(--t);}
+.contact-modal-close:hover{border-color:var(--dark);color:var(--dark);}
+.contact-modal-title{font-size:20px;font-weight:700;color:var(--dark);margin:0 0 18px;padding-right:32px;}
+.contact-modal-subtitle{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin:26px 0 14px;}
+.contact-grid{display:flex;flex-direction:column;gap:14px;}
+.contact-field{display:flex;flex-direction:column;gap:6px;}
+.contact-field label{font-size:0.8rem;font-weight:700;color:var(--dark);letter-spacing:.04em;text-transform:uppercase;}
+.contact-field label .opt{font-size:0.8rem;font-weight:500;color:var(--muted);text-transform:none;letter-spacing:0;margin-left:4px;}
+.contact-input{width:100%;border:2px solid var(--border);border-radius:var(--r);padding:11px 14px;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--dark);background:#fff;outline:none;transition:border-color var(--t),background var(--t);}
+.contact-input:focus{border-color:var(--green);}
+.contact-input.input-error{border-color:#E53935;background:#FFF5F5;}
+.contact-field .field-error-msg{display:none;font-size:11px;color:#E53935;font-weight:600;margin-top:2px;}
+.contact-field.has-error .field-error-msg{display:block;}
+.contact-field.has-error .contact-input{border-color:#E53935;background:#FFF5F5;}
+.btn-contact-modal-submit{width:100%;margin-top:24px;background:var(--dark);color:#fff;border:none;border-radius:100px;padding:15px 24px;font-family:'DM Sans',sans-serif;font-size:0.875rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:var(--t);}
+.btn-contact-modal-submit:hover{background:var(--green);}
+.modal-recap{background:var(--bg-sec);border-radius:var(--r);padding:14px 16px;margin-bottom:4px;font-size:13px;color:var(--body);line-height:1.9;}
+.modal-recap strong{color:var(--dark);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px){
+  html,body{height:auto;overflow:visible;}
+  body{display:block;}
+  .split{grid-template-columns:1fr;flex:none;overflow:visible;}
+  .form-col{order:1;padding:12px 16px 20px;border-right:none;}
+  .step-head{padding:14px 14px 12px;}
+  .step-body{padding:0 14px 16px;}
+  .preview-col{order:2;overflow:visible;height:auto;display:block;padding-bottom:96px;}
+  .preview-sticky{height:auto;display:block;}
+  .prev-canvas{height:88vw;min-height:320px;flex:none;}
+  .mat-grid{grid-template-columns:repeat(3,1fr);}
+  .swatch-grid{grid-template-columns:repeat(3,1fr);}
+  .site-header{padding:0 16px;}
+  .hdr-nav{display:none;}
+  .btn-hdr{display:none;}
+  .recap-bar{width:calc(100% - 24px);}
+  .recap-bar-inner{padding:12px 16px;gap:10px;}
+  .recap-pills{display:none;}
+}
+@media(max-width:480px){
+  .swatch-grid{grid-template-columns:repeat(2,1fr);}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="logo" href="https://www.duamilab.com" aria-label="Duami Lab — Homepage">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 804.05 188.41" aria-hidden="true">
+      <path fill="#2979ff" d="M0,184.56V0h59.73c1.45,0,4.44.04,8.97.13,4.53.09,8.88.39,13.07.9,14.87,1.79,27.47,6.97,37.81,15.51s18.2,19.4,23.58,32.55,8.08,27.56,8.08,43.19-2.69,30.04-8.08,43.19c-5.38,13.16-13.24,24.02-23.58,32.56-10.34,8.54-22.94,13.71-37.81,15.51-4.19.52-8.55.81-13.07.9-4.53.09-7.52.13-8.97.13H0Z"/>
+      <path fill="#ffc300" d="M332.22,0v115.35c0,14.79-3.16,27.64-9.48,38.58-6.32,10.94-15.12,19.42-26.4,25.45-11.28,6.02-24.35,9.03-39.22,9.03s-27.94-3.01-39.22-9.03c-11.28-6.02-20.08-14.5-26.4-25.45-6.33-10.94-9.49-23.79-9.49-38.58V.26"/>
+      <path fill="#e04153" d="M347.6,184.56L403.99,0h52.04l56.39,184.56h-164.83Z"/>
+      <path fill="#08b082" d="M535.5,184.56V0h31.27l61.01,122.53L688.79,0h31.27v184.56"/>
+      <path fill="#ab7ffb" d="M758.51,184.56V0h45.55v184.56h-45.55Z"/>
+    </svg>
+  </a>
+  <ul class="hdr-nav">
+    <li><a href="https://www.duamilab.com/#chi-siamo">Chi Siamo</a></li>
+    <li><a href="https://www.duamilab.com/#prodotti">Prodotti</a></li>
+    <li><a href="https://www.duamilab.com/#processo">Come Lavoriamo</a></li>
+    <li><a href="https://www.instagram.com/duamilab/" target="_blank" rel="noopener">Instagram</a></li>
+    <li><a href="https://www.duamilab.com/#contatti">Contattaci</a></li>
+  </ul>
+  <a class="btn-hdr nav-active" href="#">✦ Personalizza felpa</a>
+</header>
+
+<div class="split">
+
+  <!-- ════ FORM ════ -->
+  <div class="form-col">
+
+    <div class="page-title">
+      <span class="overline">Cucito su misura</span>
+      <h1>Crea la tua <em>felpa in pile</em></h1>
+      <p>Scegli modello, materiale e colori: ti inviamo una bozza prima di realizzarla.</p>
+    </div>
+
+    <!-- STEP 1: MODELLO -->
+    <div class="step-card active" id="step-modello">
+      <div class="step-head">
+        <div class="s-num" id="snum-modello">1</div>
+        <div class="s-title-wrap">
+          <span class="s-label">STEP 01</span>
+          <span class="s-title">Scegli il modello</span>
+        </div>
+      </div>
+      <div class="step-body">
+        <div class="modello-grid">
+
+          <div class="modello-card" data-modello="aperta" onclick="selectModello(this,'aperta')">
+            <div class="mc-img-area">
+              <svg width="46" height="46" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 7 Q24 13 31 7 L41 16 L34 20 L34 41 L14 41 L14 20 L7 16 Z"/>
+                <line x1="24" y1="13" x2="24" y2="41" stroke-dasharray="1.5 3"/>
+                <rect x="21.5" y="10" width="5" height="6" rx="1"/>
+              </svg>
+              <div class="card-check"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1,3.5 3.2,5.8 8,1" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </div>
+            <div class="mc-body">
+              <div class="mc-name">Aperta (giacchetto)</div>
+              <div class="mc-desc">Zip intera davanti, si indossa come una giacca</div>
+            </div>
+          </div>
+
+          <div class="modello-card" data-modello="collo" onclick="selectModello(this,'collo')">
+            <div class="mc-img-area">
+              <svg width="46" height="46" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 7 Q24 13 31 7 L41 16 L34 20 L34 41 L14 41 L14 20 L7 16 Z"/>
+                <line x1="24" y1="10" x2="24" y2="19"/>
+              </svg>
+              <div class="card-check"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1,3.5 3.2,5.8 8,1" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </div>
+            <div class="mc-body">
+              <div class="mc-name">Girocollo</div>
+              <div class="mc-desc">Corpo chiuso, apertura solo al collo</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Sub-scelta: tipo apertura al collo -->
+        <div class="pill-inline" id="chiusuraInline">
+          <span class="fl">Tipo di apertura al collo</span>
+          <div class="pills">
+            <div class="pill" onclick="pickChiusura(this,'zip')">Zip corta</div>
+            <div class="pill" onclick="pickChiusura(this,'bottoni')">Bottoni</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: MATERIALE -->
+    <div class="step-card locked" id="step-materiale">
+      <div class="step-head">
+        <div class="s-num" id="snum-materiale">2</div>
+        <div class="s-title-wrap">
+          <span class="s-label">STEP 02</span>
+          <span class="s-title">Scegli il materiale</span>
+        </div>
+      </div>
+      <div class="step-body">
+        <div class="mat-grid" id="matGrid"></div>
+        <div class="ctx-banner">
+          <span class="ctx-banner-icon">🧵</span>
+          <div><strong>Foto reali:</strong> ogni riquadro mostra la foto del tessuto che carichiamo — finché non è disponibile vedrai un colore di anteprima al suo posto.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3: COLORE MATERIALE -->
+    <div class="step-card locked" id="step-colore">
+      <div class="step-head">
+        <div class="s-num" id="snum-colore">3</div>
+        <div class="s-title-wrap">
+          <span class="s-label">STEP 03</span>
+          <span class="s-title">Scegli il colore</span>
+        </div>
+      </div>
+      <div class="step-body">
+        <div class="swatch-grid" id="colorGrid"></div>
+        <p class="hint">Colori di prova — la palette definitiva verrà confermata con le foto dei tessuti in laboratorio.</p>
+      </div>
+    </div>
+
+    <!-- STEP 4: NASTRO SBIECO -->
+    <div class="step-card locked" id="step-nastro">
+      <div class="step-head">
+        <div class="s-num" id="snum-nastro">4</div>
+        <div class="s-title-wrap">
+          <span class="s-label">STEP 04</span>
+          <span class="s-title">Nastro sbieco a contrasto?</span>
+        </div>
+      </div>
+      <div class="step-body">
+        <p class="hint" style="margin:4px 0 14px;font-style:normal;">Una rifinitura in nastro sbieco su colletto, polsini e fondo, in un colore a scelta.</p>
+        <div class="pills">
+          <div class="pill" onclick="pickNastro(this,'si')">Sì, aggiungilo</div>
+          <div class="pill" onclick="pickNastro(this,'no')">No, grazie</div>
+        </div>
+        <div class="pill-inline" id="nastroColorWrap">
+          <span class="fl">Colore del nastro sbieco</span>
+          <div class="swatch-grid" id="nastroGrid"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 5: RIEPILOGO -->
+    <div class="step-card locked" id="step-riepilogo">
+      <div class="step-head">
+        <div class="s-num" id="snum-riepilogo">5</div>
+        <div class="s-title-wrap">
+          <span class="s-label">STEP 05</span>
+          <span class="s-title">Riepilogo e richiesta</span>
+        </div>
+      </div>
+      <div class="step-body">
+        <div class="recap-list" id="recapList"></div>
+
+        <span class="fl">Note per il laboratorio <span style="text-transform:none;font-weight:500;color:var(--muted);letter-spacing:0;">(facoltativo)</span></span>
+        <textarea class="field-ta" id="noteFelpa" placeholder="Es. taglia desiderata, lunghezza manica, riferimenti a un capo che ti piace…" oninput="S.note=this.value"></textarea>
+
+        <button class="btn-submit-main" id="btnRiepilogoSubmit" onclick="openContactModal()" disabled>
+          Richiedi il preventivo
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+        <p class="submit-note">Nessun pagamento richiesto ora — ti rispondiamo con foto reali, tempi e prezzo.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ════ PREVIEW ════ -->
+  <div class="preview-col">
+    <div class="prev-header">
+      <span>Anteprima felpa</span>
+      <em>live preview</em>
+    </div>
+    <div class="preview-sticky">
+      <div class="prev-canvas">
+
+        <div class="prev-empty" id="prevEmpty">
+          <div class="prev-empty-icon">🧥</div>
+          <p>Scegli un modello per iniziare a comporre la tua felpa</p>
+        </div>
+
+        <div class="garment-wrap">
+          <svg id="garmentSvg" viewBox="0 0 220 260" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="matPattern" patternUnits="userSpaceOnUse" width="220" height="260">
+                <rect id="matPatternBg" width="220" height="260" fill="#E4DFD6"/>
+                <image id="matPatternImg" href="" width="220" height="260" preserveAspectRatio="xMidYMid slice" opacity="0" onerror="this.setAttribute('opacity','0')"/>
+              </pattern>
+              <pattern id="trimPattern" patternUnits="userSpaceOnUse" width="220" height="260">
+                <rect id="trimPatternBg" width="220" height="260" fill="#1A1A1A"/>
+                <image id="trimPatternImg" href="" width="220" height="260" preserveAspectRatio="xMidYMid slice" opacity="0" onerror="this.setAttribute('opacity','0')"/>
+              </pattern>
+            </defs>
+
+            <!-- corpo principale -->
+            <path id="garmentBody" d="M75,35 C85,45 135,45 145,35 L185,60 L215,95 L188,112 L150,88 L150,225 L70,225 L70,88 L32,112 L5,95 L35,60 Z"
+                  fill="url(#matPattern)" stroke="#1A1A1A" stroke-width="2" stroke-linejoin="round"/>
+
+            <!-- rifiniture nastro sbieco -->
+            <path id="trimCollar" d="M75,35 C85,45 135,45 145,35 L138,49 C128,55 92,55 82,49 Z" fill="url(#trimPattern)" stroke="#1A1A1A" stroke-width="1.2" opacity="0"/>
+            <path id="trimCuffL" d="M5,95 L32,112 L39,101 L14,85 Z" fill="url(#trimPattern)" stroke="#1A1A1A" stroke-width="1.2" opacity="0"/>
+            <path id="trimCuffR" d="M215,95 L188,112 L181,101 L206,85 Z" fill="url(#trimPattern)" stroke="#1A1A1A" stroke-width="1.2" opacity="0"/>
+            <rect id="trimHem" x="70" y="210" width="80" height="15" fill="url(#trimPattern)" stroke="#1A1A1A" stroke-width="1.2" opacity="0"/>
+
+            <!-- chiusure -->
+            <g id="closureFull" opacity="0">
+              <line x1="110" y1="44" x2="110" y2="222" stroke="#1A1A1A" stroke-width="1.6" stroke-dasharray="1.5 3.5"/>
+              <rect x="105" y="38" width="10" height="14" rx="2" fill="#1A1A1A"/>
+            </g>
+            <g id="closureNeckZip" opacity="0">
+              <line x1="110" y1="44" x2="110" y2="84" stroke="#1A1A1A" stroke-width="1.6" stroke-dasharray="1.5 3.5"/>
+              <rect x="105" y="38" width="10" height="14" rx="2" fill="#1A1A1A"/>
+            </g>
+            <g id="closureNeckButtons" opacity="0">
+              <circle cx="110" cy="46" r="3" fill="#1A1A1A"/>
+              <circle cx="110" cy="58" r="3" fill="#1A1A1A"/>
+              <circle cx="110" cy="70" r="3" fill="#1A1A1A"/>
+              <circle cx="110" cy="82" r="3" fill="#1A1A1A"/>
+            </g>
+          </svg>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════ RECAP BAR ════ -->
+<div class="recap-bar">
+  <div class="recap-bar-inner">
+    <div class="recap-pills" id="recapPills"><span class="p-pill">Configura la tua felpa…</span></div>
+    <button class="btn-bar-submit" id="btnBarSubmit" onclick="openContactModal()" disabled>Richiedi preventivo →</button>
+  </div>
+</div>
+
+<!-- ════ CONTACT MODAL ════ -->
+<div class="contact-modal-ov" id="contactModalOv" onclick="if(event.target===this)closeContactModal()">
+  <div class="contact-modal-wrap">
+    <div class="contact-modal-card">
+      <button class="contact-modal-close" onclick="closeContactModal()" aria-label="Chiudi">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="4" x2="16" y2="16"/><line x1="16" y1="4" x2="4" y2="16"/></svg>
+      </button>
+      <h2 class="contact-modal-title">Riepilogo della tua felpa</h2>
+
+      <div class="modal-recap" id="modalRecap"></div>
+
+      <h3 class="contact-modal-subtitle">Lascia i tuoi contatti</h3>
+      <div class="contact-grid">
+        <div class="contact-field" id="fieldNome">
+          <label for="contactNome">Nome <span style="color:var(--red)">*</span></label>
+          <input class="contact-input" id="contactNome" type="text" placeholder="Il tuo nome" required oninput="clearFieldError('fieldNome')">
+          <span class="field-error-msg">Inserisci il tuo nome</span>
+        </div>
+        <div class="contact-field" id="fieldEmail">
+          <label for="contactEmail">Email <span style="color:var(--red)">*</span></label>
+          <input class="contact-input" id="contactEmail" type="email" placeholder="tua@email.com" required oninput="clearFieldError('fieldEmail')">
+          <span class="field-error-msg">Inserisci un indirizzo email valido</span>
+        </div>
+        <div class="contact-field">
+          <label for="contactTel">Cellulare <span class="opt">(facoltativo)</span></label>
+          <input class="contact-input" id="contactTel" type="tel" placeholder="+39 000 000 0000">
+        </div>
+      </div>
+
+      <button class="btn-contact-modal-submit" onclick="if(validateContatti()){submitRequest();closeContactModal();}">
+        INVIA RICHIESTA <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-left:4px;margin-top:-2px"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ════ DATA ════ */
+const MATERIALI = [
+  {slug:'pile',       name:'Pile',        desc:'Morbido e leggero, per tutta la stagione'},
+  {slug:'teddy',      name:'Teddy',       desc:'Effetto peluche, caldo e avvolgente'},
+  {slug:'trapuntato', name:'Trapuntato',  desc:'Imbottito, cuciture a rombi più strutturate'},
+];
+const MAT_FALLBACK = {pile:'#EDE6D6', teddy:'#E8DCC8', trapuntato:'#DCD4C8'};
+
+const COLORI = [
+  {slug:'blu-avio',     name:'Blu Avio',      hex:'#2E4F7A'},
+  {slug:'verde-salvia', name:'Verde Salvia',  hex:'#7C9473'},
+  {slug:'panna',        name:'Panna',         hex:'#EDE6D6', border:true},
+  {slug:'terracotta',   name:'Terracotta',    hex:'#C1633C'},
+  {slug:'grigio-fumo',  name:'Grigio Fumo',   hex:'#8B8B85'},
+  {slug:'nero-carbone', name:'Nero Carbone',  hex:'#1A1A1A'},
+  {slug:'senape',       name:'Senape',        hex:'#D9A441'},
+  {slug:'rosa-cipria',  name:'Rosa Cipria',   hex:'#E3B7B0'},
+];
+
+const S = { modello:null, chiusura:null, materiale:null, colore:null, coloreHex:null, nastro:null, nastroColore:null, nastroHex:null, note:'', nome:'', email:'', tel:'' };
+
+/* ════ RENDER GRIDS ════ */
+function renderMatGrid(){
+  document.getElementById('matGrid').innerHTML = MATERIALI.map(m=>`
+    <div class="mat-card" data-mat="${m.slug}" onclick="selectMateriale(this,'${m.slug}')">
+      <div class="mat-thumb" style="background:${MAT_FALLBACK[m.slug]}">
+        <img src="img/felpa/materiali/${m.slug}.jpg" alt="" onerror="this.style.display='none'">
+      </div>
+      <div class="card-check"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1,3.5 3.2,5.8 8,1" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="mat-body">
+        <div class="mat-name">${m.name}</div>
+        <div class="mat-desc">${m.desc}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderColorGrid(){
+  document.getElementById('colorGrid').innerHTML = COLORI.map(c=>`
+    <div class="swatch-card" data-color="${c.slug}" onclick="selectColore(this,'${c.slug}','${c.hex}')">
+      <div class="swatch-thumb" style="background:${c.hex};${c.border?'border-bottom:1.5px solid var(--border)':''}">
+        <img src="img/felpa/colori/${S.materiale}-${c.slug}.jpg" alt="" onerror="this.style.display='none'">
+      </div>
+      <div class="card-check"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1,3.5 3.2,5.8 8,1" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="swatch-name">${c.name}</div>
+    </div>
+  `).join('');
+}
+
+function renderNastroGrid(){
+  document.getElementById('nastroGrid').innerHTML = COLORI.map(c=>`
+    <div class="swatch-card" data-ncolor="${c.slug}" onclick="selectNastroColore(this,'${c.slug}','${c.hex}')">
+      <div class="swatch-thumb" style="background:${c.hex};${c.border?'border-bottom:1.5px solid var(--border)':''}">
+        <img src="img/felpa/nastro/${c.slug}.jpg" alt="" onerror="this.style.display='none'">
+      </div>
+      <div class="card-check"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1,3.5 3.2,5.8 8,1" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="swatch-name">${c.name}</div>
+    </div>
+  `).join('');
+}
+
+/* ════ STEP HELPERS ════ */
+function unlock(id){
+  const el=document.getElementById('step-'+id);
+  el.classList.remove('locked');
+}
+function markDone(id){
+  document.getElementById('step-'+id).classList.add('done');
+}
+function scrollToStep(id){
+  document.getElementById('step-'+id).scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ════ STEP 1: MODELLO ════ */
+function selectModello(el,val){
+  document.querySelectorAll('.modello-card').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  S.modello=val;
+  const sub=document.getElementById('chiusuraInline');
+  if(val==='collo'){
+    sub.classList.add('show');
+    S.chiusura=null;
+    sub.querySelectorAll('.pill').forEach(p=>p.classList.remove('sel'));
+    updatePreview(); updateRecap();
+  }else{
+    sub.classList.remove('show');
+    S.chiusura='zip';
+    finishModello();
+  }
+}
+function pickChiusura(el,val){
+  document.querySelectorAll('#chiusuraInline .pill').forEach(p=>p.classList.remove('sel'));
+  el.classList.add('sel');
+  S.chiusura=val;
+  finishModello();
+}
+function finishModello(){
+  markDone('modello');
+  unlock('materiale');
+  updatePreview(); updateRecap();
+  setTimeout(()=>scrollToStep('materiale'),200);
+}
+
+/* ════ STEP 2: MATERIALE ════ */
+function selectMateriale(el,val){
+  document.querySelectorAll('.mat-card').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  S.materiale=val; S.colore=null; S.coloreHex=null;
+  renderColorGrid();
+  markDone('materiale');
+  unlock('colore');
+  updatePreview(); updateRecap();
+  setTimeout(()=>scrollToStep('colore'),200);
+}
+
+/* ════ STEP 3: COLORE ════ */
+function selectColore(el,val,hex){
+  document.querySelectorAll('#colorGrid .swatch-card').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  S.colore=val; S.coloreHex=hex;
+  markDone('colore');
+  unlock('nastro');
+  updatePreview(); updateRecap();
+  setTimeout(()=>scrollToStep('nastro'),200);
+}
+
+/* ════ STEP 4: NASTRO SBIECO ════ */
+function pickNastro(el,val){
+  document.querySelectorAll('#step-nastro > .step-body > .pills .pill').forEach(p=>p.classList.remove('sel'));
+  el.classList.add('sel');
+  S.nastro=val;
+  const wrap=document.getElementById('nastroColorWrap');
+  if(val==='si'){
+    wrap.classList.add('show');
+    renderNastroGrid();
+    S.nastroColore=null; S.nastroHex=null;
+    updatePreview(); updateRecap();
+  }else{
+    wrap.classList.remove('show');
+    S.nastroColore=null; S.nastroHex=null;
+    finishNastro();
+  }
+}
+function selectNastroColore(el,val,hex){
+  document.querySelectorAll('#nastroGrid .swatch-card').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  S.nastroColore=val; S.nastroHex=hex;
+  finishNastro();
+}
+function finishNastro(){
+  markDone('nastro');
+  unlock('riepilogo');
+  updatePreview(); updateRecap();
+  renderRiepilogo();
+  setTimeout(()=>scrollToStep('riepilogo'),200);
+}
+
+/* ════ PREVIEW ════ */
+function updatePreview(){
+  document.getElementById('prevEmpty').style.display = S.modello ? 'none' : 'flex';
+
+  const bodyBg=document.getElementById('matPatternBg');
+  const bodyImg=document.getElementById('matPatternImg');
+  if(S.materiale && S.colore){
+    bodyBg.setAttribute('fill', S.coloreHex);
+    bodyImg.setAttribute('opacity','1');
+    bodyImg.setAttribute('href', `img/felpa/colori/${S.materiale}-${S.colore}.jpg`);
+  }else if(S.materiale){
+    bodyBg.setAttribute('fill', MAT_FALLBACK[S.materiale]||'#E4DFD6');
+    bodyImg.setAttribute('opacity','1');
+    bodyImg.setAttribute('href', `img/felpa/materiali/${S.materiale}.jpg`);
+  }else{
+    bodyBg.setAttribute('fill','#E4DFD6');
+    bodyImg.setAttribute('opacity','0');
+    bodyImg.setAttribute('href','');
+  }
+
+  const trimOn = S.nastro==='si' && S.nastroColore;
+  ['trimCollar','trimCuffL','trimCuffR','trimHem'].forEach(id=>{
+    document.getElementById(id).setAttribute('opacity', trimOn ? '1':'0');
+  });
+  const trimBg=document.getElementById('trimPatternBg');
+  const trimImg=document.getElementById('trimPatternImg');
+  if(trimOn){
+    trimBg.setAttribute('fill', S.nastroHex);
+    trimImg.setAttribute('opacity','1');
+    trimImg.setAttribute('href', `img/felpa/nastro/${S.nastroColore}.jpg`);
+  }else{
+    trimImg.setAttribute('opacity','0');
+    trimImg.setAttribute('href','');
+  }
+
+  document.getElementById('closureFull').setAttribute('opacity', S.modello==='aperta' ? '1':'0');
+  document.getElementById('closureNeckZip').setAttribute('opacity', (S.modello==='collo'&&S.chiusura==='zip') ? '1':'0');
+  document.getElementById('closureNeckButtons').setAttribute('opacity', (S.modello==='collo'&&S.chiusura==='bottoni') ? '1':'0');
+}
+
+/* ════ RECAP BAR + RIEPILOGO STEP ════ */
+const MODELLO_LABEL = {aperta:'Aperta con zip', collo:'Girocollo'};
+const CHIUSURA_LABEL = {zip:'Chiusura zip', bottoni:'Chiusura bottoni'};
+
+function updateRecap(){
+  const chips=[];
+  if(S.modello) chips.push(MODELLO_LABEL[S.modello]);
+  if(S.modello==='collo' && S.chiusura) chips.push(CHIUSURA_LABEL[S.chiusura]);
+  if(S.materiale) chips.push(MATERIALI.find(m=>m.slug===S.materiale).name);
+  if(S.colore) chips.push(COLORI.find(c=>c.slug===S.colore).name);
+  if(S.nastro==='si' && S.nastroColore) chips.push('Nastro '+COLORI.find(c=>c.slug===S.nastroColore).name);
+  else if(S.nastro==='no') chips.push('Senza nastro sbieco');
+
+  document.getElementById('recapPills').innerHTML = chips.length
+    ? chips.map(c=>`<span class="p-pill sel">${c}</span>`).join('')
+    : '<span class="p-pill">Configura la tua felpa…</span>';
+
+  const ready = !!(S.modello && (S.modello==='aperta'||S.chiusura) && S.materiale && S.colore);
+  document.getElementById('btnBarSubmit').disabled = !ready;
+  document.getElementById('btnRiepilogoSubmit').disabled = !ready;
+}
+
+function recapRow(label,val){
+  return `<div class="recap-row"><span class="recap-row-label">${label}</span><span class="recap-row-val${val?'':' empty'}">${val||'da scegliere'}</span></div>`;
+}
+function renderRiepilogo(){
+  const rows = [
+    recapRow('Modello', S.modello?MODELLO_LABEL[S.modello]:''),
+    S.modello==='collo' ? recapRow('Chiusura', S.chiusura?CHIUSURA_LABEL[S.chiusura]:'') : '',
+    recapRow('Materiale', S.materiale?MATERIALI.find(m=>m.slug===S.materiale).name:''),
+    recapRow('Colore', S.colore?COLORI.find(c=>c.slug===S.colore).name:''),
+    recapRow('Nastro sbieco', S.nastro==='si' ? (S.nastroColore?'Sì — '+COLORI.find(c=>c.slug===S.nastroColore).name:'Sì') : (S.nastro==='no'?'No':'')),
+  ].join('');
+  document.getElementById('recapList').innerHTML = rows;
+}
+
+/* ════ CONTACT MODAL ════ */
+function openContactModal(){
+  const ready = !!(S.modello && (S.modello==='aperta'||S.chiusura) && S.materiale && S.colore);
+  if(!ready) return;
+  renderRiepilogo();
+  document.getElementById('modalRecap').innerHTML = `
+    <strong>${S.modello==='aperta'?'Felpa aperta con zip':'Felpa girocollo'}</strong>${S.modello==='collo'&&S.chiusura?' — '+CHIUSURA_LABEL[S.chiusura]:''}<br>
+    Materiale: <strong>${MATERIALI.find(m=>m.slug===S.materiale).name}</strong>, colore <strong>${COLORI.find(c=>c.slug===S.colore).name}</strong><br>
+    Nastro sbieco: <strong>${S.nastro==='si'?(S.nastroColore?COLORI.find(c=>c.slug===S.nastroColore).name:'sì'):'no'}</strong>
+  `;
+  document.getElementById('contactModalOv').classList.add('open');
+}
+function closeContactModal(){
+  document.getElementById('contactModalOv').classList.remove('open');
+}
+function clearFieldError(id){
+  document.getElementById(id).classList.remove('has-error');
+}
+function validateContatti(){
+  let ok=true;
+  const nome=document.getElementById('contactNome').value.trim();
+  const email=document.getElementById('contactEmail').value.trim();
+  const emailOk=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  if(!nome){ document.getElementById('fieldNome').classList.add('has-error'); ok=false; }
+  if(!emailOk){ document.getElementById('fieldEmail').classList.add('has-error'); ok=false; }
+  if(ok){
+    S.nome=nome; S.email=email; S.tel=document.getElementById('contactTel').value.trim();
+  }
+  return ok;
+}
+function submitRequest(){
+  const body=[
+    `RICHIESTA FELPA PERSONALIZZATA`,
+    `─────────────────────────────`,
+    `Modello:        ${S.modello?MODELLO_LABEL[S.modello]:'—'}`,
+    `Chiusura:       ${S.modello==='collo'&&S.chiusura?CHIUSURA_LABEL[S.chiusura]:(S.modello==='aperta'?'Zip intera':'—')}`,
+    `Materiale:      ${S.materiale?MATERIALI.find(m=>m.slug===S.materiale).name:'—'}`,
+    `Colore:         ${S.colore?COLORI.find(c=>c.slug===S.colore).name:'—'}`,
+    `Nastro sbieco:  ${S.nastro==='si'?(S.nastroColore?'Sì — '+COLORI.find(c=>c.slug===S.nastroColore).name:'Sì'):'No'}`,
+    `─────────────────────────────`,
+    `Note:           ${S.note||'—'}`,
+    `─────────────────────────────`,
+    `CONTATTI`,
+    `Nome:           ${S.nome||'—'}`,
+    `Email:          ${S.email||'—'}`,
+    `Cellulare:      ${S.tel||'—'}`,
+  ].map(l=>encodeURIComponent(l)).join('%0A');
+
+  setTimeout(()=>{
+    window.location.href=`mailto:duamilab@gmail.com?subject=Richiesta%20felpa%20personalizzata&body=${body}`;
+  },400);
+}
+
+/* ════ INIT ════ */
+renderMatGrid();
+updatePreview();
+updateRecap();
+</script>
+</body>
+</html>
