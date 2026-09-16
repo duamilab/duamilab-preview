@@ -52,7 +52,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);fon
   font-style:italic;color:#08B082;background:rgba(8,176,130,.10);
   border-radius:8px;padding:2px 10px 4px;display:inline-block;
 }
-.page-title p{font-size:15px;color:var(--muted);margin-top:8px;line-height:1.6;max-width:440px;}
+.page-title p{font-size:15px;color:var(--muted);margin-top:8px;line-height:1.6;max-width:460px;}
 
 /* ── STEP CARDS ── */
 .step-card{background:var(--white);border-radius:var(--r);margin-bottom:12px;overflow:hidden;}
@@ -63,12 +63,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);fon
 .step-card.done .s-num{background:var(--green);}
 .s-title-wrap{display:flex;flex-direction:column;gap:2px;}
 .s-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
-.s-title{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:800;color:var(--dark);}
+.s-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:800;color:var(--dark);}
 .step-body{padding:0 18px 20px;}
+.step-intro{font-size:13.5px;color:var(--muted);line-height:1.6;margin-bottom:14px;}
 
 .fl{display:block;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:16px 0 10px;}
 .fl:first-child{margin-top:4px;}
-.hint{font-size:14px;color:var(--muted);font-style:italic;margin-top:6px;line-height:1.6;}
+.hint{font-size:13.5px;color:var(--muted);font-style:italic;margin-top:6px;line-height:1.6;}
 
 /* ── CARD SHARED ── */
 .card-check{position:absolute;top:7px;right:7px;width:20px;height:20px;border-radius:50%;border:1.5px solid #B8B4AC;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all var(--t);}
@@ -105,7 +106,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);fon
 .mat-card.sel{border-color:var(--green);box-shadow:0 0 0 3px rgba(8,176,130,.1);}
 .mat-card.sel .card-check{background:var(--green);border-color:var(--green);}
 .mat-card.sel .card-check svg{opacity:1;}
-.mat-thumb{position:relative;height:96px;overflow:hidden;background:#EDE6D6;}
+.mat-thumb{position:relative;height:88px;overflow:hidden;background:#EDE6D6;}
 .mat-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
 .mat-body{padding:10px 12px 14px;}
 .mat-name{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;color:var(--dark);margin-bottom:4px;}
@@ -119,9 +120,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);fon
 .swatch-card.sel{border-color:var(--blue);box-shadow:0 0 0 3px rgba(41,121,255,.1);}
 .swatch-card.sel .card-check{background:var(--blue);border-color:var(--blue);}
 .swatch-card.sel .card-check svg{opacity:1;}
-.swatch-thumb{position:relative;height:64px;overflow:hidden;}
+.swatch-thumb{position:relative;height:60px;overflow:hidden;}
 .swatch-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
-.swatch-name{font-size:11px;font-weight:600;color:var(--body);padding:8px 6px 10px;line-height:1.3;}
+.swatch-name{font-size:11px;font-weight:600;color:var(--body);padding:7px 6px 9px;line-height:1.3;}
 .swatch-card.sel .swatch-name{color:var(--blue);}
 
 /* ── CONTEXT BANNER ── */
@@ -137,7 +138,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);fon
 .recap-list{display:flex;flex-direction:column;gap:0;border:1.5px solid var(--border);border-radius:var(--r);overflow:hidden;margin-top:4px;}
 .recap-row{display:flex;justify-content:space-between;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border);}
 .recap-row:last-child{border-bottom:none;}
-.recap-row-label{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);}
+.recap-row-label{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);flex-shrink:0;}
 .recap-row-val{font-size:14px;font-weight:600;color:var(--dark);text-align:right;}
 .recap-row-val.empty{color:#C8C5BE;font-weight:400;font-style:italic;}
 .btn-submit-main{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:18px;padding:16px;background:var(--dark);color:#fff;border:none;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:0.875rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:background var(--t);}
@@ -249,7 +250,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);fon
     <div class="page-title">
       <span class="overline">Cucito su misura</span>
       <h1>Crea la tua <em>felpa in pile</em></h1>
-      <p>Scegli modello, materiale e colori: ti inviamo una bozza prima di realizzarla.</p>
+      <p>Scegli modello, i 3 tessuti a contrasto e il colore del nastro sbieco: ti inviamo una bozza prima di realizzarla.</p>
     </div>
 
     <!-- STEP 1: MODELLO -->
@@ -306,67 +307,88 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);fon
       </div>
     </div>
 
-    <!-- STEP 2: MATERIALE -->
-    <div class="step-card locked" id="step-materiale">
+    <!-- STEP 2: ZONA SUPERIORE -->
+    <div class="step-card locked" id="step-zona-sopra">
       <div class="step-head">
-        <div class="s-num" id="snum-materiale">2</div>
+        <div class="s-num" id="snum-zona-sopra">2</div>
         <div class="s-title-wrap">
           <span class="s-label">STEP 02</span>
-          <span class="s-title">Scegli il materiale</span>
+          <span class="s-title">Tessuto — parte superiore</span>
         </div>
       </div>
       <div class="step-body">
-        <div class="mat-grid" id="matGrid"></div>
+        <p class="step-intro">Il tessuto di petto, spalle e schiena — la parte alta della felpa.</p>
+        <div class="mat-grid" id="matGrid_sopra"></div>
+        <div class="pill-inline" id="colorWrap_sopra">
+          <span class="fl">Colore</span>
+          <div class="swatch-grid" id="colorGrid_sopra"></div>
+        </div>
         <div class="ctx-banner">
           <span class="ctx-banner-icon">🧵</span>
-          <div><strong>Foto reali:</strong> ogni riquadro mostra la foto del tessuto che carichiamo — finché non è disponibile vedrai un colore di anteprima al suo posto.</div>
+          <div><strong>Foto reali:</strong> ogni riquadro mostrerà la foto del tessuto che carichiamo — finché non è disponibile vedrai un colore di anteprima al suo posto, in tutti gli step.</div>
         </div>
       </div>
     </div>
 
-    <!-- STEP 3: COLORE MATERIALE -->
-    <div class="step-card locked" id="step-colore">
+    <!-- STEP 3: ZONA INFERIORE E MANICHE -->
+    <div class="step-card locked" id="step-zona-sotto">
       <div class="step-head">
-        <div class="s-num" id="snum-colore">3</div>
+        <div class="s-num" id="snum-zona-sotto">3</div>
         <div class="s-title-wrap">
           <span class="s-label">STEP 03</span>
-          <span class="s-title">Scegli il colore</span>
+          <span class="s-title">Tessuto — parte inferiore e maniche</span>
         </div>
       </div>
       <div class="step-body">
-        <div class="swatch-grid" id="colorGrid"></div>
-        <p class="hint">Colori di prova — la palette definitiva verrà confermata con le foto dei tessuti in laboratorio.</p>
+        <p class="step-intro">Il tessuto della parte bassa del corpo: lo stesso coprirà anche entrambe le maniche.</p>
+        <div class="mat-grid" id="matGrid_sotto"></div>
+        <div class="pill-inline" id="colorWrap_sotto">
+          <span class="fl">Colore</span>
+          <div class="swatch-grid" id="colorGrid_sotto"></div>
+        </div>
       </div>
     </div>
 
-    <!-- STEP 4: NASTRO SBIECO -->
-    <div class="step-card locked" id="step-nastro">
+    <!-- STEP 4: FASCIA BOTTONI/ZIP -->
+    <div class="step-card locked" id="step-zona-placket">
       <div class="step-head">
-        <div class="s-num" id="snum-nastro">4</div>
+        <div class="s-num" id="snum-zona-placket">4</div>
         <div class="s-title-wrap">
           <span class="s-label">STEP 04</span>
-          <span class="s-title">Nastro sbieco a contrasto?</span>
+          <span class="s-title">Tessuto — fascia centrale</span>
         </div>
       </div>
       <div class="step-body">
-        <p class="hint" style="margin:4px 0 14px;font-style:normal;">Una rifinitura in nastro sbieco su colletto, polsini e fondo, in un colore a scelta.</p>
-        <div class="pills">
-          <div class="pill" onclick="pickNastro(this,'si')">Sì, aggiungilo</div>
-          <div class="pill" onclick="pickNastro(this,'no')">No, grazie</div>
-        </div>
-        <div class="pill-inline" id="nastroColorWrap">
-          <span class="fl">Colore del nastro sbieco</span>
-          <div class="swatch-grid" id="nastroGrid"></div>
+        <p class="step-intro" id="placketIntro">Il tessuto della striscia centrale dove sono cuciti i bottoni o la zip.</p>
+        <div class="mat-grid" id="matGrid_placket"></div>
+        <div class="pill-inline" id="colorWrap_placket">
+          <span class="fl">Colore</span>
+          <div class="swatch-grid" id="colorGrid_placket"></div>
         </div>
       </div>
     </div>
 
-    <!-- STEP 5: RIEPILOGO -->
-    <div class="step-card locked" id="step-riepilogo">
+    <!-- STEP 5: NASTRO SBIECO -->
+    <div class="step-card locked" id="step-nastro">
       <div class="step-head">
-        <div class="s-num" id="snum-riepilogo">5</div>
+        <div class="s-num" id="snum-nastro">5</div>
         <div class="s-title-wrap">
           <span class="s-label">STEP 05</span>
+          <span class="s-title">Colore del nastro sbieco</span>
+        </div>
+      </div>
+      <div class="step-body">
+        <p class="step-intro">Il nastro sbieco rifinisce colletto, fascia centrale e tasca a contrasto — è incluso in ogni felpa, scegli solo il colore.</p>
+        <div class="swatch-grid" id="nastroGrid"></div>
+      </div>
+    </div>
+
+    <!-- STEP 6: RIEPILOGO -->
+    <div class="step-card locked" id="step-riepilogo">
+      <div class="step-head">
+        <div class="s-num" id="snum-riepilogo">6</div>
+        <div class="s-title-wrap">
+          <span class="s-label">STEP 06</span>
           <span class="s-title">Riepilogo e richiesta</span>
         </div>
       </div>
@@ -403,40 +425,49 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);fon
         <div class="garment-wrap">
           <svg id="garmentSvg" viewBox="0 0 220 260" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <pattern id="matPattern" patternUnits="userSpaceOnUse" width="220" height="260">
-                <rect id="matPatternBg" width="220" height="260" fill="#E4DFD6"/>
-                <image id="matPatternImg" href="" width="220" height="260" preserveAspectRatio="xMidYMid slice" opacity="0" onerror="this.setAttribute('opacity','0')"/>
+              <pattern id="patSopra" patternUnits="userSpaceOnUse" width="220" height="260">
+                <rect id="patSopraBg" width="220" height="260" fill="#E4DFD6"/>
+                <image id="patSopraImg" href="" width="220" height="260" preserveAspectRatio="xMidYMid slice" opacity="0" onerror="this.setAttribute('opacity','0')"/>
               </pattern>
-              <pattern id="trimPattern" patternUnits="userSpaceOnUse" width="220" height="260">
-                <rect id="trimPatternBg" width="220" height="260" fill="#1A1A1A"/>
-                <image id="trimPatternImg" href="" width="220" height="260" preserveAspectRatio="xMidYMid slice" opacity="0" onerror="this.setAttribute('opacity','0')"/>
+              <pattern id="patSotto" patternUnits="userSpaceOnUse" width="220" height="260">
+                <rect id="patSottoBg" width="220" height="260" fill="#E4DFD6"/>
+                <image id="patSottoImg" href="" width="220" height="260" preserveAspectRatio="xMidYMid slice" opacity="0" onerror="this.setAttribute('opacity','0')"/>
+              </pattern>
+              <pattern id="patPlacket" patternUnits="userSpaceOnUse" width="220" height="260">
+                <rect id="patPlacketBg" width="220" height="260" fill="#E4DFD6"/>
+                <image id="patPlacketImg" href="" width="220" height="260" preserveAspectRatio="xMidYMid slice" opacity="0" onerror="this.setAttribute('opacity','0')"/>
               </pattern>
             </defs>
 
-            <!-- corpo principale -->
-            <path id="garmentBody" d="M75,35 C85,45 135,45 145,35 L185,60 L215,95 L188,112 L150,88 L150,225 L70,225 L70,88 L32,112 L5,95 L35,60 Z"
-                  fill="url(#matPattern)" stroke="#1A1A1A" stroke-width="2" stroke-linejoin="round"/>
+            <!-- maniche (tessuto "sotto") -->
+            <path id="sleeveL" d="M35,60 L5,95 L32,112 L70,88 Z" fill="url(#patSotto)" stroke="#1A1A1A" stroke-width="2" stroke-linejoin="round"/>
+            <path id="sleeveR" d="M185,60 L215,95 L188,112 L150,88 Z" fill="url(#patSotto)" stroke="#1A1A1A" stroke-width="2" stroke-linejoin="round"/>
 
-            <!-- rifiniture nastro sbieco -->
-            <path id="trimCollar" d="M75,35 C85,45 135,45 145,35 L138,49 C128,55 92,55 82,49 Z" fill="url(#trimPattern)" stroke="#1A1A1A" stroke-width="1.2" opacity="0"/>
-            <path id="trimCuffL" d="M5,95 L32,112 L39,101 L14,85 Z" fill="url(#trimPattern)" stroke="#1A1A1A" stroke-width="1.2" opacity="0"/>
-            <path id="trimCuffR" d="M215,95 L188,112 L181,101 L206,85 Z" fill="url(#trimPattern)" stroke="#1A1A1A" stroke-width="1.2" opacity="0"/>
-            <rect id="trimHem" x="70" y="210" width="80" height="15" fill="url(#trimPattern)" stroke="#1A1A1A" stroke-width="1.2" opacity="0"/>
+            <!-- corpo inferiore (tessuto "sotto") -->
+            <path id="bodyLower" d="M70,88 Q110,175 150,88 L150,225 L70,225 Z" fill="url(#patSotto)" stroke="#1A1A1A" stroke-width="2" stroke-linejoin="round"/>
+
+            <!-- corpo superiore / giogo (tessuto "sopra") -->
+            <path id="bodyYoke" d="M75,35 C85,45 135,45 145,35 L185,60 L150,88 Q110,175 70,88 L35,60 Z" fill="url(#patSopra)" stroke="#1A1A1A" stroke-width="2" stroke-linejoin="round"/>
+
+            <!-- accento tasca (nastro sbieco) -->
+            <line id="trimPocket" x1="82" y1="168" x2="100" y2="198" stroke="#1A1A1A" stroke-width="3" stroke-linecap="round" opacity="0"/>
+
+            <!-- fascia centrale bottoni/zip (tessuto "placket") -->
+            <rect id="placketRect" x="96" y="39" width="28" height="111" rx="3" fill="url(#patPlacket)" stroke="#1A1A1A" stroke-width="3" stroke-linejoin="round"/>
+
+            <!-- rifinitura colletto (nastro sbieco) -->
+            <path id="trimCollar" d="M76,36 C86,46 134,46 144,36 L140,43 C130,49 90,49 80,43 Z" fill="#B8B4AC" opacity="0"/>
 
             <!-- chiusure -->
-            <g id="closureFull" opacity="0">
-              <line x1="110" y1="44" x2="110" y2="222" stroke="#1A1A1A" stroke-width="1.6" stroke-dasharray="1.5 3.5"/>
-              <rect x="105" y="38" width="10" height="14" rx="2" fill="#1A1A1A"/>
+            <g id="closureButtons" opacity="0">
+              <circle cx="110" cy="52" r="3.2" fill="#1A1A1A"/>
+              <circle cx="110" cy="75" r="3.2" fill="#1A1A1A"/>
+              <circle cx="110" cy="98" r="3.2" fill="#1A1A1A"/>
+              <circle cx="110" cy="121" r="3.2" fill="#1A1A1A"/>
             </g>
-            <g id="closureNeckZip" opacity="0">
-              <line x1="110" y1="44" x2="110" y2="84" stroke="#1A1A1A" stroke-width="1.6" stroke-dasharray="1.5 3.5"/>
-              <rect x="105" y="38" width="10" height="14" rx="2" fill="#1A1A1A"/>
-            </g>
-            <g id="closureNeckButtons" opacity="0">
-              <circle cx="110" cy="46" r="3" fill="#1A1A1A"/>
-              <circle cx="110" cy="58" r="3" fill="#1A1A1A"/>
-              <circle cx="110" cy="70" r="3" fill="#1A1A1A"/>
-              <circle cx="110" cy="82" r="3" fill="#1A1A1A"/>
+            <g id="closureZip" opacity="0">
+              <line id="zipLine" x1="110" y1="46" x2="110" y2="145" stroke="#1A1A1A" stroke-width="1.6" stroke-dasharray="1.5 3.5"/>
+              <rect x="105" y="40" width="10" height="13" rx="2" fill="#1A1A1A"/>
             </g>
           </svg>
         </div>
@@ -509,18 +540,31 @@ const COLORI = [
   {slug:'nero-carbone', name:'Nero Carbone',  hex:'#1A1A1A'},
   {slug:'senape',       name:'Senape',        hex:'#D9A441'},
   {slug:'rosa-cipria',  name:'Rosa Cipria',   hex:'#E3B7B0'},
+  {slug:'lilla',        name:'Lilla',         hex:'#C6A0DE'},
 ];
 
-const S = { modello:null, chiusura:null, materiale:null, colore:null, coloreHex:null, nastro:null, nastroColore:null, nastroHex:null, note:'', nome:'', email:'', tel:'' };
+const ZONES = ['sopra','sotto','placket'];
+const ZONE_LABEL = {sopra:'Parte superiore', sotto:'Parte inferiore e maniche', placket:'Fascia centrale'};
+const ZONE_NEXT = {sopra:'sotto', sotto:'placket', placket:'nastro'};
+
+const S = {
+  modello:null, chiusura:null,
+  zone:{ sopra:{materiale:null,colore:null,hex:null}, sotto:{materiale:null,colore:null,hex:null}, placket:{materiale:null,colore:null,hex:null} },
+  nastroColore:null, nastroHex:null,
+  note:'', nome:'', email:'', tel:''
+};
+
+/* ════ CHECK ICON ════ */
+const CHECK_SVG = `<svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1,3.5 3.2,5.8 8,1" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
 /* ════ RENDER GRIDS ════ */
-function renderMatGrid(){
-  document.getElementById('matGrid').innerHTML = MATERIALI.map(m=>`
-    <div class="mat-card" data-mat="${m.slug}" onclick="selectMateriale(this,'${m.slug}')">
+function renderZoneMatGrid(zone){
+  document.getElementById('matGrid_'+zone).innerHTML = MATERIALI.map(m=>`
+    <div class="mat-card" data-mat="${m.slug}" onclick="selectZoneMateriale('${zone}',this,'${m.slug}')">
       <div class="mat-thumb" style="background:${MAT_FALLBACK[m.slug]}">
         <img src="img/felpa/materiali/${m.slug}.jpg" alt="" onerror="this.style.display='none'">
       </div>
-      <div class="card-check"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1,3.5 3.2,5.8 8,1" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="card-check">${CHECK_SVG}</div>
       <div class="mat-body">
         <div class="mat-name">${m.name}</div>
         <div class="mat-desc">${m.desc}</div>
@@ -528,42 +572,34 @@ function renderMatGrid(){
     </div>
   `).join('');
 }
-
-function renderColorGrid(){
-  document.getElementById('colorGrid').innerHTML = COLORI.map(c=>`
-    <div class="swatch-card" data-color="${c.slug}" onclick="selectColore(this,'${c.slug}','${c.hex}')">
+function renderZoneColorGrid(zone){
+  const mat = S.zone[zone].materiale;
+  document.getElementById('colorGrid_'+zone).innerHTML = COLORI.map(c=>`
+    <div class="swatch-card" data-color="${c.slug}" onclick="selectZoneColore('${zone}',this,'${c.slug}','${c.hex}')">
       <div class="swatch-thumb" style="background:${c.hex};${c.border?'border-bottom:1.5px solid var(--border)':''}">
-        <img src="img/felpa/colori/${S.materiale}-${c.slug}.jpg" alt="" onerror="this.style.display='none'">
+        <img src="img/felpa/colori/${mat}-${c.slug}.jpg" alt="" onerror="this.style.display='none'">
       </div>
-      <div class="card-check"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1,3.5 3.2,5.8 8,1" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="card-check">${CHECK_SVG}</div>
       <div class="swatch-name">${c.name}</div>
     </div>
   `).join('');
 }
-
 function renderNastroGrid(){
   document.getElementById('nastroGrid').innerHTML = COLORI.map(c=>`
     <div class="swatch-card" data-ncolor="${c.slug}" onclick="selectNastroColore(this,'${c.slug}','${c.hex}')">
       <div class="swatch-thumb" style="background:${c.hex};${c.border?'border-bottom:1.5px solid var(--border)':''}">
         <img src="img/felpa/nastro/${c.slug}.jpg" alt="" onerror="this.style.display='none'">
       </div>
-      <div class="card-check"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1,3.5 3.2,5.8 8,1" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="card-check">${CHECK_SVG}</div>
       <div class="swatch-name">${c.name}</div>
     </div>
   `).join('');
 }
 
 /* ════ STEP HELPERS ════ */
-function unlock(id){
-  const el=document.getElementById('step-'+id);
-  el.classList.remove('locked');
-}
-function markDone(id){
-  document.getElementById('step-'+id).classList.add('done');
-}
-function scrollToStep(id){
-  document.getElementById('step-'+id).scrollIntoView({behavior:'smooth',block:'start'});
-}
+function unlock(id){ document.getElementById('step-'+id).classList.remove('locked'); }
+function markDone(id){ document.getElementById('step-'+id).classList.add('done'); }
+function scrollToStep(id){ document.getElementById('step-'+id).scrollIntoView({behavior:'smooth',block:'start'}); }
 
 /* ════ STEP 1: MODELLO ════ */
 function selectModello(el,val){
@@ -571,6 +607,9 @@ function selectModello(el,val){
   el.classList.add('sel');
   S.modello=val;
   const sub=document.getElementById('chiusuraInline');
+  document.getElementById('placketIntro').textContent = val==='aperta'
+    ? 'Il tessuto della fascia che corre lungo tutta la zip, dal collo all’orlo.'
+    : 'Il tessuto della striscia centrale dove sono cuciti i bottoni o la zip corta.';
   if(val==='collo'){
     sub.classList.add('show');
     S.chiusura=null;
@@ -590,58 +629,40 @@ function pickChiusura(el,val){
 }
 function finishModello(){
   markDone('modello');
-  unlock('materiale');
+  unlock('zona-sopra');
   updatePreview(); updateRecap();
-  setTimeout(()=>scrollToStep('materiale'),200);
+  setTimeout(()=>scrollToStep('zona-sopra'),200);
 }
 
-/* ════ STEP 2: MATERIALE ════ */
-function selectMateriale(el,val){
-  document.querySelectorAll('.mat-card').forEach(c=>c.classList.remove('sel'));
+/* ════ STEP 2-4: ZONE TESSUTO ════ */
+function selectZoneMateriale(zone,el,val){
+  el.parentElement.querySelectorAll('.mat-card').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
-  S.materiale=val; S.colore=null; S.coloreHex=null;
-  renderColorGrid();
-  markDone('materiale');
-  unlock('colore');
+  S.zone[zone].materiale=val; S.zone[zone].colore=null; S.zone[zone].hex=null;
+  renderZoneColorGrid(zone);
+  document.getElementById('colorWrap_'+zone).classList.add('show');
   updatePreview(); updateRecap();
-  setTimeout(()=>scrollToStep('colore'),200);
+}
+function selectZoneColore(zone,el,val,hex){
+  el.parentElement.querySelectorAll('.swatch-card').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  S.zone[zone].colore=val; S.zone[zone].hex=hex;
+  finishZoneStep(zone);
+}
+function finishZoneStep(zone){
+  markDone('zona-'+zone);
+  const next = ZONE_NEXT[zone];
+  const nextId = next==='nastro' ? 'nastro' : 'zona-'+next;
+  unlock(nextId);
+  updatePreview(); updateRecap();
+  setTimeout(()=>scrollToStep(nextId),200);
 }
 
-/* ════ STEP 3: COLORE ════ */
-function selectColore(el,val,hex){
-  document.querySelectorAll('#colorGrid .swatch-card').forEach(c=>c.classList.remove('sel'));
-  el.classList.add('sel');
-  S.colore=val; S.coloreHex=hex;
-  markDone('colore');
-  unlock('nastro');
-  updatePreview(); updateRecap();
-  setTimeout(()=>scrollToStep('nastro'),200);
-}
-
-/* ════ STEP 4: NASTRO SBIECO ════ */
-function pickNastro(el,val){
-  document.querySelectorAll('#step-nastro > .step-body > .pills .pill').forEach(p=>p.classList.remove('sel'));
-  el.classList.add('sel');
-  S.nastro=val;
-  const wrap=document.getElementById('nastroColorWrap');
-  if(val==='si'){
-    wrap.classList.add('show');
-    renderNastroGrid();
-    S.nastroColore=null; S.nastroHex=null;
-    updatePreview(); updateRecap();
-  }else{
-    wrap.classList.remove('show');
-    S.nastroColore=null; S.nastroHex=null;
-    finishNastro();
-  }
-}
+/* ════ STEP 5: NASTRO SBIECO ════ */
 function selectNastroColore(el,val,hex){
   document.querySelectorAll('#nastroGrid .swatch-card').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
   S.nastroColore=val; S.nastroHex=hex;
-  finishNastro();
-}
-function finishNastro(){
   markDone('nastro');
   unlock('riepilogo');
   updatePreview(); updateRecap();
@@ -650,67 +671,83 @@ function finishNastro(){
 }
 
 /* ════ PREVIEW ════ */
+function fillZonePattern(zone, patId){
+  const z = S.zone[zone];
+  const bg = document.getElementById('pat'+patId+'Bg');
+  const img = document.getElementById('pat'+patId+'Img');
+  if(z.materiale && z.colore){
+    bg.setAttribute('fill', z.hex);
+    img.setAttribute('opacity','1');
+    img.setAttribute('href', `img/felpa/colori/${z.materiale}-${z.colore}.jpg`);
+  }else if(z.materiale){
+    bg.setAttribute('fill', MAT_FALLBACK[z.materiale]||'#E4DFD6');
+    img.setAttribute('opacity','1');
+    img.setAttribute('href', `img/felpa/materiali/${z.materiale}.jpg`);
+  }else{
+    bg.setAttribute('fill','#E4DFD6');
+    img.setAttribute('opacity','0');
+    img.setAttribute('href','');
+  }
+}
+function updateClosure(){
+  const collo = S.modello==='collo';
+  document.getElementById('placketRect').setAttribute('height', collo ? '111' : '183');
+  document.getElementById('closureButtons').setAttribute('opacity', (collo && S.chiusura==='bottoni') ? '1':'0');
+  const showZip = (collo && S.chiusura==='zip') || S.modello==='aperta';
+  document.getElementById('closureZip').setAttribute('opacity', showZip ? '1':'0');
+  document.getElementById('zipLine').setAttribute('y2', collo ? '145' : '215');
+}
+function updateTrim(){
+  const on = !!S.nastroColore;
+  const hex = S.nastroHex || '#1A1A1A';
+  const collarEl = document.getElementById('trimCollar');
+  collarEl.setAttribute('fill', on?hex:'#B8B4AC');
+  collarEl.setAttribute('opacity', on?'1':'0');
+  const placket = document.getElementById('placketRect');
+  placket.setAttribute('stroke', on?hex:'#1A1A1A');
+  placket.setAttribute('stroke-width', on?'4':'3');
+  const pocket = document.getElementById('trimPocket');
+  pocket.setAttribute('stroke', on?hex:'#1A1A1A');
+  pocket.setAttribute('opacity', on?'1':'0');
+}
 function updatePreview(){
   document.getElementById('prevEmpty').style.display = S.modello ? 'none' : 'flex';
-
-  const bodyBg=document.getElementById('matPatternBg');
-  const bodyImg=document.getElementById('matPatternImg');
-  if(S.materiale && S.colore){
-    bodyBg.setAttribute('fill', S.coloreHex);
-    bodyImg.setAttribute('opacity','1');
-    bodyImg.setAttribute('href', `img/felpa/colori/${S.materiale}-${S.colore}.jpg`);
-  }else if(S.materiale){
-    bodyBg.setAttribute('fill', MAT_FALLBACK[S.materiale]||'#E4DFD6');
-    bodyImg.setAttribute('opacity','1');
-    bodyImg.setAttribute('href', `img/felpa/materiali/${S.materiale}.jpg`);
-  }else{
-    bodyBg.setAttribute('fill','#E4DFD6');
-    bodyImg.setAttribute('opacity','0');
-    bodyImg.setAttribute('href','');
-  }
-
-  const trimOn = S.nastro==='si' && S.nastroColore;
-  ['trimCollar','trimCuffL','trimCuffR','trimHem'].forEach(id=>{
-    document.getElementById(id).setAttribute('opacity', trimOn ? '1':'0');
-  });
-  const trimBg=document.getElementById('trimPatternBg');
-  const trimImg=document.getElementById('trimPatternImg');
-  if(trimOn){
-    trimBg.setAttribute('fill', S.nastroHex);
-    trimImg.setAttribute('opacity','1');
-    trimImg.setAttribute('href', `img/felpa/nastro/${S.nastroColore}.jpg`);
-  }else{
-    trimImg.setAttribute('opacity','0');
-    trimImg.setAttribute('href','');
-  }
-
-  document.getElementById('closureFull').setAttribute('opacity', S.modello==='aperta' ? '1':'0');
-  document.getElementById('closureNeckZip').setAttribute('opacity', (S.modello==='collo'&&S.chiusura==='zip') ? '1':'0');
-  document.getElementById('closureNeckButtons').setAttribute('opacity', (S.modello==='collo'&&S.chiusura==='bottoni') ? '1':'0');
+  fillZonePattern('sopra','Sopra');
+  fillZonePattern('sotto','Sotto');
+  fillZonePattern('placket','Placket');
+  updateClosure();
+  updateTrim();
 }
 
 /* ════ RECAP BAR + RIEPILOGO STEP ════ */
 const MODELLO_LABEL = {aperta:'Aperta con zip', collo:'Girocollo'};
 const CHIUSURA_LABEL = {zip:'Chiusura zip', bottoni:'Chiusura bottoni'};
 
+function zoneLabelStr(zone){
+  const z=S.zone[zone];
+  if(!z.materiale || !z.colore) return null;
+  return `${MATERIALI.find(m=>m.slug===z.materiale).name} ${COLORI.find(c=>c.slug===z.colore).name}`;
+}
+function isReady(){
+  return !!(S.modello && (S.modello==='aperta'||S.chiusura) &&
+    ZONES.every(z=>S.zone[z].materiale && S.zone[z].colore) &&
+    S.nastroColore);
+}
 function updateRecap(){
   const chips=[];
   if(S.modello) chips.push(MODELLO_LABEL[S.modello]);
   if(S.modello==='collo' && S.chiusura) chips.push(CHIUSURA_LABEL[S.chiusura]);
-  if(S.materiale) chips.push(MATERIALI.find(m=>m.slug===S.materiale).name);
-  if(S.colore) chips.push(COLORI.find(c=>c.slug===S.colore).name);
-  if(S.nastro==='si' && S.nastroColore) chips.push('Nastro '+COLORI.find(c=>c.slug===S.nastroColore).name);
-  else if(S.nastro==='no') chips.push('Senza nastro sbieco');
+  ZONES.forEach(z=>{ const l=zoneLabelStr(z); if(l) chips.push(l); });
+  if(S.nastroColore) chips.push('Sbieco '+COLORI.find(c=>c.slug===S.nastroColore).name);
 
   document.getElementById('recapPills').innerHTML = chips.length
     ? chips.map(c=>`<span class="p-pill sel">${c}</span>`).join('')
     : '<span class="p-pill">Configura la tua felpa…</span>';
 
-  const ready = !!(S.modello && (S.modello==='aperta'||S.chiusura) && S.materiale && S.colore);
+  const ready = isReady();
   document.getElementById('btnBarSubmit').disabled = !ready;
   document.getElementById('btnRiepilogoSubmit').disabled = !ready;
 }
-
 function recapRow(label,val){
   return `<div class="recap-row"><span class="recap-row-label">${label}</span><span class="recap-row-val${val?'':' empty'}">${val||'da scegliere'}</span></div>`;
 }
@@ -718,22 +755,24 @@ function renderRiepilogo(){
   const rows = [
     recapRow('Modello', S.modello?MODELLO_LABEL[S.modello]:''),
     S.modello==='collo' ? recapRow('Chiusura', S.chiusura?CHIUSURA_LABEL[S.chiusura]:'') : '',
-    recapRow('Materiale', S.materiale?MATERIALI.find(m=>m.slug===S.materiale).name:''),
-    recapRow('Colore', S.colore?COLORI.find(c=>c.slug===S.colore).name:''),
-    recapRow('Nastro sbieco', S.nastro==='si' ? (S.nastroColore?'Sì — '+COLORI.find(c=>c.slug===S.nastroColore).name:'Sì') : (S.nastro==='no'?'No':'')),
+    recapRow(ZONE_LABEL.sopra, zoneLabelStr('sopra')),
+    recapRow(ZONE_LABEL.sotto, zoneLabelStr('sotto')),
+    recapRow(ZONE_LABEL.placket, zoneLabelStr('placket')),
+    recapRow('Nastro sbieco', S.nastroColore ? COLORI.find(c=>c.slug===S.nastroColore).name : ''),
   ].join('');
   document.getElementById('recapList').innerHTML = rows;
 }
 
 /* ════ CONTACT MODAL ════ */
 function openContactModal(){
-  const ready = !!(S.modello && (S.modello==='aperta'||S.chiusura) && S.materiale && S.colore);
-  if(!ready) return;
+  if(!isReady()) return;
   renderRiepilogo();
   document.getElementById('modalRecap').innerHTML = `
     <strong>${S.modello==='aperta'?'Felpa aperta con zip':'Felpa girocollo'}</strong>${S.modello==='collo'&&S.chiusura?' — '+CHIUSURA_LABEL[S.chiusura]:''}<br>
-    Materiale: <strong>${MATERIALI.find(m=>m.slug===S.materiale).name}</strong>, colore <strong>${COLORI.find(c=>c.slug===S.colore).name}</strong><br>
-    Nastro sbieco: <strong>${S.nastro==='si'?(S.nastroColore?COLORI.find(c=>c.slug===S.nastroColore).name:'sì'):'no'}</strong>
+    Superiore: <strong>${zoneLabelStr('sopra')}</strong><br>
+    Inferiore e maniche: <strong>${zoneLabelStr('sotto')}</strong><br>
+    Fascia centrale: <strong>${zoneLabelStr('placket')}</strong><br>
+    Nastro sbieco: <strong>${COLORI.find(c=>c.slug===S.nastroColore).name}</strong>
   `;
   document.getElementById('contactModalOv').classList.add('open');
 }
@@ -759,18 +798,19 @@ function submitRequest(){
   const body=[
     `RICHIESTA FELPA PERSONALIZZATA`,
     `─────────────────────────────`,
-    `Modello:        ${S.modello?MODELLO_LABEL[S.modello]:'—'}`,
-    `Chiusura:       ${S.modello==='collo'&&S.chiusura?CHIUSURA_LABEL[S.chiusura]:(S.modello==='aperta'?'Zip intera':'—')}`,
-    `Materiale:      ${S.materiale?MATERIALI.find(m=>m.slug===S.materiale).name:'—'}`,
-    `Colore:         ${S.colore?COLORI.find(c=>c.slug===S.colore).name:'—'}`,
-    `Nastro sbieco:  ${S.nastro==='si'?(S.nastroColore?'Sì — '+COLORI.find(c=>c.slug===S.nastroColore).name:'Sì'):'No'}`,
+    `Modello:            ${S.modello?MODELLO_LABEL[S.modello]:'—'}`,
+    `Chiusura:           ${S.modello==='collo'&&S.chiusura?CHIUSURA_LABEL[S.chiusura]:(S.modello==='aperta'?'Zip intera':'—')}`,
+    `Parte superiore:    ${zoneLabelStr('sopra')||'—'}`,
+    `Inferiore/maniche:  ${zoneLabelStr('sotto')||'—'}`,
+    `Fascia centrale:    ${zoneLabelStr('placket')||'—'}`,
+    `Nastro sbieco:      ${S.nastroColore?COLORI.find(c=>c.slug===S.nastroColore).name:'—'}`,
     `─────────────────────────────`,
-    `Note:           ${S.note||'—'}`,
+    `Note:               ${S.note||'—'}`,
     `─────────────────────────────`,
     `CONTATTI`,
-    `Nome:           ${S.nome||'—'}`,
-    `Email:          ${S.email||'—'}`,
-    `Cellulare:      ${S.tel||'—'}`,
+    `Nome:               ${S.nome||'—'}`,
+    `Email:              ${S.email||'—'}`,
+    `Cellulare:          ${S.tel||'—'}`,
   ].map(l=>encodeURIComponent(l)).join('%0A');
 
   setTimeout(()=>{
@@ -779,7 +819,10 @@ function submitRequest(){
 }
 
 /* ════ INIT ════ */
-renderMatGrid();
+renderZoneMatGrid('sopra');
+renderZoneMatGrid('sotto');
+renderZoneMatGrid('placket');
+renderNastroGrid();
 updatePreview();
 updateRecap();
 </script>
