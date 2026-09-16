@@ -6,7 +6,7 @@
 <title>Configura la tua felpa in pile | Duami Lab</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:ital,wght@0,700;0,800;1,700;1,800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:ital,wght@0,700;0,800;1,700;1,800&family=Bebas+Neue&family=Dancing+Script:wght@600&family=Courier+Prime:wght@700&family=Beth+Ellen&display=swap" rel="stylesheet"/>
 <style>
 /* ════════════════════════════════
    TOKENS — allineati a index.html
@@ -124,6 +124,23 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);fon
 .swatch-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
 .swatch-name{font-size:11px;font-weight:600;color:var(--body);padding:7px 6px 9px;line-height:1.3;}
 .swatch-card.sel .swatch-name{color:var(--blue);}
+
+/* ── RICAMO ── */
+.font-pills{display:flex;flex-wrap:wrap;gap:8px;}
+.font-pill{border:1.5px solid var(--border);border-radius:10px;padding:11px 18px;font-size:17px;color:var(--dark);cursor:pointer;background:#fff;transition:var(--t);}
+.font-pill:hover{border-color:#999;}
+.font-pill.sel{border-color:var(--dark);background:var(--dark);color:#fff;}
+.ricamo-pos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.pos-card{position:relative;border:1.5px solid var(--border);border-radius:14px;cursor:pointer;background:#fff;overflow:hidden;transition:border-color var(--t),box-shadow var(--t);text-align:center;padding:10px 6px 12px;}
+.pos-card:hover{border-color:#C0BCBA;}
+.pos-card.sel{border-color:var(--blue);box-shadow:0 0 0 3px rgba(41,121,255,.1);}
+.pos-icon{display:flex;align-items:center;justify-content:center;margin-bottom:6px;}
+.pos-card .shirt-dot{fill:var(--dark);opacity:.75;transition:fill var(--t),opacity var(--t);}
+.pos-card.sel .shirt-dot{fill:var(--blue);opacity:1;}
+.pos-card .shirt-path{fill:none;stroke:var(--dark);stroke-width:1.5;opacity:.6;transition:stroke var(--t),opacity var(--t);}
+.pos-card.sel .shirt-path{stroke:var(--blue);opacity:.9;}
+.pos-name{font-size:12px;font-weight:600;color:var(--body);}
+.pos-card.sel .pos-name{color:var(--blue);}
 
 /* ── CONTEXT BANNER ── */
 .ctx-banner{display:flex;align-items:flex-start;gap:10px;margin-top:16px;padding:12px 14px;background:var(--bg-sec);border-radius:var(--r-sm);font-size:13px;color:var(--muted);line-height:1.7;}
@@ -383,12 +400,46 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);fon
       </div>
     </div>
 
-    <!-- STEP 6: RIEPILOGO -->
-    <div class="step-card locked" id="step-riepilogo">
+    <!-- STEP 6: RICAMO -->
+    <div class="step-card locked" id="step-ricamo">
       <div class="step-head">
-        <div class="s-num" id="snum-riepilogo">6</div>
+        <div class="s-num" id="snum-ricamo">6</div>
         <div class="s-title-wrap">
           <span class="s-label">STEP 06</span>
+          <span class="s-title">Vuoi un ricamo?</span>
+        </div>
+      </div>
+      <div class="step-body">
+        <p class="step-intro">Una scritta, un nome o una piccola frase ricamati a mano su petto o manica — facoltativo.</p>
+        <div class="pills">
+          <div class="pill" onclick="pickRicamo(this,true)">Sì, aggiungilo</div>
+          <div class="pill" onclick="pickRicamo(this,false)">No, grazie</div>
+        </div>
+
+        <div class="pill-inline" id="ricamoWrap">
+          <span class="fl">Testo del ricamo</span>
+          <input class="contact-input" id="ricamoTesto" maxlength="16" placeholder="Es. il tuo nome" oninput="updateRicamoTesto(this.value)">
+
+          <span class="fl">Font</span>
+          <div class="font-pills" id="fontPills"></div>
+
+          <span class="fl">Colore del filo</span>
+          <div class="swatch-grid" id="ricamoColorGrid"></div>
+
+          <span class="fl">Posizione</span>
+          <div class="ricamo-pos-grid" id="ricamoPosGrid"></div>
+
+          <button class="btn-submit-main" id="btnRicamoContinua" style="margin-top:20px" onclick="confirmRicamo()" disabled>Conferma ricamo</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 7: RIEPILOGO -->
+    <div class="step-card locked" id="step-riepilogo">
+      <div class="step-head">
+        <div class="s-num" id="snum-riepilogo">7</div>
+        <div class="s-title-wrap">
+          <span class="s-label">STEP 07</span>
           <span class="s-title">Riepilogo e richiesta</span>
         </div>
       </div>
@@ -469,6 +520,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);fon
               <line id="zipLine" x1="110" y1="46" x2="110" y2="145" stroke="#1A1A1A" stroke-width="1.6" stroke-dasharray="1.5 3.5"/>
               <rect x="105" y="40" width="10" height="13" rx="2" fill="#1A1A1A"/>
             </g>
+
+            <!-- ricamo -->
+            <text id="ricamoText" x="0" y="0" text-anchor="middle" font-size="12" fill="#1A1A1A" opacity="0"></text>
           </svg>
         </div>
 
@@ -547,10 +601,23 @@ const ZONES = ['sopra','sotto','placket'];
 const ZONE_LABEL = {sopra:'Parte superiore', sotto:'Parte inferiore e maniche', placket:'Fascia centrale'};
 const ZONE_NEXT = {sopra:'sotto', sotto:'placket', placket:'nastro'};
 
+const RICAMO_FONTS = [
+  {slug:'bebas',   name:'Bebas Neue',     fam:"'Bebas Neue',sans-serif"},
+  {slug:'dancing', name:'Dancing Script', fam:"'Dancing Script',cursive"},
+  {slug:'courier', name:'Courier Prime',  fam:"'Courier Prime',monospace"},
+  {slug:'beth',    name:'Beth Ellen',     fam:"'Beth Ellen',cursive"},
+];
+const RICAMO_POS = [
+  {slug:'petto-sx',  name:'Petto sinistro', x:58,  y:64,  iconX:35, iconY:34},
+  {slug:'petto-dx',  name:'Petto destro',   x:162, y:64,  iconX:65, iconY:34},
+  {slug:'manica-sx', name:'Manica',         x:20,  y:97,  iconX:19, iconY:24},
+];
+
 const S = {
   modello:null, chiusura:null,
   zone:{ sopra:{materiale:null,colore:null,hex:null}, sotto:{materiale:null,colore:null,hex:null}, placket:{materiale:null,colore:null,hex:null} },
   nastroColore:null, nastroHex:null,
+  ricamo:{ attivo:null, testo:'', font:null, fontFam:null, colore:null, hex:null, posizione:null },
   note:'', nome:'', email:'', tel:''
 };
 
@@ -592,6 +659,33 @@ function renderNastroGrid(){
       </div>
       <div class="card-check">${CHECK_SVG}</div>
       <div class="swatch-name">${c.name}</div>
+    </div>
+  `).join('');
+}
+function renderRicamoFontPills(){
+  document.getElementById('fontPills').innerHTML = RICAMO_FONTS.map(f=>`
+    <div class="font-pill" data-font="${f.slug}" style="font-family:${f.fam}" onclick="selectRicamoFont(this,'${f.slug}')">${f.name}</div>
+  `).join('');
+}
+function renderRicamoColorGrid(){
+  document.getElementById('ricamoColorGrid').innerHTML = COLORI.map(c=>`
+    <div class="swatch-card" data-rcolor="${c.slug}" onclick="selectRicamoColore(this,'${c.slug}','${c.hex}')">
+      <div class="swatch-thumb" style="background:${c.hex};${c.border?'border-bottom:1.5px solid var(--border)':''}"></div>
+      <div class="card-check">${CHECK_SVG}</div>
+      <div class="swatch-name">${c.name}</div>
+    </div>
+  `).join('');
+}
+function renderRicamoPosGrid(){
+  document.getElementById('ricamoPosGrid').innerHTML = RICAMO_POS.map(p=>`
+    <div class="pos-card" data-pos="${p.slug}" onclick="selectRicamoPos(this,'${p.slug}')">
+      <div class="pos-icon">
+        <svg viewBox="0 0 100 88" width="52" height="46" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M32 10 Q50 20 68 10 L84 26 L70 31 L70 76 L30 76 L30 31 L16 26 Z" class="shirt-path"/>
+          <circle cx="${p.iconX}" cy="${p.iconY}" r="6" class="shirt-dot"/>
+        </svg>
+      </div>
+      <div class="pos-name">${p.name}</div>
     </div>
   `).join('');
 }
@@ -664,10 +758,97 @@ function selectNastroColore(el,val,hex){
   el.classList.add('sel');
   S.nastroColore=val; S.nastroHex=hex;
   markDone('nastro');
-  unlock('riepilogo');
+  unlock('ricamo');
   updatePreview(); updateRecap();
-  renderRiepilogo();
+  setTimeout(()=>scrollToStep('ricamo'),200);
+}
+
+/* ════ STEP 6: RICAMO (facoltativo) ════ */
+function pickRicamo(el,val){
+  document.querySelectorAll('#step-ricamo > .step-body > .pills .pill').forEach(p=>p.classList.remove('sel'));
+  el.classList.add('sel');
+  S.ricamo.attivo = val;
+  const wrap = document.getElementById('ricamoWrap');
+  if(val){
+    wrap.classList.add('show');
+    if(!S.ricamo.font) selectRicamoFontDefault();
+    if(!S.ricamo.colore) selectRicamoColoreDefault();
+    if(!S.ricamo.posizione) selectRicamoPosDefault();
+    updateRicamoBtn();
+    updateRicamoPreview();
+    updateRecap();
+  }else{
+    wrap.classList.remove('show');
+    S.ricamo = {attivo:false, testo:'', font:null, fontFam:null, colore:null, hex:null, posizione:null};
+    document.getElementById('ricamoTesto').value='';
+    document.querySelectorAll('#fontPills .font-pill, #ricamoColorGrid .swatch-card, #ricamoPosGrid .pos-card').forEach(c=>c.classList.remove('sel'));
+    updateRicamoPreview();
+    finishRicamoStep();
+  }
+}
+function selectRicamoFontDefault(){
+  const first = document.querySelector('#fontPills .font-pill');
+  if(first) selectRicamoFont(first, RICAMO_FONTS[0].slug);
+}
+function selectRicamoColoreDefault(){
+  const first = document.querySelector('#ricamoColorGrid .swatch-card');
+  if(first) selectRicamoColore(first, COLORI[0].slug, COLORI[0].hex);
+}
+function selectRicamoPosDefault(){
+  const first = document.querySelector('#ricamoPosGrid .pos-card');
+  if(first) selectRicamoPos(first, RICAMO_POS[0].slug);
+}
+function selectRicamoFont(el,slug){
+  document.querySelectorAll('#fontPills .font-pill').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  const f = RICAMO_FONTS.find(x=>x.slug===slug);
+  S.ricamo.font=slug; S.ricamo.fontFam=f.fam;
+  updateRicamoPreview(); updateRecap();
+}
+function selectRicamoColore(el,slug,hex){
+  document.querySelectorAll('#ricamoColorGrid .swatch-card').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  S.ricamo.colore=slug; S.ricamo.hex=hex;
+  updateRicamoPreview(); updateRecap();
+}
+function selectRicamoPos(el,slug){
+  document.querySelectorAll('#ricamoPosGrid .pos-card').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  S.ricamo.posizione=slug;
+  updateRicamoPreview(); updateRecap();
+}
+function updateRicamoTesto(val){
+  S.ricamo.testo = val;
+  updateRicamoBtn();
+  updateRicamoPreview();
+  updateRecap();
+}
+function updateRicamoBtn(){
+  document.getElementById('btnRicamoContinua').disabled = !(S.ricamo.testo && S.ricamo.testo.trim().length>0);
+}
+function confirmRicamo(){
+  if(!S.ricamo.testo || !S.ricamo.testo.trim()) return;
+  finishRicamoStep();
+}
+function finishRicamoStep(){
+  markDone('ricamo');
+  unlock('riepilogo');
+  updateRecap(); renderRiepilogo();
   setTimeout(()=>scrollToStep('riepilogo'),200);
+}
+function updateRicamoPreview(){
+  const t = document.getElementById('ricamoText');
+  if(S.ricamo.attivo && S.ricamo.testo && S.ricamo.posizione && S.ricamo.fontFam && S.ricamo.hex){
+    const pos = RICAMO_POS.find(p=>p.slug===S.ricamo.posizione);
+    t.setAttribute('x', pos.x);
+    t.setAttribute('y', pos.y);
+    t.setAttribute('font-family', S.ricamo.fontFam);
+    t.setAttribute('fill', S.ricamo.hex);
+    t.textContent = S.ricamo.testo;
+    t.setAttribute('opacity','1');
+  }else{
+    t.setAttribute('opacity','0');
+  }
 }
 
 /* ════ PREVIEW ════ */
@@ -717,6 +898,7 @@ function updatePreview(){
   fillZonePattern('placket','Placket');
   updateClosure();
   updateTrim();
+  updateRicamoPreview();
 }
 
 /* ════ RECAP BAR + RIEPILOGO STEP ════ */
@@ -729,9 +911,7 @@ function zoneLabelStr(zone){
   return `${MATERIALI.find(m=>m.slug===z.materiale).name} ${COLORI.find(c=>c.slug===z.colore).name}`;
 }
 function isReady(){
-  return !!(S.modello && (S.modello==='aperta'||S.chiusura) &&
-    ZONES.every(z=>S.zone[z].materiale && S.zone[z].colore) &&
-    S.nastroColore);
+  return !document.getElementById('step-riepilogo').classList.contains('locked');
 }
 function updateRecap(){
   const chips=[];
@@ -739,6 +919,7 @@ function updateRecap(){
   if(S.modello==='collo' && S.chiusura) chips.push(CHIUSURA_LABEL[S.chiusura]);
   ZONES.forEach(z=>{ const l=zoneLabelStr(z); if(l) chips.push(l); });
   if(S.nastroColore) chips.push('Sbieco '+COLORI.find(c=>c.slug===S.nastroColore).name);
+  if(S.ricamo.attivo && S.ricamo.testo) chips.push(`Ricamo “${S.ricamo.testo}”`);
 
   document.getElementById('recapPills').innerHTML = chips.length
     ? chips.map(c=>`<span class="p-pill sel">${c}</span>`).join('')
@@ -751,6 +932,14 @@ function updateRecap(){
 function recapRow(label,val){
   return `<div class="recap-row"><span class="recap-row-label">${label}</span><span class="recap-row-val${val?'':' empty'}">${val||'da scegliere'}</span></div>`;
 }
+function ricamoLabelStr(){
+  if(S.ricamo.attivo===false) return 'No';
+  if(!S.ricamo.attivo || !S.ricamo.testo) return null;
+  const f=RICAMO_FONTS.find(x=>x.slug===S.ricamo.font);
+  const c=COLORI.find(x=>x.slug===S.ricamo.colore);
+  const p=RICAMO_POS.find(x=>x.slug===S.ricamo.posizione);
+  return `“${S.ricamo.testo}” — ${f?f.name:'—'}, filo ${c?c.name:'—'}, ${p?p.name.toLowerCase():'—'}`;
+}
 function renderRiepilogo(){
   const rows = [
     recapRow('Modello', S.modello?MODELLO_LABEL[S.modello]:''),
@@ -759,6 +948,7 @@ function renderRiepilogo(){
     recapRow(ZONE_LABEL.sotto, zoneLabelStr('sotto')),
     recapRow(ZONE_LABEL.placket, zoneLabelStr('placket')),
     recapRow('Nastro sbieco', S.nastroColore ? COLORI.find(c=>c.slug===S.nastroColore).name : ''),
+    recapRow('Ricamo', ricamoLabelStr()),
   ].join('');
   document.getElementById('recapList').innerHTML = rows;
 }
@@ -772,7 +962,8 @@ function openContactModal(){
     Superiore: <strong>${zoneLabelStr('sopra')}</strong><br>
     Inferiore e maniche: <strong>${zoneLabelStr('sotto')}</strong><br>
     Fascia centrale: <strong>${zoneLabelStr('placket')}</strong><br>
-    Nastro sbieco: <strong>${COLORI.find(c=>c.slug===S.nastroColore).name}</strong>
+    Nastro sbieco: <strong>${COLORI.find(c=>c.slug===S.nastroColore).name}</strong><br>
+    Ricamo: <strong>${ricamoLabelStr()||'No'}</strong>
   `;
   document.getElementById('contactModalOv').classList.add('open');
 }
@@ -804,6 +995,7 @@ function submitRequest(){
     `Inferiore/maniche:  ${zoneLabelStr('sotto')||'—'}`,
     `Fascia centrale:    ${zoneLabelStr('placket')||'—'}`,
     `Nastro sbieco:      ${S.nastroColore?COLORI.find(c=>c.slug===S.nastroColore).name:'—'}`,
+    `Ricamo:             ${ricamoLabelStr()||'No'}`,
     `─────────────────────────────`,
     `Note:               ${S.note||'—'}`,
     `─────────────────────────────`,
@@ -823,6 +1015,9 @@ renderZoneMatGrid('sopra');
 renderZoneMatGrid('sotto');
 renderZoneMatGrid('placket');
 renderNastroGrid();
+renderRicamoFontPills();
+renderRicamoColorGrid();
+renderRicamoPosGrid();
 updatePreview();
 updateRecap();
 </script>
